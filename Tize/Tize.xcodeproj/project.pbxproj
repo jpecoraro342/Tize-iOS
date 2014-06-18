@@ -29,6 +29,14 @@
 		7C9A5C84195023B2008B2666 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C83195023B2008B2666 /* Security.framework */; };
 		7C9A5C86195023BF008B2666 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C85195023BF008B2666 /* StoreKit.framework */; };
 		7C9A5C88195023D0008B2666 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */; };
+		7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9419512112008B2666 /* GWTLoginViewController.m */; };
+		7C9A5C9719512112008B2666 /* GWTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */; };
+		7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9919512132008B2666 /* GWTEventsViewController.m */; };
+		7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */; };
+		7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA019512628008B2666 /* GWTEvent.m */; };
+		7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA3195126A3008B2666 /* GWTEventCell.m */; };
+		7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */; };
+		7C9A5CA91951522B008B2666 /* blueBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA81951522B008B2666 /* blueBackground@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +76,18 @@
 		7C9A5C83195023B2008B2666 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		7C9A5C85195023BF008B2666 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		7C9A5C9319512112008B2666 /* GWTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTLoginViewController.h; sourceTree = "<group>"; };
+		7C9A5C9419512112008B2666 /* GWTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTLoginViewController.m; sourceTree = "<group>"; };
+		7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTLoginViewController.xib; sourceTree = "<group>"; };
+		7C9A5C9819512132008B2666 /* GWTEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventsViewController.h; sourceTree = "<group>"; };
+		7C9A5C9919512132008B2666 /* GWTEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventsViewController.m; sourceTree = "<group>"; };
+		7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventsViewController.xib; sourceTree = "<group>"; };
+		7C9A5C9F19512628008B2666 /* GWTEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEvent.h; sourceTree = "<group>"; };
+		7C9A5CA019512628008B2666 /* GWTEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEvent.m; sourceTree = "<group>"; };
+		7C9A5CA2195126A3008B2666 /* GWTEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventCell.h; sourceTree = "<group>"; };
+		7C9A5CA3195126A3008B2666 /* GWTEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventCell.m; sourceTree = "<group>"; };
+		7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventCell.xib; sourceTree = "<group>"; };
+		7C9A5CA81951522B008B2666 /* blueBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueBackground@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,9 +167,10 @@
 		7C9A5C4C19501FBC008B2666 /* Tize */ = {
 			isa = PBXGroup;
 			children = (
-				7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */,
-				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
+				7C9A5C9E195125DC008B2666 /* Model */,
+				7C9A5C9D195125D3008B2666 /* Controller */,
 				7C9A5C5819501FBC008B2666 /* Images.xcassets */,
+				7C9A5CA719515211008B2666 /* Resources */,
 				7C9A5C4D19501FBC008B2666 /* Supporting Files */,
 			);
 			path = Tize;
@@ -182,6 +203,41 @@
 				7C9A5C6819501FBC008B2666 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7C9A5C9D195125D3008B2666 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */,
+				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
+				7C9A5C9319512112008B2666 /* GWTLoginViewController.h */,
+				7C9A5C9419512112008B2666 /* GWTLoginViewController.m */,
+				7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */,
+				7C9A5C9819512132008B2666 /* GWTEventsViewController.h */,
+				7C9A5C9919512132008B2666 /* GWTEventsViewController.m */,
+				7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */,
+				7C9A5CA2195126A3008B2666 /* GWTEventCell.h */,
+				7C9A5CA3195126A3008B2666 /* GWTEventCell.m */,
+				7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		7C9A5C9E195125DC008B2666 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7C9A5C9F19512628008B2666 /* GWTEvent.h */,
+				7C9A5CA019512628008B2666 /* GWTEvent.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		7C9A5CA719515211008B2666 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7C9A5CA81951522B008B2666 /* blueBackground@2x.png */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +318,10 @@
 			files = (
 				7C9A5C5119501FBC008B2666 /* InfoPlist.strings in Resources */,
 				7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */,
+				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
+				7C9A5C9719512112008B2666 /* GWTLoginViewController.xib in Resources */,
+				7C9A5CA91951522B008B2666 /* blueBackground@2x.png in Resources */,
+				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +340,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
+				7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */,
 				7C9A5C5319501FBC008B2666 /* main.m in Sources */,
+				7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */,
 				7C9A5C5719501FBC008B2666 /* GWTAppDelegate.m in Sources */,
+				7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +552,7 @@
 				7C9A5C7119501FBC008B2666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7C9A5C7219501FBC008B2666 /* Build configuration list for PBXNativeTarget "TizeTests" */ = {
 			isa = XCConfigurationList;
@@ -496,6 +561,7 @@
 				7C9A5C7419501FBC008B2666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

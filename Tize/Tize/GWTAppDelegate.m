@@ -7,6 +7,7 @@
 //
 
 #import "GWTAppDelegate.h"
+#import "GWTLoginViewController.h"
 #import <Parse/Parse.h>
 
 @implementation GWTAppDelegate
@@ -14,7 +15,10 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+    
+    GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
+    
+    self.window.rootViewController = login;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
