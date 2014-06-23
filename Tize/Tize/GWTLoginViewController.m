@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 GrayWolfTechnologies. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "GWTLoginViewController.h"
 #import "GWTEventsViewController.h"
 
@@ -24,9 +25,15 @@
 }
 
 - (IBAction)signIn:(id)sender {
-    //log the user in
-    GWTEventsViewController *controller = [[GWTEventsViewController alloc] init];
-    [self presentViewController:controller animated:YES completion:nil];
+    [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser* user, NSError *error) {
+        if (user) {
+            GWTEventsViewController *controller = [[GWTEventsViewController alloc] init];
+            [self presentViewController:controller animated:YES completion:nil];
+        }
+        else {
+            NSLog(@"user was not logged in");
+        }
+    }];
 }
 
 - (IBAction)registerButton:(id)sender {

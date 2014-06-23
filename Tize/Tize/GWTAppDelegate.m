@@ -15,6 +15,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [Parse setApplicationId:@"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD"
+                  clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
     GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
     
