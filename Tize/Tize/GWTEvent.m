@@ -7,12 +7,24 @@
 //
 
 #import "GWTEvent.h"
+#import <Parse/PFObject+Subclass.h>
 
 @implementation GWTEvent
 
+
+@dynamic eventName;
+@dynamic locationName;
+@dynamic date;
+@dynamic eventDetails;
+@synthesize address;
+
 //Converts the date string into a readable time format, that is also relative to today
 -(NSString*)timeString {
-    return [NSString stringWithFormat:@"%@", self.time];
+    return [NSString stringWithFormat:@"%@", self.date];
+}
+
++(NSString*)parseClassName {
+    return @"Event";
 }
 
 @end

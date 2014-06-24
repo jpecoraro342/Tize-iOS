@@ -7,6 +7,7 @@
 //
 
 #import "GWTAppDelegate.h"
+#import "GWTEvent.h"
 #import "GWTLoginViewController.h"
 #import <Parse/Parse.h>
 
@@ -15,6 +16,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    [GWTEvent registerSubclass];
+    
     [Parse setApplicationId:@"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD"
                   clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];

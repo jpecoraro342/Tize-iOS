@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 GrayWolfTechnologies. All rights reserved.
 //
 
+#import <Parse/Parse.h>
 #import "GWTEventsViewController.h"
 #import "GWTEventCell.h"
 #import "GWTEvent.h"
@@ -45,8 +46,8 @@
     
     if (indexPath.row < [self.eventsArray count]) {
         GWTEvent* tempEvent = [self.eventsArray objectAtIndex:indexPath.row];
-        cell.eventNameLabel.text = tempEvent.name;
-        cell.eventLocationLabel.text = tempEvent.location;
+        cell.eventNameLabel.text = tempEvent.eventName;
+        cell.eventLocationLabel.text = tempEvent.locationName;
         cell.eventTimeLabel.text = [tempEvent timeString];
     }
     else {
@@ -66,29 +67,19 @@
 -(void)queryEvents {
     _eventsArray = [[NSMutableArray alloc] init];
     
-    GWTEvent *event = [[GWTEvent alloc] init];
-    event.name = @"House Partay!!!";
-    event.location = @"Mi Casa";
-    event.time = [[NSDate date] dateByAddingTimeInterval:120200];
-    [self.eventsArray addObject:event];
+    PFQuery *getAllEventsForCurrentUser= [PFQuery queryWithClassName:@"Event"];
+    PFQuery *getAllEventsForUsersWeAreFollowing = [PFQuery queryWithClassName:@"Event"];
     
-    GWTEvent *event2 = [[GWTEvent alloc] init];
-    event2.name = @"Study Group";
-    event2.location = @"Lib West";
-    event2.time = [[NSDate date] dateByAddingTimeInterval:100200];
-    [self.eventsArray addObject:event2];
+    [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
+    [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *object in objects) {
+                [self.eventsArray addObject:object];
+            }
+        }
+        [self.tableView reloadData];
+    }];
     
-    GWTEvent *event3 = [[GWTEvent alloc] init];
-    event3.name = @"Grilling";
-    event3.location = @"Your house";
-    event3.time = [[NSDate date] dateByAddingTimeInterval:600200];
-    [self.eventsArray addObject:event3];
-    
-    GWTEvent *event4 = [[GWTEvent alloc] init];
-    event4.name = @"Kappa Phi BBQ";
-    event4.location = @"The House";
-    event4.time = [[NSDate date] dateByAddingTimeInterval:800200];
-    [self.eventsArray addObject:event4];
 }
 
 - (void)didReceiveMemoryWarning {
