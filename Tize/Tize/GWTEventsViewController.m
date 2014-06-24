@@ -34,6 +34,15 @@
     UINib *eventCell = [UINib nibWithNibName:@"GWTEventCell" bundle:nil];
     [self.tableView registerNib:eventCell forCellReuseIdentifier:@"eventCell"];
     
+    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
+    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    
+    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
+    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    [self.tableView addGestureRecognizer:rightSwipe];
+    [self.tableView addGestureRecognizer:leftSwipe];
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"blueBackground.png"]];
 }
 
@@ -80,6 +89,18 @@
         [self.tableView reloadData];
     }];
     
+}
+
+-(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
+    CGPoint swipePoint = [sender locationInView:self.tableView];
+    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
+    NSLog(@"Left swipe detected on row: %i", cellIndex.row);
+}
+
+-(void)swipeRight:(UISwipeGestureRecognizer*)sender {
+    CGPoint swipePoint = [sender locationInView:self.tableView];
+    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
+    NSLog(@"Right swipe detected on row: %i", cellIndex.row);
 }
 
 - (void)didReceiveMemoryWarning {
