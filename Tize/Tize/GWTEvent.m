@@ -14,6 +14,7 @@
 
 @dynamic eventName;
 @dynamic locationName;
+@dynamic host;
 @dynamic date;
 @dynamic eventDetails;
 @synthesize address;

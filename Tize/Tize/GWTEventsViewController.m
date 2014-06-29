@@ -10,6 +10,10 @@
 #import "GWTEventsViewController.h"
 #import "GWTEventCell.h"
 #import "GWTEvent.h"
+#import "GWTEventDetailViewController.h"
+#import "GWTEditEventViewController.h"
+#import "GWTFriendsTableViewController.h"
+#import "GWTAttendingTableViewController.h"
 
 @interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -56,14 +60,10 @@
     if (indexPath.row < [self.eventsArray count]) {
         GWTEvent* tempEvent = [self.eventsArray objectAtIndex:indexPath.row];
         cell.eventNameLabel.text = tempEvent.eventName;
-        cell.eventLocationLabel.text = tempEvent.locationName;
-        cell.eventTimeLabel.text = [tempEvent timeString];
     }
     else {
         //create an add new cell
-        cell.eventNameLabel.text = @"";
-        cell.eventLocationLabel.text = @"Create New Event";
-        cell.eventTimeLabel.text = @"";
+        cell.eventNameLabel.text = @"Create New Event";
     }
     
     return cell;
@@ -94,13 +94,73 @@
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
     CGPoint swipePoint = [sender locationInView:self.tableView];
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    NSLog(@"Left swipe detected on row: %i", cellIndex.row);
+    if (cellIndex.row < [self.eventsArray count]) {
+        GWTAttendingTableViewController* attendeeList = [[GWTAttendingTableViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
+        [self animateSwipeLeftView:attendeeList];
+    }
 }
 
 -(void)swipeRight:(UISwipeGestureRecognizer*)sender {
     CGPoint swipePoint = [sender locationInView:self.tableView];
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    NSLog(@"Right swipe detected on row: %i", cellIndex.row);
+    if (cellIndex.row < [self.eventsArray count]) {
+        if ([[self.eventsArray objectAtIndex:cellIndex.row] host] == [[PFUser currentUser] objectId]) {
+            GWTEditEventViewController* editEvent = [[GWTEditEventViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
+            [self animateSwipeRightView:editEvent];
+        }
+        else {
+            GWTEventDetailViewController* eventDetails = [[GWTEventDetailViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
+            [self animateSwipeRightView:eventDetails];
+        }
+    }
+}
+
+-(void)animateSwipeLeftView:(UIViewController*)toViewController {
+    UIView * toView = toViewController.view;
+    UIView * fromView = self.view;
+    
+    // Get the size of the view area.
+    CGRect viewSize = fromView.frame;
+    
+    // Add the toView to the fromView
+    [fromView.superview addSubview:toView];
+    
+    // Position it off screen.
+    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        // Animate the views on and off the screen. This will appear to slide.
+        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
+        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self presentViewController:toViewController animated:NO completion:nil];
+        }
+    }];
+}
+
+-(void)animateSwipeRightView:(UIViewController*)toViewController {
+    UIView * toView = toViewController.view;
+    UIView * fromView = self.view;
+    
+    // Get the size of the view area.
+    CGRect viewSize = fromView.frame;
+    
+    // Add the toView to the fromView
+    [fromView.superview addSubview:toView];
+    
+    // Position it off screen.
+    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
+    
+    [UIView animateWithDuration:0.4 animations:^{
+        // Animate the views on and off the screen. This will appear to slide.
+        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
+        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [self presentViewController:toViewController animated:NO completion:nil];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,6 +14,8 @@
 @property (nonatomic, copy) NSString* eventName;
 @property (nonatomic, copy) NSString* locationName; //the name of the location
 
+@property (nonatomic, copy) NSString* host;
+
 @property (nonatomic, strong) NSDate* date;
 
 @property (nonatomic, strong) NSString* address;
