@@ -11,4 +11,6 @@
 
 @interface GWTFriendsTableViewController : UIViewController
 
+@property (nonatomic, strong) NSMutableArray* listOfFriends;
+
 @end
