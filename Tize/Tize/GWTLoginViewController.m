@@ -27,8 +27,12 @@
 - (IBAction)signIn:(id)sender {
     [PFUser logInWithUsernameInBackground:self.usernameTextField.text password:self.passwordTextField.text block:^(PFUser* user, NSError *error) {
         if (user) {
-            GWTEventsViewController *controller = [[GWTEventsViewController alloc] init];
-            [self presentViewController:controller animated:YES completion:nil];
+            GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
+            [self presentViewController:eventsController animated:YES completion:nil];
+            //UINavigationController * navContoller = [[UINavigationController alloc] initWithRootViewController:eventsController];
+            //[navContoller.navigationBar setBarTintColor:[UIColor colorWithRed:40/255.0f green:130/255.0f blue:190/255.0f alpha:1]];
+            //[navContoller.navigationBar setTranslucent:YES];
+            //[self presentViewController:navContoller animated:YES completion:nil];
         }
         else {
             NSLog(@"user was not logged in");

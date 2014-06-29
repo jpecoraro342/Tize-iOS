@@ -17,6 +17,14 @@
 
 @implementation GWTEditEventViewController
 
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        //if we use regular init we are creating an event, not editing
+    }
+    return self;
+}
+
 -(instancetype)initWithEvent:(GWTEvent *)event {
     self = [super init];
     if (self) {

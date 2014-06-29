@@ -32,6 +32,8 @@
     return self;
 }
 
+#pragma mark loading view
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -47,8 +49,19 @@
     [self.tableView addGestureRecognizer:rightSwipe];
     [self.tableView addGestureRecognizer:leftSwipe];
     
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+    
+    UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(viewFriends)];
+    [toolbar setItems:[NSArray arrayWithObjects:addItem, flex, friends, nil]];
+    
+    [self.view addSubview:toolbar];
+    
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"blueBackground.png"]];
 }
+
+#pragma mark tableview delegate methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.eventsArray count] + 1;
@@ -72,6 +85,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
+
+#pragma mark query methods
 
 -(void)queryEvents {
     _eventsArray = [[NSMutableArray alloc] init];
@@ -113,6 +128,20 @@
     }];
 }
 
+#pragma mark user management
+
+-(void)addEvent {
+    GWTEditEventViewController *addEvent = [[GWTEditEventViewController alloc] init];
+    [self presentViewController:addEvent animated:YES completion:nil];
+}
+
+-(void)viewFriends {
+    GWTFriendsTableViewController *friends = [[GWTFriendsTableViewController alloc] init];
+    [self presentViewController:friends animated:YES completion:nil];
+}
+
+#pragma mark navigation methods
+
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
     CGPoint swipePoint = [sender locationInView:self.tableView];
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
@@ -126,7 +155,7 @@
     CGPoint swipePoint = [sender locationInView:self.tableView];
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
     if (cellIndex.row < [self.eventsArray count]) {
-        if ([[self.eventsArray objectAtIndex:cellIndex.row] host] == [[PFUser currentUser] objectId]) {
+        if ([[[self.eventsArray objectAtIndex:cellIndex.row] host] isEqualToString:[[PFUser currentUser] objectId]]) {
             GWTEditEventViewController* editEvent = [[GWTEditEventViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
             [self animateSwipeRightView:editEvent];
         }
