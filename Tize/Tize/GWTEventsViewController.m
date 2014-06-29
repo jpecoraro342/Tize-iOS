@@ -76,11 +76,34 @@
 -(void)queryEvents {
     _eventsArray = [[NSMutableArray alloc] init];
     
-    PFQuery *getAllEventsForCurrentUser= [PFQuery queryWithClassName:@"Event"];
+    PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
     PFQuery *getAllEventsForUsersWeAreFollowing = [PFQuery queryWithClassName:@"Event"];
     
+    [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
+    [getAllEventsForUsersWeAreFollowing whereKey:@"host" matchesKey:@"following" inQuery:getAllFollowingEvents];
+    /*[getAllEventsForUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            for (PFObject *object in objects) {
+                [self.eventsArray addObject:object];
+            }
+            [self.tableView reloadData];
+        }
+    }];*/
+    
+    PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
     [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
-    [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    /*[getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            for (PFObject *object in objects) {
+                [self.eventsArray addObject:object];
+            }
+        }
+        [self.tableView reloadData];
+    }];*/
+    
+    PFQuery *eventsQuery = [PFQuery orQueryWithSubqueries:[NSArray arrayWithObjects:getAllEventsForCurrentUser, getAllEventsForUsersWeAreFollowing, nil]];
+    [eventsQuery orderByDescending:@"date"];
+    [eventsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             for (PFObject *object in objects) {
                 [self.eventsArray addObject:object];
@@ -88,7 +111,6 @@
         }
         [self.tableView reloadData];
     }];
-    
 }
 
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
