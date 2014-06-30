@@ -12,7 +12,11 @@
 
 @interface GWTAttendingTableViewController : UIViewController
 
-@property GWTEvent* event;
+@property (nonatomic, strong) GWTEvent* event;
+@property (nonatomic, strong) NSMutableArray* listOfAttending;
+@property (nonatomic, strong) NSMutableArray* listOfMaybeAttending;
+@property (nonatomic, strong) NSMutableArray* listOfNotAttending;
+@property (nonatomic, strong) NSMutableArray* listOfNotResponded;
 
 -(instancetype)initWithEvent:(GWTEvent*)event;
 
