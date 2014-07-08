@@ -53,12 +53,16 @@
     
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(viewFriends)];
+    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Contacts" style:UIBarButtonItemStyleBordered target:self action:@selector(viewFriends)];
     [toolbar setItems:[NSArray arrayWithObjects:addItem, flex, friends, nil]];
     
     [self.view addSubview:toolbar];
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"blueBackground.png"]];
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    [self queryEvents];
 }
 
 #pragma mark tableview delegate methods
@@ -85,8 +89,6 @@
 #pragma mark query methods
 
 -(void)queryEvents {
-    _eventsArray = [[NSMutableArray alloc] init];
-    
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
     PFQuery *getAllEventsForUsersWeAreFollowing = [PFQuery queryWithClassName:@"Event"];
     
@@ -116,6 +118,7 @@
     [eventsQuery orderByDescending:@"date"];
     [eventsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            _eventsArray = [[NSMutableArray alloc] init];
             for (PFObject *object in objects) {
                 [self.eventsArray addObject:object];
             }
