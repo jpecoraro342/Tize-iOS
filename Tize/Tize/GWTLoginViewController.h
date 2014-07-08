@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GWTLoginViewController : UIViewController
+@interface GWTLoginViewController : PFLogInViewController
 
 @end

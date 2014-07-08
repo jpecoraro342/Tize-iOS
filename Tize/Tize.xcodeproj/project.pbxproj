@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C2CF5E8196BA2B8002AE0C6 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2CF5E7196BA2B8002AE0C6 /* Twitter.framework */; };
+		7C2CF5EA196BA2BD002AE0C6 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2CF5E9196BA2BD002AE0C6 /* Social.framework */; };
+		7C2CF5EC196BA2C2002AE0C6 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */; };
 		7C3B5628195D026E008FD5F5 /* GWTEventDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B5626195D026E008FD5F5 /* GWTEventDetailViewController.m */; };
 		7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5627195D026E008FD5F5 /* GWTEventDetailViewController.xib */; };
 		7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B562E195D02CA008FD5F5 /* GWTEditEventViewController.m */; };
@@ -38,7 +41,6 @@
 		7C9A5C86195023BF008B2666 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C85195023BF008B2666 /* StoreKit.framework */; };
 		7C9A5C88195023D0008B2666 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */; };
 		7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9419512112008B2666 /* GWTLoginViewController.m */; };
-		7C9A5C9719512112008B2666 /* GWTLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */; };
 		7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9919512132008B2666 /* GWTEventsViewController.m */; };
 		7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */; };
 		7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA019512628008B2666 /* GWTEvent.m */; };
@@ -58,6 +60,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C2CF5E7196BA2B8002AE0C6 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
+		7C2CF5E9196BA2BD002AE0C6 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		7C3B5625195D026E008FD5F5 /* GWTEventDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventDetailViewController.h; sourceTree = "<group>"; };
 		7C3B5626195D026E008FD5F5 /* GWTEventDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventDetailViewController.m; sourceTree = "<group>"; };
 		7C3B5627195D026E008FD5F5 /* GWTEventDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventDetailViewController.xib; sourceTree = "<group>"; };
@@ -98,7 +103,6 @@
 		7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7C9A5C9319512112008B2666 /* GWTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTLoginViewController.h; sourceTree = "<group>"; };
 		7C9A5C9419512112008B2666 /* GWTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTLoginViewController.m; sourceTree = "<group>"; };
-		7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTLoginViewController.xib; sourceTree = "<group>"; };
 		7C9A5C9819512132008B2666 /* GWTEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventsViewController.h; sourceTree = "<group>"; };
 		7C9A5C9919512132008B2666 /* GWTEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventsViewController.m; sourceTree = "<group>"; };
 		7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventsViewController.xib; sourceTree = "<group>"; };
@@ -115,6 +119,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C2CF5EC196BA2C2002AE0C6 /* Accounts.framework in Frameworks */,
+				7C2CF5EA196BA2BD002AE0C6 /* Social.framework in Frameworks */,
+				7C2CF5E8196BA2B8002AE0C6 /* Twitter.framework in Frameworks */,
 				7C9A5C88195023D0008B2666 /* SystemConfiguration.framework in Frameworks */,
 				7C9A5C86195023BF008B2666 /* StoreKit.framework in Frameworks */,
 				7C9A5C84195023B2008B2666 /* Security.framework in Frameworks */,
@@ -187,6 +194,9 @@
 		7C9A5C4519501FBC008B2666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */,
+				7C2CF5E9196BA2BD002AE0C6 /* Social.framework */,
+				7C2CF5E7196BA2B8002AE0C6 /* Twitter.framework */,
 				7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */,
 				7C9A5C85195023BF008B2666 /* StoreKit.framework */,
 				7C9A5C83195023B2008B2666 /* Security.framework */,
@@ -256,7 +266,6 @@
 				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
 				7C9A5C9319512112008B2666 /* GWTLoginViewController.h */,
 				7C9A5C9419512112008B2666 /* GWTLoginViewController.m */,
-				7C9A5C9519512112008B2666 /* GWTLoginViewController.xib */,
 				7C9A5C9819512132008B2666 /* GWTEventsViewController.h */,
 				7C9A5C9919512132008B2666 /* GWTEventsViewController.m */,
 				7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */,
@@ -381,7 +390,6 @@
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
 				7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
-				7C9A5C9719512112008B2666 /* GWTLoginViewController.xib in Resources */,
 				7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */,
 				7C9A5CA91951522B008B2666 /* blueBackground@2x.png in Resources */,
 				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
@@ -540,6 +548,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -560,6 +569,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
