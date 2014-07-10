@@ -12,6 +12,7 @@
 @interface GWTEventDetailViewController : UIViewController
 
 @property GWTEvent* event;
+@property PFObject* currentAttendingStatus;
 
 -(instancetype)initWithEvent:(GWTEvent*)event;
 
