@@ -8,6 +8,7 @@
 
 #import "GWTEditEventViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTFriendsTableViewController.h"
 
 @interface GWTEditEventViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
 
@@ -90,7 +91,9 @@
 }
 
 -(void)inviteFriends {
-    
+    [self updateEvent];
+    GWTFriendsTableViewController *friends = [[GWTFriendsTableViewController alloc] initWithEvent:self.event];
+    [self presentViewController:friends animated:YES completion:nil];
 }
 
 -(void)updateFields {
