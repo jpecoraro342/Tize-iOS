@@ -58,6 +58,16 @@
     NSLog(@"Transitioning\n\n");
 }
 
+#pragma mark private methods
+
+-(void)goForwardToEventsPage {
+    [self setViewControllers:@[[[GWTEventsViewController alloc] init]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+}
+
+-(void)goBackwardToEventsPage {
+    [self setViewControllers:@[[[GWTEventsViewController alloc] init]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

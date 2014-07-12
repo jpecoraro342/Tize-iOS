@@ -10,4 +10,7 @@
 
 @interface GWTBasePageViewController : UIPageViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
+-(void)goForwardToEventsPage;
+-(void)goBackwardToEventsPage;
+
 @end

@@ -9,6 +9,7 @@
 #import "GWTEditEventViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTFriendsTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTEditEventViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
 
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
 @property (weak, nonatomic) IBOutlet UITextField *eventLocationTextField;
 @property (weak, nonatomic) IBOutlet UITextField *eventTimeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *createEventButton;
 
 @property (strong, nonatomic) UIDatePicker* picker;
 
@@ -72,6 +74,7 @@
     
     if (self.isEdit) {
         self.eventTypeLabel.text = @"Edit Event";
+        self.createEventButton.titleLabel.text = @"Update Event";
     }
     else {
         self.eventTypeLabel.text = @"Create Event";
@@ -88,10 +91,17 @@
 
 -(void)cancelEdit {
     self.shouldSaveChanges = NO;
+    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
 }
 
 - (IBAction)createEvent:(id)sender {
     [self.event saveInBackground];
+    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+}
+
+- (IBAction)deleteEvent:(id)sender {
+    [self.event deleteInBackground];
+    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
 }
 
 -(void)inviteFriends {
