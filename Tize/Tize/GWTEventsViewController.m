@@ -40,6 +40,7 @@
     UINib *eventCell = [UINib nibWithNibName:@"GWTEventCell" bundle:nil];
     [self.tableView registerNib:eventCell forCellReuseIdentifier:@"eventCell"];
     
+    /*
     UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
     rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
     
@@ -48,6 +49,7 @@
     
     [self.tableView addGestureRecognizer:rightSwipe];
     [self.tableView addGestureRecognizer:leftSwipe];
+     */
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
@@ -146,7 +148,7 @@
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
     if (cellIndex.row < [self.eventsArray count]) {
         GWTAttendingTableViewController* attendeeList = [[GWTAttendingTableViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-        [self animateSwipeLeftView:attendeeList];
+        //load attending list
     }
 }
 
@@ -156,61 +158,13 @@
     if (cellIndex.row < [self.eventsArray count]) {
         if ([[[self.eventsArray objectAtIndex:cellIndex.row] host] isEqualToString:[[PFUser currentUser] objectId]]) {
             GWTEditEventViewController* editEvent = [[GWTEditEventViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            [self animateSwipeRightView:editEvent];
+            //load editevent
         }
         else {
             GWTEventDetailViewController* eventDetails = [[GWTEventDetailViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            [self animateSwipeRightView:eventDetails];
+            //load event details
         }
     }
-}
-
--(void)animateSwipeLeftView:(UIViewController*)toViewController {
-    UIView * toView = toViewController.view;
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self presentViewController:toViewController animated:NO completion:nil];
-        }
-    }];
-}
-
--(void)animateSwipeRightView:(UIViewController*)toViewController {
-    UIView * toView = toViewController.view;
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self presentViewController:toViewController animated:NO completion:nil];
-        }
-    }];
 }
 
 - (void)didReceiveMemoryWarning {

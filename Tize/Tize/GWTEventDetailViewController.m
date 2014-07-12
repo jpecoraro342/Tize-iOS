@@ -36,10 +36,12 @@ static NSArray* attendingStatus;
     [self.eventNameLabel setText:[self.event eventName]];
     [self.pickerView selectRow:4 inComponent:0 animated:YES];
     
+    /*
     UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     
     [self.view addGestureRecognizer:leftSwipe];
+     */
 }
 
 -(void)initAttendingArray {
@@ -90,31 +92,7 @@ static NSArray* attendingStatus;
 }
 
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeLeftAnimation];
-}
-
--(void)returnWithSwipeLeftAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
+    //events page
 }
 
 - (void)didReceiveMemoryWarning

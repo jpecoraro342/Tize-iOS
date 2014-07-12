@@ -115,33 +115,9 @@
 #pragma mark animation and navigation
 
 -(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeRightAnimation];
-    //[self presentViewController:events animated:YES completion:nil];
+    //events page
 }
 
--(void)returnWithSwipeRightAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

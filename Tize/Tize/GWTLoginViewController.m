@@ -9,6 +9,10 @@
 #import <Parse/Parse.h>
 #import "GWTLoginViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTEditEventViewController.h"
+#import "GWTEventDetailViewController.h"
+#import "GWTAttendingTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTLoginViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -21,8 +25,20 @@
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
-    [self presentViewController:eventsController animated:YES completion:nil];
+    GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    
+    //disable the tap gesture
+    for (UIGestureRecognizer *recognizer in basePageController.gestureRecognizers) {
+        if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+            recognizer.enabled = NO;
+        }
+    }
+    
+    GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
+    
+    [basePageController setViewControllers:@[events] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    
+    [self presentViewController:basePageController animated:YES completion:nil];
 }
 
 -(void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
@@ -42,8 +58,20 @@
     [super viewDidAppear:animated];
 
     if ([PFUser currentUser]) {
-        GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
-        [self presentViewController:eventsController animated:YES completion:nil];
+        GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+        
+        //disable the tap gesture
+        for (UIGestureRecognizer *recognizer in basePageController.gestureRecognizers) {
+            if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+                recognizer.enabled = NO;
+            }
+        }
+        
+        GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
+        
+        [basePageController setViewControllers:@[events] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+        
+        [self presentViewController:basePageController animated:YES completion:nil];
     }
     else {
         self.delegate = self;

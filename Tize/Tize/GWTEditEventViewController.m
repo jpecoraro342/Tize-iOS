@@ -76,18 +76,22 @@
     else {
         self.eventTypeLabel.text = @"Create Event";
     }
-    
+    /*
     UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
     leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
     
     [self.view addGestureRecognizer:leftSwipe];
+     */
 }
 
 #pragma mark private methods
 
 -(void)cancelEdit {
     self.shouldSaveChanges = NO;
-    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)createEvent:(id)sender {
+    [self.event saveInBackground];
 }
 
 -(void)inviteFriends {
@@ -147,6 +151,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    /*
     if (self.shouldSaveChanges) {
         [self.event saveInBackground];
     }
@@ -158,7 +163,7 @@
                 }
             }];
         }
-    }
+    }*/
     
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
@@ -186,32 +191,9 @@
 #pragma mark page navigation
 
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeLeftAnimation];
+    //events page
 }
 
--(void)returnWithSwipeLeftAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
