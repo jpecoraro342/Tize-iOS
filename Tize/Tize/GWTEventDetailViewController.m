@@ -12,6 +12,10 @@
 @interface GWTEventDetailViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
+@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
+
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 
 @end
@@ -34,6 +38,9 @@ static NSArray* attendingStatus;
     [super viewDidLoad];
     
     [self.eventNameLabel setText:[self.event eventName]];
+    [self.eventDescriptionLabel setText:[self.event eventDetails]];
+    [self.eventLocationLabel setText:[self.event locationName]];
+    [self.eventTimeLabel setText:[self.event timeString]];
     [self.pickerView selectRow:4 inComponent:0 animated:YES];
     
     UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
