@@ -56,7 +56,11 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
     if (![pendingViewControllers.firstObject isEqual:self.mainEventsView]) {
-        [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
+        GWTEvent* toEvent = [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
+        NSLog(@"\nWill transition to view with event name: %@\n\n", toEvent.eventName);
+        if (toEvent) {
+            [pendingViewControllers.firstObject reloadWithEvent:toEvent];
+        }
     }
 }
 

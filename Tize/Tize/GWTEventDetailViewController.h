@@ -14,6 +14,6 @@
 @property GWTEvent* event;
 @property PFObject* currentAttendingStatus;
 
--(instancetype)initWithEvent:(GWTEvent*)event;
+-(void)reloadWithEvent:(GWTEvent*)event;
 
 @end

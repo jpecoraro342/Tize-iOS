@@ -134,7 +134,6 @@
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
-    NSLog(@"Transitioning, set the selected event to %@\n\n", [self.eventsArray objectAtIndex:cellIndex.row]);
     return [self.eventsArray objectAtIndex:cellIndex.row];
 }
 

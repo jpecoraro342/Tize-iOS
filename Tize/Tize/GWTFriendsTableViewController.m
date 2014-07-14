@@ -26,15 +26,30 @@
     return self;
 }
 
--(instancetype)initWithEvent:(GWTEvent*)event {
+-(instancetype)initWithEvent:(GWTEvent *)event {
     self = [super init];
     if (self) {
-        _listOfFriends = [[NSMutableArray alloc] init];
         self.isInviteList = YES;
         self.event = event;
+        _listOfFriends = [[NSMutableArray alloc] init];
         [self queryFollowing];
     }
     return self;
+}
+
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.isInviteList = YES;
+    self.event = event;
+    [self queryFollowing];
+    
+    self.tableView.allowsMultipleSelection = YES;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
+    
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
+    [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
 }
 
 - (void)viewDidLoad {
@@ -43,8 +58,6 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
-    
-    //UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
     
     if (self.isInviteList) {
         self.tableView.allowsMultipleSelection = YES;
@@ -56,11 +69,6 @@
     }
     
     [self.view addSubview:toolbar];
-    
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.view addGestureRecognizer:rightSwipe];
 }
 
 -(void)inviteSelected {
@@ -116,13 +124,6 @@
         }
     }];
 }
-
-#pragma mark animation and navigation
-
--(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    //events page
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

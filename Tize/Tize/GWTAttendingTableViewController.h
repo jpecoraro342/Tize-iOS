@@ -18,6 +18,6 @@
 @property (nonatomic, strong) NSMutableArray* listOfNotAttending;
 @property (nonatomic, strong) NSMutableArray* listOfNotResponded;
 
--(instancetype)initWithEvent:(GWTEvent*)event;
+-(void)reloadWithEvent:(GWTEvent*)event;
 
 @end

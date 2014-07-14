@@ -18,25 +18,16 @@
 
 @implementation GWTAttendingTableViewController
 
--(instancetype)initWithEvent:(GWTEvent *)event {
-    self = [super init];
-    if (self) {
-        self.event = event;
-        [self initArrays];
-        [self loadTableData];
-    }
-    return self;
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.event = event;
+    [self initArrays];
+    [self loadTableData];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-    
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.view addGestureRecognizer:rightSwipe];
 }
 
 #pragma mark table view delegates
@@ -121,37 +112,6 @@
                 [statusList addObject:object];
             }
             [self.tableView reloadData];
-        }
-    }];
-}
-
-#pragma mark navigation
-
--(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeRightAnimation];
-    //[self presentViewController:events animated:YES completion:nil];
-}
-
--(void)returnWithSwipeRightAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
         }
     }];
 }

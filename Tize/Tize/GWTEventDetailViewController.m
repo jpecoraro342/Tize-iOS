@@ -20,28 +20,17 @@
 
 static NSArray* attendingStatus;
 
--(instancetype)initWithEvent:(GWTEvent *)event {
-    self = [super init];
-    if (self) {
-        self.event = event;
-        [self initAttendingArray];
-        [self queryAttendingStatus];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.eventNameLabel setText:[self.event eventName]];
+
     [self.pickerView selectRow:4 inComponent:0 animated:YES];
-    
-    /*
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.view addGestureRecognizer:leftSwipe];
-     */
+}
+
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.event = event;
+    [self.eventNameLabel setText:[self.event eventName]];
+    [self initAttendingArray];
+    [self queryAttendingStatus];
 }
 
 -(void)initAttendingArray {
@@ -95,8 +84,7 @@ static NSArray* attendingStatus;
     //events page
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

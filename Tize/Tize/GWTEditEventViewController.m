@@ -41,14 +41,15 @@
     return self;
 }
 
--(instancetype)initWithEvent:(GWTEvent *)event {
-    self = [super init];
-    if (self) {
-        self.isEdit = YES;
-        self.shouldSaveChanges = YES;
-        self.event = event;
-    }
-    return self;
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.isEdit = YES;
+    self.shouldSaveChanges = YES;
+    self.event = event;
+    
+    self.eventTypeLabel.text = @"Edit Event";
+    self.createEventButton.titleLabel.text = @"Update Event";
+    
+    [self updateFields];
 }
 
 - (void)viewDidLoad {
@@ -71,20 +72,6 @@
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     [bottomBar setItems:[NSArray arrayWithObjects:inviteFriends, flex, cancel, nil]];
-    
-    if (self.isEdit) {
-        self.eventTypeLabel.text = @"Edit Event";
-        self.createEventButton.titleLabel.text = @"Update Event";
-    }
-    else {
-        self.eventTypeLabel.text = @"Create Event";
-    }
-    /*
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.view addGestureRecognizer:leftSwipe];
-     */
 }
 
 #pragma mark private methods
@@ -161,20 +148,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    /*
-    if (self.shouldSaveChanges) {
-        [self.event saveInBackground];
-    }
-    else {
-        if (self.isEdit) {
-            [self.event fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                if (!error) {
-                    self.event = (GWTEvent*)object;
-                }
-            }];
-        }
-    }*/
-    
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];

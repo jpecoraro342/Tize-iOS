@@ -13,6 +13,6 @@
 
 @property GWTEvent* event;
 
--(instancetype)initWithEvent:(GWTEvent*)event;
+-(void)reloadWithEvent:(GWTEvent*)event;
 
 @end
