@@ -55,7 +55,9 @@
 #pragma mark pageviewcontroller delegate methods
 
 -(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    NSLog(@"Transitioning\n\n");
+    if (![pendingViewControllers.firstObject isEqual:self.mainEventsView]) {
+        [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
+    }
 }
 
 #pragma mark private methods

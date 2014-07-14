@@ -8,7 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class GWTEventsViewController;
+
 @interface GWTBasePageViewController : UIPageViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+
+@property (nonatomic, strong) GWTEventsViewController *mainEventsView;
+@property (nonatomic, strong) UIPanGestureRecognizer *transitionDetector;
 
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;

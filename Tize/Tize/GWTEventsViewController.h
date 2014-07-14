@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class GWTEvent;
+
 @interface GWTEventsViewController : UIViewController
+
+-(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer*)gesture;
 
 @end

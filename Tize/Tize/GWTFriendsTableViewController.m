@@ -49,9 +49,10 @@
     if (self.isInviteList) {
         self.tableView.allowsMultipleSelection = YES;
         
+        UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
-        [toolbar setItems:[NSArray arrayWithObjects:flex, friends, nil]];
+        UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
+        [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
     }
     
     [self.view addSubview:toolbar];
@@ -71,6 +72,10 @@
         invite[@"eventID"] = self.event.objectId;
         [invite saveInBackground];
     }
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)cancelAddingFriends {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

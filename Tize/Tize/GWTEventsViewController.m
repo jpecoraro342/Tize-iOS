@@ -40,17 +40,6 @@
     UINib *eventCell = [UINib nibWithNibName:@"GWTEventCell" bundle:nil];
     [self.tableView registerNib:eventCell forCellReuseIdentifier:@"eventCell"];
     
-    /*
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.tableView addGestureRecognizer:rightSwipe];
-    [self.tableView addGestureRecognizer:leftSwipe];
-     */
-    
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
@@ -143,28 +132,10 @@
 
 #pragma mark navigation methods
 
--(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    CGPoint swipePoint = [sender locationInView:self.tableView];
-    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    if (cellIndex.row < [self.eventsArray count]) {
-        GWTAttendingTableViewController* attendeeList = [[GWTAttendingTableViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-        //load attending list
-    }
-}
-
--(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    CGPoint swipePoint = [sender locationInView:self.tableView];
-    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    if (cellIndex.row < [self.eventsArray count]) {
-        if ([[[self.eventsArray objectAtIndex:cellIndex.row] host] isEqualToString:[[PFUser currentUser] objectId]]) {
-            GWTEditEventViewController* editEvent = [[GWTEditEventViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            //load editevent
-        }
-        else {
-            GWTEventDetailViewController* eventDetails = [[GWTEventDetailViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            //load event details
-        }
-    }
+-(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
+    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    NSLog(@"Transitioning, set the selected event to %@\n\n", [self.eventsArray objectAtIndex:cellIndex.row]);
+    return [self.eventsArray objectAtIndex:cellIndex.row];
 }
 
 - (void)didReceiveMemoryWarning {

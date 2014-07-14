@@ -27,13 +27,6 @@
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     
-    //disable the tap gesture
-    for (UIGestureRecognizer *recognizer in basePageController.gestureRecognizers) {
-        if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
-            recognizer.enabled = NO;
-        }
-    }
-    
     GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
     
     [basePageController setViewControllers:@[events] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
@@ -60,14 +53,15 @@
     if ([PFUser currentUser]) {
         GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
         
-        //disable the tap gesture
-        for (UIGestureRecognizer *recognizer in basePageController.gestureRecognizers) {
-            if ([recognizer isKindOfClass:[UITapGestureRecognizer class]]) {
-                recognizer.enabled = NO;
+        for (UIView *view in basePageController.view.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                UIScrollView *scrollView = (UIScrollView *)view;
+                basePageController.transitionDetector = scrollView.panGestureRecognizer;
             }
         }
         
         GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
+        basePageController.mainEventsView = events;
         
         [basePageController setViewControllers:@[events] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
         
