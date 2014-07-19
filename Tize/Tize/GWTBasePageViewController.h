@@ -10,14 +10,13 @@
 
 @class GWTEventsViewController;
 
-@interface GWTBasePageViewController : UIPageViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface GWTBasePageViewController : UIViewController
 
+@property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) GWTEventsViewController *mainEventsView;
-@property (nonatomic, strong) UIPanGestureRecognizer *transitionDetector;
+@property (nonatomic, strong) UIViewController *currentViewController;
 
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;
-
--(void)setNeedsUpdate;
 
 @end

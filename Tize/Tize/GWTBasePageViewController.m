@@ -13,7 +13,9 @@
 #import "GWTAttendingTableViewController.h"
 
 
-@interface GWTBasePageViewController ()
+@interface GWTBasePageViewController () <UIScrollViewDelegate, UIScrollViewAccessibilityDelegate>
+
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
@@ -22,16 +24,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.mainEventsView.parentPageController = self;
+    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 3.0, self.scrollView.frame.size.height);
     
-    self.delegate = self;
-    self.dataSource = self;
+    [self initializeViewControllers];
+    
+    self.mainEventsView.parentPageController = self;
 }
 
 #pragma mark pageviewcontroller datasource methods
 
 -(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    if ([viewController isKindOfClass:[GWTEventsViewController class]]) {
+    /*if ([viewController isKindOfClass:[GWTEventsViewController class]]) {
         GWTEvent* toEvent = [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
         NSLog(@"\nWe are currently on the events page, transition to view with event: %@\n\n", toEvent.eventName);
         UIViewController *previousPage;
@@ -50,7 +53,8 @@
     }
     else {
         return nil;
-    }
+    }*/
+    return nil;
 }
 
 -(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
@@ -65,34 +69,47 @@
     }
 }
 
-#pragma mark pageviewcontroller delegate methods
+#pragma mark ScrollView
 
--(void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers {
-    if (![pendingViewControllers.firstObject isKindOfClass:[GWTEventsViewController class]]) {
-        GWTEvent* toEvent = [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
-        /*NSLog(@"\nWill transition to view with event name: %@\n\n", toEvent.eventName);
-        if (toEvent) {
-            [pendingViewControllers.firstObject reloadWithEvent:toEvent];
-        }*/
-        [pendingViewControllers.firstObject reloadWithEvent:toEvent];
-    }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
 }
 
-#pragma mark private methods
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"\nPage Changed");
+}
 
--(void)setNeedsUpdate {
-    [self setViewControllers:self.viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self setViewControllers:self.viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    });
+#pragma mark Private
+
+-(void)initializeViewControllers {
+    GWTEditEventViewController *editEvent = [[GWTEditEventViewController alloc] init];
+    GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
+    GWTAttendingTableViewController *attending = [[GWTAttendingTableViewController alloc] init];
+    
+    self.viewControllers = [[NSMutableArray alloc] initWithObjects:editEvent, detailEvent, self.mainEventsView, attending, nil];
+    
+    CGRect mainEventsFrame = self.mainEventsView.view.frame;
+    mainEventsFrame.origin.x = 320;
+    self.mainEventsView.view.frame = mainEventsFrame;
+    
+    [self.scrollView scrollRectToVisible:mainEventsFrame animated:NO];
+    
+    CGRect attendingFrame = attending.view.frame;
+    attendingFrame.origin.x = 640;
+    attending.view.frame = attendingFrame;
+    
+    for (UIViewController *vc in self.viewControllers) {
+        [self.scrollView addSubview:vc.view];
+    }
+    
 }
 
 -(void)goForwardToEventsPage {
-    [self setViewControllers:@[[[GWTEventsViewController alloc] init]] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    //self scrolltopage self.mainEventsView (go forward)
 }
 
 -(void)goBackwardToEventsPage {
-    [self setViewControllers:@[[[GWTEventsViewController alloc] init]] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    //self scrolltopage self.mainEventsView (in reverse)
 }
 
 - (void)didReceiveMemoryWarning {

@@ -123,7 +123,6 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     NSLog(@"\nTouches Began \nEvent: %@\n\n", [self getEventForTransitionFromGesture:[touches anyObject]]);
-    [self.parentPageController setNeedsUpdate];
 }
 
 #pragma mark User Management

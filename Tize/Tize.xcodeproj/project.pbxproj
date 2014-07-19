@@ -21,6 +21,7 @@
 		7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */; };
 		7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */; };
 		7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */; };
+		7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */; };
 		7C9A5C4719501FBC008B2666 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C4619501FBC008B2666 /* Foundation.framework */; };
 		7C9A5C4919501FBC008B2666 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C4819501FBC008B2666 /* CoreGraphics.framework */; };
 		7C9A5C4B19501FBC008B2666 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C4A19501FBC008B2666 /* UIKit.framework */; };
@@ -83,6 +84,7 @@
 		7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTExtendedNSLog.h; sourceTree = "<group>"; };
 		7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTExtendedNSLog.m; sourceTree = "<group>"; };
 		7C9778C319749DC3008BFF66 /* GWTConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWTConstants.h; sourceTree = "<group>"; };
+		7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTBasePageViewController.xib; sourceTree = "<group>"; };
 		7C9A5C4319501FBC008B2666 /* Tize.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tize.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C9A5C4619501FBC008B2666 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7C9A5C4819501FBC008B2666 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -185,6 +187,7 @@
 			children = (
 				7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */,
 				7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */,
+				7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */,
 			);
 			name = PageViewControllerTesting;
 			sourceTree = "<group>";
@@ -412,6 +415,7 @@
 				7C3B5631195D02CA008FD5F5 /* GWTEditEventViewController.xib in Resources */,
 				7C9A5C5119501FBC008B2666 /* InfoPlist.strings in Resources */,
 				7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */,
+				7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */,
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
 				7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
