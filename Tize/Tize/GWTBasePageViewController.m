@@ -34,13 +34,26 @@
 #pragma mark ScrollView
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
-    NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
-    [self updateControllersWithEvent:event];
+    if ([self.currentViewController isEqual:self.mainEventsView]) {
+        GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
+        NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
+        [self setEditOrDetailEventViewWithEvent:event];
+        [self updateControllersWithEvent:event];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"\nPage Changed: Set up the current view controller\n\n");
+    NSInteger page = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
+    if (page == 0) {
+        self.currentViewController = [[self.viewControllers objectAtIndex:0] view].hidden ? [self.viewControllers objectAtIndex:1] : [self.viewControllers objectAtIndex:0];
+    }
+    else if (page == 1) {
+        self.currentViewController = self.mainEventsView;
+    }
+    else {
+        self.currentViewController = [self.viewControllers objectAtIndex:2];
+    }
+    NSLog(@"\nPage Changed\nCurrent View Controller:%@\n\n", self.currentViewController);
 }
 
 #pragma mark Private
@@ -73,6 +86,21 @@
 -(void)updateControllersWithEvent:(GWTEvent*)event {
     for (GWTEventBasedViewController *vc in self.viewControllers) {
         [vc reloadWithEvent:event];
+    }
+}
+
+-(void)setEditOrDetailEventViewWithEvent:(GWTEvent*)event {
+    if ([event.host isEqualToString:[[PFUser currentUser] objectId]]) {
+        //we are the owner, show the edit event view controller, hide the detail one (note, removing from superview is probably a better option
+        NSLog(@"\nWe are the event owner: show the edit page\n\n");
+        [[[self.viewControllers objectAtIndex:0] view] setHidden:NO];
+        [[[self.viewControllers objectAtIndex:1] view] setHidden:YES];
+    }
+    else {
+        //we are not the owner, we just want the detail view
+        NSLog(@"\nWe are not the event owner: show the detail page\n\n");
+        [[[self.viewControllers objectAtIndex:0] view] setHidden:YES];
+        [[[self.viewControllers objectAtIndex:1] view] setHidden:NO];
     }
 }
 
