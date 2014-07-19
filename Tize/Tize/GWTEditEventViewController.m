@@ -72,6 +72,8 @@
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     [bottomBar setItems:[NSArray arrayWithObjects:inviteFriends, flex, cancel, nil]];
+    
+    self.eventTypeLabel.text = @"Create Event";
 }
 
 #pragma mark private methods
@@ -83,7 +85,12 @@
 
 - (IBAction)createEvent:(id)sender {
     [self.event saveInBackground];
-    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    if (self.isEdit) {
+        [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)deleteEvent:(id)sender {

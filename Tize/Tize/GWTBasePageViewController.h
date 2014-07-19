@@ -18,4 +18,6 @@
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;
 
+-(void)setNeedsUpdate;
+
 @end

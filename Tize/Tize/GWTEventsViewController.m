@@ -14,6 +14,7 @@
 #import "GWTEditEventViewController.h"
 #import "GWTFriendsTableViewController.h"
 #import "GWTAttendingTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -32,7 +33,7 @@
     return self;
 }
 
-#pragma mark loading view
+#pragma mark View Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -56,7 +57,7 @@
     [self queryEvents];
 }
 
-#pragma mark tableview delegate methods
+#pragma mark Tableview Delegate
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.eventsArray count];
@@ -77,7 +78,7 @@
     
 }
 
-#pragma mark query methods
+#pragma mark Query
 
 -(void)queryEvents {
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
@@ -118,7 +119,14 @@
     }];
 }
 
-#pragma mark user management
+#pragma mark Touch Events
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"\nTouches Began \nEvent: %@\n\n", [self getEventForTransitionFromGesture:[touches anyObject]]);
+    [self.parentPageController setNeedsUpdate];
+}
+
+#pragma mark User Management
 
 -(void)addEvent {
     GWTEditEventViewController *addEvent = [[GWTEditEventViewController alloc] init];
@@ -130,7 +138,7 @@
     [self presentViewController:friends animated:YES completion:nil];
 }
 
-#pragma mark navigation methods
+#pragma mark Navigation Methods
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
