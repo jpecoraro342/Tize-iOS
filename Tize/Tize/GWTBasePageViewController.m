@@ -43,6 +43,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self.currentViewController removeFromParentViewController];
     NSInteger page = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
     if (page == 0) {
         self.currentViewController = [[self.viewControllers objectAtIndex:0] view].hidden ? [self.viewControllers objectAtIndex:1] : [self.viewControllers objectAtIndex:0];
@@ -53,6 +54,7 @@
     else {
         self.currentViewController = [self.viewControllers objectAtIndex:2];
     }
+    [self addChildViewController:self.currentViewController];
     NSLog(@"\nPage Changed\nCurrent View Controller:%@\n\n", self.currentViewController);
 }
 

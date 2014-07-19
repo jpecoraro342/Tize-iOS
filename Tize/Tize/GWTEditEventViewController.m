@@ -80,7 +80,12 @@
 
 -(void)cancelEdit {
     self.shouldSaveChanges = NO;
-    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    if (self.isEdit) {
+        [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (IBAction)createEvent:(id)sender {
