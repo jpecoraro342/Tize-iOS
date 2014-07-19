@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
+#import "GWTEventBasedViewController.h"
 
-@interface GWTEditEventViewController : UIViewController
+@interface GWTEditEventViewController : GWTEventBasedViewController
 
 @property GWTEvent* event;
-
--(void)reloadWithEvent:(GWTEvent*)event;
 
 @end

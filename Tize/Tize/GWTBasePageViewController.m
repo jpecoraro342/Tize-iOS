@@ -31,52 +31,16 @@
     self.mainEventsView.parentPageController = self;
 }
 
-#pragma mark pageviewcontroller datasource methods
-
--(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
-    /*if ([viewController isKindOfClass:[GWTEventsViewController class]]) {
-        GWTEvent* toEvent = [self.mainEventsView getEventForTransitionFromGesture:self.transitionDetector];
-        NSLog(@"\nWe are currently on the events page, transition to view with event: %@\n\n", toEvent.eventName);
-        UIViewController *previousPage;
-        if ([toEvent.host isEqualToString:[PFUser currentUser].objectId]) {
-            NSLog(@"\nThe event host is equal to the current user, we want an edit event page\n\n");
-            previousPage = [[GWTEditEventViewController alloc] init]; //initWithEvent?
-        }
-        else {
-            NSLog(@"\nThe event host is not the same as the current user, take us to the event detail page\n\n");
-            previousPage = [[GWTEventDetailViewController alloc] init];
-        }
-        return previousPage;
-    }
-    else if ([viewController isKindOfClass:[GWTAttendingTableViewController class]]) {
-        return self.mainEventsView;
-    }
-    else {
-        return nil;
-    }*/
-    return nil;
-}
-
--(UIViewController*)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    if ([viewController isKindOfClass:[GWTEventsViewController class]]) {
-        return [[GWTAttendingTableViewController alloc] init];
-    }
-    else if ([viewController isKindOfClass:[GWTAttendingTableViewController class]]) {
-        return nil;
-    }
-    else {
-        return self.mainEventsView;
-    }
-}
-
 #pragma mark ScrollView
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
+    NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
+    [self updateControllersWithEvent:event];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"\nPage Changed");
+    NSLog(@"\nPage Changed: Set up the current view controller\n\n");
 }
 
 #pragma mark Private
@@ -86,11 +50,13 @@
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
     GWTAttendingTableViewController *attending = [[GWTAttendingTableViewController alloc] init];
     
-    self.viewControllers = [[NSMutableArray alloc] initWithObjects:editEvent, detailEvent, self.mainEventsView, attending, nil];
+    //Note: Main Events View Controller is not in this list
+    self.viewControllers = [[NSMutableArray alloc] initWithObjects:editEvent, detailEvent, attending, nil];
     
     CGRect mainEventsFrame = self.mainEventsView.view.frame;
     mainEventsFrame.origin.x = 320;
     self.mainEventsView.view.frame = mainEventsFrame;
+    [self.scrollView addSubview:self.mainEventsView.view];
     
     [self.scrollView scrollRectToVisible:mainEventsFrame animated:NO];
     
@@ -104,12 +70,18 @@
     
 }
 
+-(void)updateControllersWithEvent:(GWTEvent*)event {
+    for (GWTEventBasedViewController *vc in self.viewControllers) {
+        [vc reloadWithEvent:event];
+    }
+}
+
 -(void)goForwardToEventsPage {
-    //self scrolltopage self.mainEventsView (go forward)
+    [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
 }
 
 -(void)goBackwardToEventsPage {
-    //self scrolltopage self.mainEventsView (in reverse)
+    [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,12 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
+#import "GWTEventBasedViewController.h"
 
-@interface GWTEventDetailViewController : UIViewController
+@interface GWTEventDetailViewController : GWTEventBasedViewController
 
 @property GWTEvent* event;
 @property PFObject* currentAttendingStatus;
-
--(void)reloadWithEvent:(GWTEvent*)event;
 
 @end
