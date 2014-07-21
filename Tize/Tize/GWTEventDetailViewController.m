@@ -13,6 +13,9 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventStartTimeLabel;
 
 @end
 
@@ -20,21 +23,24 @@
 
 static NSArray* attendingStatus;
 
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        attendingStatus = [[NSMutableArray alloc] initWithObjects:@"Attending", @"Maybe Attending", @"Not Attending", @"Not Responded", nil];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self.pickerView selectRow:4 inComponent:0 animated:YES];
 }
 
 -(void)reloadWithEvent:(GWTEvent *)event {
     self.event = event;
-    [self.eventNameLabel setText:[self.event eventName]];
-    [self initAttendingArray];
+    [self updateFields];
     [self queryAttendingStatus];
-}
-
--(void)initAttendingArray {
-    attendingStatus = [[NSMutableArray alloc] initWithObjects:@"Attending", @"Maybe Attending", @"Not Attending", @"Not Responded", nil];
 }
 
 -(void)queryAttendingStatus {
@@ -55,6 +61,13 @@ static NSArray* attendingStatus;
     }];
 }
 
+-(void)updateFields {
+    [self.eventNameLabel setText:[self.event eventName]];
+    [self.eventDescriptionTextView setText:[self.event eventDetails]];
+    [self.eventLocationLabel setText:[self.event locationName]];
+    [self.eventStartTimeLabel setText:[NSString stringWithFormat:@"%@", [self.event date]]];
+}
+
 #pragma mark pickerview delegate methods
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -70,7 +83,7 @@ static NSArray* attendingStatus;
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.currentAttendingStatus[@"attendingStatus"] = [NSNumber numberWithInt:row];
+    self.currentAttendingStatus[@"attendingStatus"] = [NSNumber numberWithInteger:row];
 }
 
 #pragma mark navigation
@@ -78,10 +91,6 @@ static NSArray* attendingStatus;
 -(void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.currentAttendingStatus saveInBackground];
-}
-
--(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    //events page
 }
 
 - (void)didReceiveMemoryWarning {

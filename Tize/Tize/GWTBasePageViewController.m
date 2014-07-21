@@ -34,16 +34,21 @@
 #pragma mark ScrollView
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.currentViewController viewWillDisappear:YES];
     if ([self.currentViewController isEqual:self.mainEventsView]) {
         GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
         NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
         [self setEditOrDetailEventViewWithEvent:event];
         [self updateControllersWithEvent:event];
+        
+        //call view will appear on the view controller we are going to (check the direction for dragging left or right)
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self.currentViewController removeFromParentViewController];
+    [self.currentViewController viewDidDisappear:YES];
+    
     NSInteger page = round(self.scrollView.contentOffset.x / self.scrollView.frame.size.width);
     if (page == 0) {
         self.currentViewController = [[self.viewControllers objectAtIndex:0] view].hidden ? [self.viewControllers objectAtIndex:1] : [self.viewControllers objectAtIndex:0];
@@ -54,7 +59,9 @@
     else {
         self.currentViewController = [self.viewControllers objectAtIndex:2];
     }
+    [self.currentViewController viewDidAppear:YES];
     [self addChildViewController:self.currentViewController];
+    
     NSLog(@"\nPage Changed\nCurrent View Controller:%@\n\n", self.currentViewController);
 }
 
@@ -107,11 +114,21 @@
 }
 
 -(void)goForwardToEventsPage {
+    [self.currentViewController viewWillDisappear:YES];
     [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
+    [self.currentViewController viewDidDisappear:YES];
+    [self.currentViewController removeFromParentViewController];
+    self.currentViewController = self.mainEventsView;
+    [self addChildViewController:self.currentViewController];
 }
 
 -(void)goBackwardToEventsPage {
+    [self.currentViewController viewWillDisappear:YES];
     [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
+    [self.currentViewController viewDidDisappear:YES];
+    [self.currentViewController removeFromParentViewController];
+    self.currentViewController = self.mainEventsView;
+    [self addChildViewController:self.currentViewController];
 }
 
 - (void)didReceiveMemoryWarning {
