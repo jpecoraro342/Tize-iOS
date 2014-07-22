@@ -76,13 +76,23 @@
 
 -(void)inviteSelected {
     NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [selectedRows count]; i++) {
         PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
         invite[@"userID"] = [[self.listOfFriends objectAtIndex:[[selectedRows objectAtIndex:i] row]] objectId];
         invite[@"attendingStatus"] = [NSNumber numberWithInt:3];
         invite[@"eventID"] = self.event.objectId;
-        [invite saveInBackground];
+        [eventUserObjects addObject:invite];
     }
+    NSLog(@"\nInviting %d friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
+     [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
+         if (succeeded) {
+             NSLog(@"\nFriends successfully invited!\n\n");
+         }
+         else {
+             NSLog(@"\nError: %@", error.localizedDescription);
+         }
+    }];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
