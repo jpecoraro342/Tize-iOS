@@ -9,6 +9,10 @@
 #import <Parse/Parse.h>
 #import "GWTLoginViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTEditEventViewController.h"
+#import "GWTEventDetailViewController.h"
+#import "GWTAttendingTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTLoginViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
@@ -21,8 +25,7 @@
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
-    [self presentViewController:eventsController animated:YES completion:nil];
+    [self loadMainView];
 }
 
 -(void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
@@ -30,8 +33,7 @@
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
-    [self presentViewController:eventsController animated:YES completion:nil];
+    [self loadMainView];
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
@@ -42,8 +44,7 @@
     [super viewDidAppear:animated];
 
     if ([PFUser currentUser]) {
-        GWTEventsViewController *eventsController = [[GWTEventsViewController alloc] init];
-        [self presentViewController:eventsController animated:YES completion:nil];
+        [self loadMainView];
     }
     else {
         self.delegate = self;
@@ -55,6 +56,16 @@
         // Assign our sign up controller to be displayed from the login controller
         [self setSignUpController:signUpViewController];
     }
+}
+
+-(void)loadMainView {
+    GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] init];
+    
+    GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
+    basePageController.mainEventsView = events;
+    basePageController.currentViewController = events;
+    
+    [self presentViewController:basePageController animated:YES completion:nil];
 }
 
 - (void)viewDidLoad {

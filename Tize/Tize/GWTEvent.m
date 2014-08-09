@@ -21,7 +21,10 @@
 
 //Converts the date string into a readable time format, that is also relative to today
 -(NSString*)timeString {
-    return [NSString stringWithFormat:@"%@", self.date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [dateFormatter stringFromDate:self.date];
 }
 
 +(NSString*)parseClassName {

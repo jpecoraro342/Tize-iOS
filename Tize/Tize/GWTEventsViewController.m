@@ -14,6 +14,7 @@
 #import "GWTEditEventViewController.h"
 #import "GWTFriendsTableViewController.h"
 #import "GWTAttendingTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -22,7 +23,9 @@
 
 @end
 
-@implementation GWTEventsViewController
+@implementation GWTEventsViewController {
+    NSMutableArray *_cellIsSelected;
+}
 
 -(instancetype)init {
     self = [super init];
@@ -32,22 +35,13 @@
     return self;
 }
 
-#pragma mark loading view
+#pragma mark View Lifecycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     UINib *eventCell = [UINib nibWithNibName:@"GWTEventCell" bundle:nil];
     [self.tableView registerNib:eventCell forCellReuseIdentifier:@"eventCell"];
-    
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.tableView addGestureRecognizer:rightSwipe];
-    [self.tableView addGestureRecognizer:leftSwipe];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
@@ -65,7 +59,14 @@
     [self queryEvents];
 }
 
-#pragma mark tableview delegate methods
+#pragma mark Tableview Delegate
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([_cellIsSelected[indexPath.row] boolValue]) {
+        return 120;
+    }
+    return 60;
+}
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.eventsArray count];
@@ -77,16 +78,21 @@
     if (indexPath.row < [self.eventsArray count]) {
         GWTEvent* tempEvent = [self.eventsArray objectAtIndex:indexPath.row];
         cell.eventNameLabel.text = tempEvent.eventName;
+        cell.eventTimeLabel.text = tempEvent.timeString;
+        cell.eventLocationLabel.text = tempEvent.locationName;
     }
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    _cellIsSelected[indexPath.row] = [NSNumber numberWithBool:![_cellIsSelected[indexPath.row] boolValue]];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
-#pragma mark query methods
+#pragma mark Query
 
 -(void)queryEvents {
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
@@ -118,16 +124,24 @@
     [eventsQuery orderByDescending:@"date"];
     [eventsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            _eventsArray = [[NSMutableArray alloc] init];
+            _eventsArray = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            _cellIsSelected = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (PFObject *object in objects) {
                 [self.eventsArray addObject:object];
+                [_cellIsSelected addObject:[NSNumber numberWithBool:NO]];
             }
         }
         [self.tableView reloadData];
     }];
 }
 
-#pragma mark user management
+#pragma mark Touch Events
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"\nTouches Began \nEvent: %@\n\n", [self getEventForTransitionFromGesture:[touches anyObject]]);
+}
+
+#pragma mark User Management
 
 -(void)addEvent {
     GWTEditEventViewController *addEvent = [[GWTEditEventViewController alloc] init];
@@ -139,78 +153,11 @@
     [self presentViewController:friends animated:YES completion:nil];
 }
 
-#pragma mark navigation methods
+#pragma mark Navigation Methods
 
--(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    CGPoint swipePoint = [sender locationInView:self.tableView];
-    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    if (cellIndex.row < [self.eventsArray count]) {
-        GWTAttendingTableViewController* attendeeList = [[GWTAttendingTableViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-        [self animateSwipeLeftView:attendeeList];
-    }
-}
-
--(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    CGPoint swipePoint = [sender locationInView:self.tableView];
-    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:swipePoint];
-    if (cellIndex.row < [self.eventsArray count]) {
-        if ([[[self.eventsArray objectAtIndex:cellIndex.row] host] isEqualToString:[[PFUser currentUser] objectId]]) {
-            GWTEditEventViewController* editEvent = [[GWTEditEventViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            [self animateSwipeRightView:editEvent];
-        }
-        else {
-            GWTEventDetailViewController* eventDetails = [[GWTEventDetailViewController alloc] initWithEvent:[self.eventsArray objectAtIndex:cellIndex.row]];
-            [self animateSwipeRightView:eventDetails];
-        }
-    }
-}
-
--(void)animateSwipeLeftView:(UIViewController*)toViewController {
-    UIView * toView = toViewController.view;
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self presentViewController:toViewController animated:NO completion:nil];
-        }
-    }];
-}
-
--(void)animateSwipeRightView:(UIViewController*)toViewController {
-    UIView * toView = toViewController.view;
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self presentViewController:toViewController animated:NO completion:nil];
-        }
-    }];
+-(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
+    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    return [self.eventsArray objectAtIndex:cellIndex.row];
 }
 
 - (void)didReceiveMemoryWarning {

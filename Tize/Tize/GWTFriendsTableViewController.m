@@ -26,15 +26,30 @@
     return self;
 }
 
--(instancetype)initWithEvent:(GWTEvent*)event {
+-(instancetype)initWithEvent:(GWTEvent *)event {
     self = [super init];
     if (self) {
-        _listOfFriends = [[NSMutableArray alloc] init];
         self.isInviteList = YES;
         self.event = event;
+        _listOfFriends = [[NSMutableArray alloc] init];
         [self queryFollowing];
     }
     return self;
+}
+
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.isInviteList = YES;
+    self.event = event;
+    [self queryFollowing];
+    
+    self.tableView.allowsMultipleSelection = YES;
+    
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
+    
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
+    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
+    [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
 }
 
 - (void)viewDidLoad {
@@ -43,34 +58,45 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
-    
-    //UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
     
     if (self.isInviteList) {
         self.tableView.allowsMultipleSelection = YES;
         
         UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
-        [toolbar setItems:[NSArray arrayWithObjects:flex, friends, nil]];
+        UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
+        [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
+    }
+    else {
+        [toolbar setItems:@[cancel]];
     }
     
     [self.view addSubview:toolbar];
-    
-    UISwipeGestureRecognizer *rightSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeRight:)];
-    rightSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    
-    [self.view addGestureRecognizer:rightSwipe];
 }
 
 -(void)inviteSelected {
     NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
+    NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [selectedRows count]; i++) {
         PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
         invite[@"userID"] = [[self.listOfFriends objectAtIndex:[[selectedRows objectAtIndex:i] row]] objectId];
         invite[@"attendingStatus"] = [NSNumber numberWithInt:3];
         invite[@"eventID"] = self.event.objectId;
-        [invite saveInBackground];
+        [eventUserObjects addObject:invite];
     }
+    NSLog(@"\nInviting %d friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
+     [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
+         if (succeeded) {
+             NSLog(@"\nFriends successfully invited!\n\n");
+         }
+         else {
+             NSLog(@"\nError: %@", error.localizedDescription);
+         }
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)cancelAddingFriends {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -108,37 +134,6 @@
                 [self.listOfFriends addObject:object];
             }
             [self.tableView reloadData];
-        }
-    }];
-}
-
-#pragma mark animation and navigation
-
--(void)swipeRight:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeRightAnimation];
-    //[self presentViewController:events animated:YES completion:nil];
-}
-
--(void)returnWithSwipeRightAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
         }
     }];
 }

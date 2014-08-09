@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
+@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
+@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventStartTimeLabel;
 
 @end
 
@@ -24,12 +27,10 @@
 
 static NSArray* attendingStatus;
 
--(instancetype)initWithEvent:(GWTEvent *)event {
+-(instancetype)init {
     self = [super init];
     if (self) {
-        self.event = event;
-        [self initAttendingArray];
-        [self queryAttendingStatus];
+        attendingStatus = [[NSMutableArray alloc] initWithObjects:@"Attending", @"Maybe Attending", @"Not Attending", @"Not Responded", nil];
     }
     return self;
 }
@@ -37,20 +38,13 @@ static NSArray* attendingStatus;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.eventNameLabel setText:[self.event eventName]];
-    [self.eventDescriptionLabel setText:[self.event eventDetails]];
-    [self.eventLocationLabel setText:[self.event locationName]];
-    [self.eventTimeLabel setText:[self.event timeString]];
     [self.pickerView selectRow:4 inComponent:0 animated:YES];
-    
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.view addGestureRecognizer:leftSwipe];
 }
 
--(void)initAttendingArray {
-    attendingStatus = [[NSMutableArray alloc] initWithObjects:@"Attending", @"Maybe Attending", @"Not Attending", @"Not Responded", nil];
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.event = event;
+    [self updateFields];
+    [self queryAttendingStatus];
 }
 
 -(void)queryAttendingStatus {
@@ -71,6 +65,13 @@ static NSArray* attendingStatus;
     }];
 }
 
+-(void)updateFields {
+    [self.eventNameLabel setText:[self.event eventName]];
+    [self.eventDescriptionTextView setText:[self.event eventDetails]];
+    [self.eventLocationLabel setText:[self.event locationName]];
+    [self.eventStartTimeLabel setText:[NSString stringWithFormat:@"%@", [self.event date]]];
+}
+
 #pragma mark pickerview delegate methods
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -86,7 +87,7 @@ static NSArray* attendingStatus;
 }
 
 -(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
-    self.currentAttendingStatus[@"attendingStatus"] = [NSNumber numberWithInt:row];
+    self.currentAttendingStatus[@"attendingStatus"] = [NSNumber numberWithInteger:row];
 }
 
 #pragma mark navigation
@@ -96,36 +97,7 @@ static NSArray* attendingStatus;
     [self.currentAttendingStatus saveInBackground];
 }
 
--(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeLeftAnimation];
-}
-
--(void)returnWithSwipeLeftAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
-}
-
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

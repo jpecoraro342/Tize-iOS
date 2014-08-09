@@ -9,6 +9,7 @@
 #import "GWTEditEventViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTFriendsTableViewController.h"
+#import "GWTBasePageViewController.h"
 
 @interface GWTEditEventViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
 
@@ -17,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
 @property (weak, nonatomic) IBOutlet UITextField *eventLocationTextField;
 @property (weak, nonatomic) IBOutlet UITextField *eventTimeTextField;
+@property (weak, nonatomic) IBOutlet UIButton *createEventButton;
 
 @property (strong, nonatomic) UIDatePicker* picker;
 
@@ -39,14 +41,15 @@
     return self;
 }
 
--(instancetype)initWithEvent:(GWTEvent *)event {
-    self = [super init];
-    if (self) {
-        self.isEdit = YES;
-        self.shouldSaveChanges = YES;
-        self.event = event;
-    }
-    return self;
+-(void)reloadWithEvent:(GWTEvent *)event {
+    self.isEdit = YES;
+    self.shouldSaveChanges = YES;
+    self.event = event;
+    
+    self.eventTypeLabel.text = @"Edit Event";
+    self.createEventButton.titleLabel.text = @"Update Event";
+    
+    [self updateFields];
 }
 
 - (void)viewDidLoad {
@@ -70,24 +73,34 @@
     
     [bottomBar setItems:[NSArray arrayWithObjects:inviteFriends, flex, cancel, nil]];
     
-    if (self.isEdit) {
-        self.eventTypeLabel.text = @"Edit Event";
-    }
-    else {
-        self.eventTypeLabel.text = @"Create Event";
-    }
-    
-    UISwipeGestureRecognizer *leftSwipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeLeft:)];
-    leftSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    
-    [self.view addGestureRecognizer:leftSwipe];
+    self.eventTypeLabel.text = @"Create Event";
 }
 
 #pragma mark private methods
 
 -(void)cancelEdit {
     self.shouldSaveChanges = NO;
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.isEdit) {
+        [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (IBAction)createEvent:(id)sender {
+    [self.event saveInBackground];
+    if (self.isEdit) {
+        [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    }
+    else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (IBAction)deleteEvent:(id)sender {
+    [self.event deleteInBackground];
+    [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
 }
 
 -(void)inviteFriends {
@@ -147,19 +160,6 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    if (self.shouldSaveChanges) {
-        [self.event saveInBackground];
-    }
-    else {
-        if (self.isEdit) {
-            [self.event fetchInBackgroundWithBlock:^(PFObject *object, NSError *error) {
-                if (!error) {
-                    self.event = (GWTEvent*)object;
-                }
-            }];
-        }
-    }
-    
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -186,32 +186,9 @@
 #pragma mark page navigation
 
 -(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    [self returnWithSwipeLeftAnimation];
+    //events page
 }
 
--(void)returnWithSwipeLeftAnimation {
-    UIView * toView = [[self presentingViewController] view];
-    UIView * fromView = self.view;
-    
-    // Get the size of the view area.
-    CGRect viewSize = fromView.frame;
-    
-    // Add the toView to the fromView
-    [fromView.superview addSubview:toView];
-    
-    // Position it off screen.
-    toView.frame = CGRectMake(320 , viewSize.origin.y, 320, viewSize.size.height);
-    
-    [UIView animateWithDuration:0.4 animations:^{
-        // Animate the views on and off the screen. This will appear to slide.
-        fromView.frame =CGRectMake(-320 , viewSize.origin.y, 320, viewSize.size.height);
-        toView.frame =CGRectMake(0, viewSize.origin.y, 320, viewSize.size.height);
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [self dismissViewControllerAnimated:NO completion:nil];
-        }
-    }];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

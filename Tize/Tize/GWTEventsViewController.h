@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class GWTEvent;
+@class GWTBasePageViewController;
+
 @interface GWTEventsViewController : UIViewController
+
+@property (nonatomic, strong) GWTBasePageViewController *parentPageController;
+
+-(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer*)gesture;
 
 @end
