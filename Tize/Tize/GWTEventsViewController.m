@@ -23,7 +23,9 @@
 
 @end
 
-@implementation GWTEventsViewController
+@implementation GWTEventsViewController {
+    NSMutableArray *_cellIsSelected;
+}
 
 -(instancetype)init {
     self = [super init];
@@ -59,6 +61,13 @@
 
 #pragma mark Tableview Delegate
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([_cellIsSelected[indexPath.row] boolValue]) {
+        return 120;
+    }
+    return 60;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.eventsArray count];
 }
@@ -69,13 +78,18 @@
     if (indexPath.row < [self.eventsArray count]) {
         GWTEvent* tempEvent = [self.eventsArray objectAtIndex:indexPath.row];
         cell.eventNameLabel.text = tempEvent.eventName;
+        cell.eventTimeLabel.text = tempEvent.timeString;
+        cell.eventLocationLabel.text = tempEvent.locationName;
     }
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    _cellIsSelected[indexPath.row] = [NSNumber numberWithBool:![_cellIsSelected[indexPath.row] boolValue]];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 #pragma mark Query
@@ -110,9 +124,11 @@
     [eventsQuery orderByDescending:@"date"];
     [eventsQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            _eventsArray = [[NSMutableArray alloc] init];
+            _eventsArray = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            _cellIsSelected = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (PFObject *object in objects) {
                 [self.eventsArray addObject:object];
+                [_cellIsSelected addObject:[NSNumber numberWithBool:NO]];
             }
         }
         [self.tableView reloadData];

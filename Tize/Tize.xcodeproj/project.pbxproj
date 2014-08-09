@@ -206,14 +206,14 @@
 			name = Xibs;
 			sourceTree = "<group>";
 		};
-		7C8C3A9B1971BB2D00F38328 /* PageViewControllerTesting */ = {
+		7C8C3A9B1971BB2D00F38328 /* BaseViewController */ = {
 			isa = PBXGroup;
 			children = (
 				7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */,
 				7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */,
 				7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */,
 			);
-			name = PageViewControllerTesting;
+			name = BaseViewController;
 			sourceTree = "<group>";
 		};
 		7C9A5C3A19501FBC008B2666 = {
@@ -266,7 +266,7 @@
 				7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */,
 				7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */,
 				7C9778C319749DC3008BFF66 /* GWTConstants.h */,
-				7C8C3A9B1971BB2D00F38328 /* PageViewControllerTesting */,
+				7C8C3A9B1971BB2D00F38328 /* BaseViewController */,
 				7C9A5C9E195125DC008B2666 /* Model */,
 				7C9A5C9D195125D3008B2666 /* Controller */,
 				7C9AB6C81996AE75007A81F5 /* View */,
