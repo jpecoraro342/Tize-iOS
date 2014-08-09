@@ -6,10 +6,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GWTEventDetailViewController">
             <connections>
+                <outlet property="eventDescriptionLabel" destination="v1d-2s-AGm" id="EI7-JY-IGu"/>
                 <outlet property="eventDescriptionTextView" destination="v1d-2s-AGm" id="16w-de-JSm"/>
                 <outlet property="eventLocationLabel" destination="TqC-eS-0sU" id="DPI-rU-Pko"/>
                 <outlet property="eventNameLabel" destination="W2c-Sh-mQ3" id="J4v-Vj-SjE"/>
                 <outlet property="eventStartTimeLabel" destination="HgR-k1-hTp" id="ohi-Yb-XmI"/>
+                <outlet property="eventTimeLabel" destination="HgR-k1-hTp" id="4eF-M7-E47"/>
                 <outlet property="pickerView" destination="4d1-Lk-tpO" id="rfY-of-iCi"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>

@@ -18,7 +18,6 @@
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 @property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventStartTimeLabel;
 
 @end
@@ -69,7 +68,7 @@ static NSArray* attendingStatus;
     [self.eventNameLabel setText:[self.event eventName]];
     [self.eventDescriptionTextView setText:[self.event eventDetails]];
     [self.eventLocationLabel setText:[self.event locationName]];
-    [self.eventStartTimeLabel setText:[NSString stringWithFormat:@"%@", [self.event date]]];
+    [self.eventStartTimeLabel setText:[self.event timeString]];
 }
 
 #pragma mark pickerview delegate methods
