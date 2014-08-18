@@ -15,7 +15,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBQ-by-eMY">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBQ-by-eMY">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <connections>
@@ -24,6 +24,12 @@
                 </scrollView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="aBQ-by-eMY" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6OM-BE-HVB"/>
+                <constraint firstItem="aBQ-by-eMY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Giy-Lj-i9x"/>
+                <constraint firstAttribute="trailing" secondItem="aBQ-by-eMY" secondAttribute="trailing" id="YZe-36-3xU"/>
+                <constraint firstAttribute="bottom" secondItem="aBQ-by-eMY" secondAttribute="bottom" id="iBK-Pm-ah0"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
