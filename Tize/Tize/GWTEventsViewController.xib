@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GWTEventsViewController">
             <connections>
+                <outlet property="navigationBar" destination="9d9-h7-tpI" id="sew-xc-2he"/>
                 <outlet property="tableView" destination="kuj-or-gu0" id="GLI-a0-kFn"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -15,22 +16,35 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="kuj-or-gu0">
-                    <rect key="frame" x="0.0" y="18" width="320" height="501"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="kuj-or-gu0">
+                    <rect key="frame" x="0.0" y="64" width="320" height="460"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="vRj-oi-zBt"/>
                         <outlet property="delegate" destination="-1" id="zUE-OZ-tYF"/>
                     </connections>
                 </tableView>
+                <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9d9-h7-tpI">
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <color key="barTintColor" red="0.95294117647058818" green="0.53333333333333333" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                    <items>
+                        <navigationItem title="Title" id="mUs-yL-wsY"/>
+                    </items>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Hfn-yC-spX"/>
+                    </connections>
+                </navigationBar>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="kuj-or-gu0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="EPw-TE-b6C"/>
                 <constraint firstAttribute="trailing" secondItem="kuj-or-gu0" secondAttribute="trailing" id="RoL-D3-gf4"/>
-                <constraint firstAttribute="bottom" secondItem="kuj-or-gu0" secondAttribute="bottom" constant="49" id="XBN-kX-c6u"/>
-                <constraint firstItem="kuj-or-gu0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="18" id="Z6W-al-EcN"/>
+                <constraint firstAttribute="bottom" secondItem="kuj-or-gu0" secondAttribute="bottom" constant="44" id="XBN-kX-c6u"/>
+                <constraint firstItem="kuj-or-gu0" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="64" id="Z6W-al-EcN"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

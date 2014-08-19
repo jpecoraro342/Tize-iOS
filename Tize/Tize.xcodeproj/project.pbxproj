@@ -50,7 +50,7 @@
 		7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA019512628008B2666 /* GWTEvent.m */; };
 		7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA3195126A3008B2666 /* GWTEventCell.m */; };
 		7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */; };
-		7C9A5CA91951522B008B2666 /* blueBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA81951522B008B2666 /* blueBackground@2x.png */; };
+		7CCACA2B19A2CBB20024BFEB /* navBarLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,7 +123,7 @@
 		7C9A5CA2195126A3008B2666 /* GWTEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventCell.h; sourceTree = "<group>"; };
 		7C9A5CA3195126A3008B2666 /* GWTEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventCell.m; sourceTree = "<group>"; };
 		7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventCell.xib; sourceTree = "<group>"; };
-		7C9A5CA81951522B008B2666 /* blueBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blueBackground@2x.png"; sourceTree = "<group>"; };
+		7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBarLogo@2x.png"; sourceTree = "<group>"; };
 		B8F5ECCD6831470491ED0072 /* Pods-Tize.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.xcconfig"; path = "Pods/Pods-Tize.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -328,7 +328,7 @@
 		7C9A5CA719515211008B2666 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				7C9A5CA81951522B008B2666 /* blueBackground@2x.png */,
+				7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -430,10 +430,10 @@
 				7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */,
 				7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */,
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
+				7CCACA2B19A2CBB20024BFEB /* navBarLogo@2x.png in Resources */,
 				7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
 				7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */,
-				7C9A5CA91951522B008B2666 /* blueBackground@2x.png in Resources */,
 				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

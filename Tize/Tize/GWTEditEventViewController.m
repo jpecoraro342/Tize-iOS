@@ -62,7 +62,7 @@
     [self.picker setDate:[self.event date]];
     self.eventTimeTextField.inputView = self.picker;
     
-    UIToolbar *bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 49, self.view.frame.size.width, 49)];
+    UIToolbar *bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     [self.view addSubview:bottomBar];
     
     UIBarButtonItem *inviteFriends = [[UIBarButtonItem alloc] initWithTitle:@"Invite Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteFriends)];

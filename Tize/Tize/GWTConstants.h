@@ -11,6 +11,10 @@
 
 #import "GWTExtendedNSLog.h"
 
+#define kNavBarColor [UIColor colorWithRed:243/255.0f green:136/255.0f blue:105/255.0f alpha:1]
+#define kNavBarTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navBarLogo.png"]]
+
+
 //Logging
 #ifdef DEBUG
 #define NSLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
