@@ -15,16 +15,24 @@
 @dynamic eventName;
 @dynamic locationName;
 @dynamic host;
-@dynamic date;
+@dynamic startDate;
+@dynamic endDate;
 @dynamic eventDetails;
 @synthesize address;
 
 //Converts the date string into a readable time format, that is also relative to today
--(NSString*)timeString {
+-(NSString*)startTime {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [dateFormatter stringFromDate:self.date];
+    return [dateFormatter stringFromDate:self.startDate];
+}
+
+-(NSString*)endTime {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
+    return [dateFormatter stringFromDate:self.endDate];
 }
 
 +(NSString*)parseClassName {

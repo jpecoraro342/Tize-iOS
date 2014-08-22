@@ -148,7 +148,7 @@
     }
     
     cell.eventNameLabel.text = tempEvent.eventName;
-    cell.eventTimeLabel.text = tempEvent.timeString;
+    cell.eventTimeLabel.text = tempEvent.startTime;
     cell.eventLocationLabel.text = tempEvent.locationName;
     
     return cell;

@@ -16,13 +16,15 @@
 
 @property (nonatomic, copy) NSString* host;
 
-@property (nonatomic, strong) NSDate* date;
+@property (nonatomic, strong) NSDate* startDate;
+@property (nonatomic, strong) NSDate* endDate;
 
 @property (nonatomic, strong) NSString* address;
 
 @property (nonatomic, strong) NSString* eventDetails;
 
 +(NSString*)parseClassName;
--(NSString*)timeString;
+-(NSString*)startTime;
+-(NSString*)endTime;
 
 @end

@@ -36,7 +36,7 @@
         self.shouldSaveChanges = YES;
         _event = [[GWTEvent alloc] init];
         [_event setHost:[[PFUser currentUser] objectId]];
-        [_event setDate:[NSDate date]];
+        [_event setStartDate:[NSDate date]];
     }
     return self;
 }
@@ -59,7 +59,7 @@
     
     _picker = [[UIDatePicker alloc] init];
     [self.picker setDatePickerMode:UIDatePickerModeDateAndTime];
-    [self.picker setDate:[self.event date]];
+    [self.picker setDate:[self.event startDate]];
     self.eventTimeTextField.inputView = self.picker;
     
     UIToolbar *bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
@@ -113,13 +113,13 @@
     [self.eventNameTextField setText:[self.event eventName]];
     [self.eventDescriptionTextView setText:[self.event eventDetails]];
     [self.eventLocationTextField setText:[self.event locationName]];
-    [self.eventTimeTextField setText:[NSString stringWithFormat:@"%@", [self.event date]]];
+    [self.eventTimeTextField setText:[self.event startTime]];
 }
 
 -(void)updateEvent {
     [self.event setEventName:self.eventNameTextField.text];
     [self.event setLocationName:self.eventLocationTextField.text];
-    [self.event setDate:self.picker.date];
+    [self.event setStartDate:self.picker.date];
 }
 
 #pragma mark textview and textfield delegates

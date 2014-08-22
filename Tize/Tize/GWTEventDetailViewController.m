@@ -24,6 +24,18 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (assign, nonatomic) NSInteger usersAttending;
+@property (assign, nonatomic) NSInteger usersMaybeAttending;
+@property (assign, nonatomic) NSInteger usersNotAttending;
+
+@property (strong, nonatomic) UILabel *attendingLabel;
+@property (strong, nonatomic) UILabel *maybeAttendingLabel;
+@property (strong, nonatomic) UILabel *notAttendingLabel;
+
+@property (strong, nonatomic) UIButton *attendingButton;
+@property (strong, nonatomic) UIButton *maybeAttendingButton;
+@property (strong, nonatomic) UIButton *notAttendingButton;
+
 @end
 
 @implementation GWTEventDetailViewController
@@ -135,30 +147,39 @@
             return [self cellForRow:indexPath.row];
         }
         case 1: {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 200, 44)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 200, 44)];
+            UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+            [icon setContentMode:UIViewContentModeScaleAspectFit];
             switch (indexPath.row) {
                 case 0:
-                    [label setText:@"Attending"];
+                    self.attendingLabel = label;
+                    [icon setImage:[UIImage imageNamed:@"attendingIcon.png"]];
                     break;
                 case 1:
-                    [label setText:@"Maybe"];
+                    self.maybeAttendingLabel = label;
+                    [icon setImage:[UIImage imageNamed:@"maybeIcon.png"]];
                     break;
                 case 2:
-                    [label setText:@"Declined"];
+                    self.notAttendingLabel = label;
+                    [icon setImage:[UIImage imageNamed:@"notAttendingIcon.png"]];
                     break;
             }
+            [self updateAttendingLabels];
             [cell addSubview:label];
+            [cell addSubview:icon];
             break;
         }
         case 2: {
             break;
         }
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12, 200, 28)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 200, 10)];
     [titleLabel setFont:[UIFont systemFontOfSize:12]];
@@ -173,18 +194,18 @@
         case 1: {
             [titleLabel setText:@"Start Time:"];
             _startDateLabel = infoLabel;
-            [infoLabel setText:[self.event timeString]];
+            [infoLabel setText:[self.event startTime]];
             break;
         }
         case 2: {
             [titleLabel setText:@"End Time:"];
             _endDateLabel = infoLabel;
-            [infoLabel setText:[self.event timeString]];
+            [infoLabel setText:[self.event endTime]];
             break;
         }
         case 3: {
             [titleLabel setText:@"About:"];
-            _aboutTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 108)];
+            _aboutTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
             [_aboutTextView setText:[self.event eventDetails]];
             _aboutTextView.editable = NO;
             _aboutTextView.scrollEnabled = NO;
@@ -194,16 +215,21 @@
         }
         case 4: {
             CGFloat width = self.tableView.frame.size.width/3;
-            UIButton *attending = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 45)];
-            [attending setBackgroundImage:[UIImage imageNamed:@"attendingButton.png"] forState:UIControlStateNormal];
-            UIButton *maybe = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, 45)];
-            [maybe setBackgroundImage:[UIImage imageNamed:@"maybeAttendingButton.png"] forState:UIControlStateNormal];
-            UIButton *not = [[UIButton alloc] initWithFrame:CGRectMake(width*2, 0, width, 45)];
-            [not setBackgroundImage:[UIImage imageNamed:@"notAttendingButton.png"] forState:UIControlStateNormal];
+            _attendingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 45)];
+            [self.attendingButton setBackgroundImage:[UIImage imageNamed:@"attendingButton.png"] forState:UIControlStateNormal];
+            [self.attendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
-            [cell addSubview:attending];
-            [cell addSubview:maybe];
-            [cell addSubview:not];
+            _maybeAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, 45)];
+            [self.maybeAttendingButton setBackgroundImage:[UIImage imageNamed:@"maybeAttendingButton.png"] forState:UIControlStateNormal];
+            [self.maybeAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
+            
+            _notAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width*2, 0, width, 45)];
+            [self.notAttendingButton setBackgroundImage:[UIImage imageNamed:@"notAttendingButton.png"] forState:UIControlStateNormal];
+            [self.notAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [cell addSubview:self.attendingButton];
+            [cell addSubview:self.maybeAttendingButton];
+            [cell addSubview:self.notAttendingButton];
         }
     }
     
@@ -222,11 +248,18 @@
     [self.eventNameLabel setText:[self.event eventName]];
     [self.aboutTextView setText:[self.event eventDetails]];
     [self.locationLabel setText:[self.event locationName]];
-    [self.startDateLabel setText:[self.event timeString]];
-    [self.endDateLabel setText:[self.event timeString]];
+    [self.startDateLabel setText:[self.event startTime]];
+    [self.endDateLabel setText:[self.event startTime]];
+}
+
+-(void)updateAttendingLabels {
+    [self.attendingLabel setText:[NSString stringWithFormat:@"Attending (%zd)", self.usersAttending]];
+    [self.maybeAttendingLabel setText:[NSString stringWithFormat:@"Maybe (%zd)", self.usersMaybeAttending]];
+    [self.notAttendingLabel setText:[NSString stringWithFormat:@"Declined (%zd)", self.usersNotAttending]];
 }
 
 -(void)queryAttendingStatus {
+    //query my attending status
     PFQuery *attendingStatus = [PFQuery queryWithClassName:@"EventUsers"];
     [attendingStatus whereKey:@"eventID" equalTo:self.event.objectId];
     [attendingStatus whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
@@ -241,14 +274,82 @@
             self.currentAttendingStatus[@"eventID"] = self.event.objectId;
         }
     }];
+    
+    //get all attending
+    [self countUsersWithAttendingStatus:0];
+    //get all maube attending
+    [self countUsersWithAttendingStatus:1];
+    //get all not attending
+    [self countUsersWithAttendingStatus:2];
+}
+
+-(void)setAttendingStatus:(UIButton*)sender {
+    NSInteger current = [self.currentAttendingStatus[@"attendingStatus"] integerValue];
+    
+    if ([sender isEqual:self.attendingButton]) {
+        self.currentAttendingStatus[@"attendingStatus"] = @(0);
+        self.usersAttending++;
+    }
+    else if ([sender isEqual:self.maybeAttendingButton]) {
+        self.currentAttendingStatus[@"attendingStatus"] = @(1);
+        self.usersMaybeAttending++;
+    }
+    else if ([sender isEqual:self.notAttendingButton]) {
+        self.currentAttendingStatus[@"attendingStatus"] = @(2);
+        self.usersNotAttending++;
+    }
+    [self.currentAttendingStatus saveInBackground];
+    
+    switch (current) {
+        case 0: {
+            self.usersAttending--;
+            break;
+        }
+        case 1: {
+            self.usersMaybeAttending--;
+            break;
+        }
+        case 2: {
+            self.usersNotAttending--;
+            break;
+        }
+    }
+    
+    [self updateAttendingLabels];
+}
+
+-(void)countUsersWithAttendingStatus:(NSInteger)attending {
+    PFQuery *attendingStatus = [PFQuery queryWithClassName:@"EventUsers"];
+    [attendingStatus whereKey:@"eventID" equalTo:self.event.objectId];
+    [attendingStatus whereKey:@"attendingStatus" equalTo:[NSNumber numberWithInteger:attending]];
+    
+    PFQuery *users = [PFUser query];
+    [users whereKey:@"objectId" matchesKey:@"userID" inQuery:attendingStatus];
+    [users countObjectsInBackgroundWithBlock:^(int count, NSError *error) {
+        if (!error) {
+            switch (attending) {
+                case 0: {
+                    self.usersAttending = count;
+                    break;
+                }
+                case 1: {
+                    self.usersMaybeAttending = count;
+                    break;
+                }
+                case 2: {
+                    self.usersNotAttending = count;
+                    break;
+                }
+            }
+            [self updateAttendingLabels];
+        }
+        else {
+            
+        }
+    }];
 }
 
 #pragma mark navigation
-
--(void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self.currentAttendingStatus saveInBackground];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
