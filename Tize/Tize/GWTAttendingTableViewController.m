@@ -13,6 +13,7 @@
 @interface GWTAttendingTableViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
 
@@ -27,13 +28,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationBar setBarTintColor:kNavBarColor];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
+    navItem.titleView = kNavBarTitleView;
+    [self.navigationBar setItems:@[navItem]];
+    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
 }
 
 #pragma mark table view delegates
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 4;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 38;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -70,17 +88,29 @@
     return cell;
 }
 
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
+    [titleLabel setTextColor:[UIColor darkGrayColor]];
+    
     switch (section) {
         case 0:
-            return @"Attending";
+            titleLabel.text = @"Attending";
+            break;
         case 1:
-            return @"Maybe Attending";
+            titleLabel.text = @"Maybe Attending";
+            break;
         case 2:
-            return @"Not Attending";
+            titleLabel.text = @"Not Attending";
+            break;
         default:
-            return @"Not Responded";
+            titleLabel.text = @"Not Responded";
+            break;
     }
+    
+    [headerView addSubview:titleLabel];
+    return headerView;
 }
 
 #pragma mark queries

@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GWTAttendingTableViewController">
             <connections>
+                <outlet property="navigationBar" destination="SaO-bM-29r" id="gag-d3-KPu"/>
                 <outlet property="tableView" destination="VXG-ii-Bsf" id="s8s-dB-IaK"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -15,21 +16,40 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-ii-Bsf">
-                    <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="VXG-ii-Bsf">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="separatorColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="XtL-Qy-9mM"/>
                         <outlet property="delegate" destination="-1" id="DEl-NR-ysq"/>
                     </connections>
                 </tableView>
+                <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaO-bM-29r">
+                    <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="2hh-po-NAY"/>
+                    </constraints>
+                    <color key="barTintColor" red="0.95294117649999999" green="0.53333333329999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <items>
+                        <navigationItem title="Title" id="hbT-D8-dUn"/>
+                    </items>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="WQI-jC-06l"/>
+                    </connections>
+                </navigationBar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="VXG-ii-Bsf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="HpY-va-krV"/>
                 <constraint firstItem="VXG-ii-Bsf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MKW-YT-NJ3"/>
+                <constraint firstItem="SaO-bM-29r" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="PqC-ux-ncr"/>
+                <constraint firstItem="SaO-bM-29r" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="UC7-iJ-lZV"/>
                 <constraint firstAttribute="bottom" secondItem="VXG-ii-Bsf" secondAttribute="bottom" id="edH-Wq-pOU"/>
+                <constraint firstAttribute="trailing" secondItem="SaO-bM-29r" secondAttribute="trailing" id="sM2-TX-Bkq"/>
+                <constraint firstItem="VXG-ii-Bsf" firstAttribute="top" secondItem="SaO-bM-29r" secondAttribute="bottom" id="tOp-ZX-Qyw"/>
                 <constraint firstAttribute="trailing" secondItem="VXG-ii-Bsf" secondAttribute="trailing" id="xPe-vG-gch"/>
             </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
