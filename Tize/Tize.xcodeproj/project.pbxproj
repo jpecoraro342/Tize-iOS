@@ -19,9 +19,6 @@
 		7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5634195D0367008FD5F5 /* GWTFriendsTableViewController.xib */; };
 		7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */; };
 		7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */; };
-		7C6262A819A5B63600760427 /* notAttendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6262A519A5B63600760427 /* notAttendingButton.png */; };
-		7C6262A919A5B63600760427 /* maybeAttendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6262A619A5B63600760427 /* maybeAttendingButton.png */; };
-		7C6262AA19A5B63600760427 /* attendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C6262A719A5B63600760427 /* attendingButton.png */; };
 		7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */; };
 		7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */; };
 		7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */; };
@@ -53,10 +50,13 @@
 		7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA019512628008B2666 /* GWTEvent.m */; };
 		7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA3195126A3008B2666 /* GWTEventCell.m */; };
 		7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */; };
-		7CCACA2B19A2CBB20024BFEB /* navBarLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */; };
-		7CF9101B19A7034800149F91 /* notAttendingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF9101819A7034800149F91 /* notAttendingIcon.png */; };
-		7CF9101C19A7034800149F91 /* attendingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF9101919A7034800149F91 /* attendingIcon.png */; };
-		7CF9101D19A7034800149F91 /* maybeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CF9101A19A7034800149F91 /* maybeIcon.png */; };
+		7CE3E2AE19ACF454000892B6 /* attendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2A719ACF454000892B6 /* attendingButton.png */; };
+		7CE3E2AF19ACF454000892B6 /* attendingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2A819ACF454000892B6 /* attendingIcon.png */; };
+		7CE3E2B019ACF454000892B6 /* maybeAttendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2A919ACF454000892B6 /* maybeAttendingButton.png */; };
+		7CE3E2B119ACF454000892B6 /* maybeIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2AA19ACF454000892B6 /* maybeIcon.png */; };
+		7CE3E2B219ACF454000892B6 /* navBarLogo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2AB19ACF454000892B6 /* navBarLogo@2x.png */; };
+		7CE3E2B319ACF454000892B6 /* notAttendingButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2AC19ACF454000892B6 /* notAttendingButton.png */; };
+		7CE3E2B419ACF454000892B6 /* notAttendingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CE3E2AD19ACF454000892B6 /* notAttendingIcon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,9 +86,6 @@
 		7C3B5637195D0380008FD5F5 /* GWTAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTAttendingTableViewController.h; sourceTree = "<group>"; };
 		7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTAttendingTableViewController.m; sourceTree = "<group>"; };
 		7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTAttendingTableViewController.xib; sourceTree = "<group>"; };
-		7C6262A519A5B63600760427 /* notAttendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAttendingButton.png; sourceTree = "<group>"; };
-		7C6262A619A5B63600760427 /* maybeAttendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maybeAttendingButton.png; sourceTree = "<group>"; };
-		7C6262A719A5B63600760427 /* attendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attendingButton.png; sourceTree = "<group>"; };
 		7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTBasePageViewController.h; sourceTree = "<group>"; };
 		7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTBasePageViewController.m; sourceTree = "<group>"; };
 		7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTExtendedNSLog.h; sourceTree = "<group>"; };
@@ -132,10 +129,13 @@
 		7C9A5CA2195126A3008B2666 /* GWTEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventCell.h; sourceTree = "<group>"; };
 		7C9A5CA3195126A3008B2666 /* GWTEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventCell.m; sourceTree = "<group>"; };
 		7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventCell.xib; sourceTree = "<group>"; };
-		7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBarLogo@2x.png"; sourceTree = "<group>"; };
-		7CF9101819A7034800149F91 /* notAttendingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAttendingIcon.png; sourceTree = "<group>"; };
-		7CF9101919A7034800149F91 /* attendingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attendingIcon.png; sourceTree = "<group>"; };
-		7CF9101A19A7034800149F91 /* maybeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maybeIcon.png; sourceTree = "<group>"; };
+		7CE3E2A719ACF454000892B6 /* attendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attendingButton.png; sourceTree = "<group>"; };
+		7CE3E2A819ACF454000892B6 /* attendingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = attendingIcon.png; sourceTree = "<group>"; };
+		7CE3E2A919ACF454000892B6 /* maybeAttendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maybeAttendingButton.png; sourceTree = "<group>"; };
+		7CE3E2AA19ACF454000892B6 /* maybeIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = maybeIcon.png; sourceTree = "<group>"; };
+		7CE3E2AB19ACF454000892B6 /* navBarLogo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navBarLogo@2x.png"; sourceTree = "<group>"; };
+		7CE3E2AC19ACF454000892B6 /* notAttendingButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAttendingButton.png; sourceTree = "<group>"; };
+		7CE3E2AD19ACF454000892B6 /* notAttendingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = notAttendingIcon.png; sourceTree = "<group>"; };
 		B8F5ECCD6831470491ED0072 /* Pods-Tize.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.xcconfig"; path = "Pods/Pods-Tize.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -282,8 +282,8 @@
 				7C9A5C9E195125DC008B2666 /* Model */,
 				7C9A5C9D195125D3008B2666 /* Controller */,
 				7C9AB6C81996AE75007A81F5 /* View */,
+				7CE3E2A619ACF454000892B6 /* Resources */,
 				7C9A5C5819501FBC008B2666 /* Images.xcassets */,
-				7C9A5CA719515211008B2666 /* Resources */,
 				7C9A5C4D19501FBC008B2666 /* Supporting Files */,
 			);
 			path = Tize;
@@ -337,20 +337,6 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		7C9A5CA719515211008B2666 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				7CF9101819A7034800149F91 /* notAttendingIcon.png */,
-				7CF9101919A7034800149F91 /* attendingIcon.png */,
-				7CF9101A19A7034800149F91 /* maybeIcon.png */,
-				7C6262A519A5B63600760427 /* notAttendingButton.png */,
-				7C6262A619A5B63600760427 /* maybeAttendingButton.png */,
-				7C6262A719A5B63600760427 /* attendingButton.png */,
-				7CCACA2A19A2CBB20024BFEB /* navBarLogo@2x.png */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		7C9AB6C81996AE75007A81F5 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,6 +345,20 @@
 				7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		7CE3E2A619ACF454000892B6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7CE3E2A719ACF454000892B6 /* attendingButton.png */,
+				7CE3E2A819ACF454000892B6 /* attendingIcon.png */,
+				7CE3E2A919ACF454000892B6 /* maybeAttendingButton.png */,
+				7CE3E2AA19ACF454000892B6 /* maybeIcon.png */,
+				7CE3E2AB19ACF454000892B6 /* navBarLogo@2x.png */,
+				7CE3E2AC19ACF454000892B6 /* notAttendingButton.png */,
+				7CE3E2AD19ACF454000892B6 /* notAttendingIcon.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -448,17 +448,17 @@
 				7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */,
 				7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */,
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
-				7CCACA2B19A2CBB20024BFEB /* navBarLogo@2x.png in Resources */,
-				7C6262AA19A5B63600760427 /* attendingButton.png in Resources */,
-				7CF9101D19A7034800149F91 /* maybeIcon.png in Resources */,
-				7C6262A819A5B63600760427 /* notAttendingButton.png in Resources */,
+				7CE3E2B119ACF454000892B6 /* maybeIcon.png in Resources */,
 				7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */,
+				7CE3E2AE19ACF454000892B6 /* attendingButton.png in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
+				7CE3E2AF19ACF454000892B6 /* attendingIcon.png in Resources */,
+				7CE3E2B319ACF454000892B6 /* notAttendingButton.png in Resources */,
 				7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */,
-				7CF9101C19A7034800149F91 /* attendingIcon.png in Resources */,
-				7CF9101B19A7034800149F91 /* notAttendingIcon.png in Resources */,
 				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
-				7C6262A919A5B63600760427 /* maybeAttendingButton.png in Resources */,
+				7CE3E2B019ACF454000892B6 /* maybeAttendingButton.png in Resources */,
+				7CE3E2B219ACF454000892B6 /* navBarLogo@2x.png in Resources */,
+				7CE3E2B419ACF454000892B6 /* notAttendingIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

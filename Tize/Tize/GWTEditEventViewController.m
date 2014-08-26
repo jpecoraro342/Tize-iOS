@@ -24,7 +24,11 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) UIDatePicker* picker;
+@property (strong, nonatomic) UIDatePicker* startDatePicker;
+@property (strong, nonatomic) UIDatePicker* endDatePicker;
+
+@property (assign, nonatomic) BOOL startDateShouldShow;
+@property (assign, nonatomic) BOOL endDateShouldShow;
 
 @property (assign, nonatomic) BOOL isEdit;
 @property (assign, nonatomic) BOOL shouldSaveChanges;
@@ -46,6 +50,8 @@
 }
 
 -(void)reloadWithEvent:(GWTEvent *)event {
+    self.startDateShouldShow = self.endDateShouldShow = NO;
+    
     self.isEdit = YES;
     self.shouldSaveChanges = YES;
     self.event = event;
@@ -61,10 +67,12 @@
     
     [self updateFields];
     
-    //should we have two pickers for the two different dates?
-    _picker = [[UIDatePicker alloc] init];
-    [self.picker setDatePickerMode:UIDatePickerModeDateAndTime];
-    [self.picker setDate:[self.event startDate]];
+    //set up pickers
+    _startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
+    [self.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    
+    _endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
+    [self.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
     [cancel setTintColor:[UIColor darkGrayColor]];
@@ -95,9 +103,14 @@
                 case 0:
                 case 1:
                 case 2:
-                case 3:
                     return 44;
+                case 3:
+                    return self.startDateShouldShow ? 216 : 0;
                 case 4:
+                    return 44;
+                case 5:
+                    return self.endDateShouldShow ? 216 : 0;
+                case 6:
                     return 120;
             }
         }
@@ -121,7 +134,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return 7;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -169,6 +182,11 @@
             break;
         }
         case 3: {
+            [cell addSubview:self.startDatePicker];
+            cell.clipsToBounds = YES;
+            break;
+        }
+        case 4: {
             [titleLabel setText:@"End Time:"];
             self.eventEndTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
             [self.eventEndTimeLabel setText:[self.event startTime]];
@@ -177,7 +195,12 @@
             inputTextfield = nil;
             break;
         }
-        case 4: {
+        case 5: {
+            [cell addSubview:self.endDatePicker];
+            cell.clipsToBounds = YES;
+            break;
+        }
+        case 6: {
             [titleLabel setText:@"About:"];
             self.eventDescriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
             [self.eventDescriptionTextView setText:[self.event eventDetails]];
@@ -198,6 +221,18 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Cell Selected: %zd", indexPath.row);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 2) {
+        self.startDateShouldShow = !self.startDateShouldShow;
+    }
+    else if (indexPath.row == 4) {
+        self.endDateShouldShow = !self.endDateShouldShow;
+    }
+    else {
+        return;
+    }
+    
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -238,6 +273,9 @@
 }
 
 -(void)updateFields {
+    self.startDatePicker.date = self.event.startDate ?: [NSDate new];
+    self.endDatePicker.date = self.event.endDate ?: [NSDate new];
+    
     [self.eventNameTextField setText:[self.event eventName]];
     [self.eventDescriptionTextView setText:[self.event eventDetails]];
     [self.eventLocationTextField setText:[self.event locationName]];
@@ -248,7 +286,8 @@
 -(void)updateEvent {
     [self.event setEventName:self.eventNameTextField.text];
     [self.event setLocationName:self.eventLocationTextField.text];
-    [self.event setStartDate:self.picker.date];
+    [self.event setStartDate:self.startDatePicker.date];
+    [self.event setEndDate:self.endDatePicker.date];
 }
 
 #pragma mark textview and textfield delegates

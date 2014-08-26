@@ -38,10 +38,22 @@
     if ([self.currentViewController isEqual:self.mainEventsView]) {
         GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
         NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
-        [self setEditOrDetailEventViewWithEvent:event];
+        BOOL isEdit = [self setEditOrDetailEventViewWithEvent:event];
         [self updateControllersWithEvent:event];
         
-        //call view will appear on the view controller we are going to (check the direction for dragging left or right)
+        CGPoint translation = [scrollView.panGestureRecognizer translationInView:scrollView.superview];
+        
+        if (translation.x > 0) {
+            if (isEdit) {
+                [[self.viewControllers objectAtIndex:0] viewWillAppear:YES];
+            }
+            else {
+                [[self.viewControllers objectAtIndex:1] viewWillAppear:YES];
+            }
+        }
+        else if (translation.x < 0) {
+            [[self.viewControllers objectAtIndex:2] viewWillAppear:YES];
+        }
     }
 }
 
@@ -98,18 +110,20 @@
     }
 }
 
--(void)setEditOrDetailEventViewWithEvent:(GWTEvent*)event {
+-(BOOL)setEditOrDetailEventViewWithEvent:(GWTEvent*)event {
     if ([event.host isEqualToString:[[PFUser currentUser] objectId]]) {
         //we are the owner, show the edit event view controller, hide the detail one (note, removing from superview is probably a better option
         NSLog(@"\nWe are the event owner: show the edit page\n\n");
         [[[self.viewControllers objectAtIndex:0] view] setHidden:NO];
         [[[self.viewControllers objectAtIndex:1] view] setHidden:YES];
+        return YES;
     }
     else {
         //we are not the owner, we just want the detail view
         NSLog(@"\nWe are not the event owner: show the detail page\n\n");
         [[[self.viewControllers objectAtIndex:0] view] setHidden:YES];
         [[[self.viewControllers objectAtIndex:1] view] setHidden:NO];
+        return NO;
     }
 }
 
