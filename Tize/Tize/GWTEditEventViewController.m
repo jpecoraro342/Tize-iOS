@@ -11,14 +11,18 @@
 #import "GWTFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
 
-@interface GWTEditEventViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
+@interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *eventTypeLabel;
-@property (weak, nonatomic) IBOutlet UITextField *eventNameTextField;
-@property (weak, nonatomic) IBOutlet UITextView *eventDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UITextField *eventLocationTextField;
-@property (weak, nonatomic) IBOutlet UITextField *eventTimeTextField;
-@property (weak, nonatomic) IBOutlet UIButton *createEventButton;
+@property (strong, nonatomic) UILabel *eventTypeLabel;
+@property (strong, nonatomic) UITextField *eventNameTextField;
+@property (strong, nonatomic) UITextView *eventDescriptionTextView;
+@property (strong, nonatomic) UITextField *eventLocationTextField;
+@property (strong, nonatomic) UILabel *eventStartTimeLabel;
+@property (strong, nonatomic) UILabel *eventEndTimeLabel;
+@property (strong, nonatomic) UIButton *createEventButton;
+
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) UIDatePicker* picker;
 
@@ -57,23 +61,147 @@
     
     [self updateFields];
     
+    //should we have two pickers for the two different dates?
     _picker = [[UIDatePicker alloc] init];
     [self.picker setDatePickerMode:UIDatePickerModeDateAndTime];
     [self.picker setDate:[self.event startDate]];
-    self.eventTimeTextField.inputView = self.picker;
-    
-    UIToolbar *bottomBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
-    [self.view addSubview:bottomBar];
-    
-    UIBarButtonItem *inviteFriends = [[UIBarButtonItem alloc] initWithTitle:@"Invite Friends" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteFriends)];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
+    [cancel setTintColor:[UIColor darkGrayColor]];
     
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(createEvent:)];
+    [done setTintColor:[UIColor darkGrayColor]];
     
-    [bottomBar setItems:[NSArray arrayWithObjects:inviteFriends, flex, cancel, nil]];
+    [self.navigationBar setBarTintColor:kNavBarColor];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
+    navItem.titleView = kNavBarTitleView;
+    navItem.leftBarButtonItem = cancel;
+    navItem.rightBarButtonItem = done;
+    [self.navigationBar setItems:@[navItem]];
     
     self.eventTypeLabel.text = @"Create Event";
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
+}
+
+#pragma mark Table View
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0: {
+            switch (indexPath.row) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    return 44;
+                case 4:
+                    return 120;
+            }
+        }
+        case 1:
+        case 2:
+        default:
+            return 44;
+    }
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 38;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
+    [titleLabel setTextColor:[UIColor darkGrayColor]];
+    
+    //set title label text
+    
+    [headerView addSubview:titleLabel];
+    return headerView;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    UITextField *inputTextfield = [[UITextField alloc] initWithFrame:CGRectMake(10, 12, 310, 28)];
+    inputTextfield.delegate = self;
+    inputTextfield.borderStyle = UITextBorderStyleNone;
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 200, 10)];
+    [titleLabel setFont:[UIFont systemFontOfSize:12]];
+    
+    switch (indexPath.row) {
+        case 0: {
+            [titleLabel setText:@"Event Name: "];
+            self.eventNameTextField = inputTextfield;
+            [inputTextfield setText:self.event.eventName];
+            break;
+        }
+        case 1: {
+            [titleLabel setText:@"Location:"];
+            self.eventLocationTextField = inputTextfield;
+            [inputTextfield setText:self.event.locationName];
+            break;
+        }
+        case 2: {
+            [titleLabel setText:@"Start Time:"];
+            self.eventStartTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
+            [self.eventStartTimeLabel setText:[self.event startTime]];
+            [cell addSubview:self.eventStartTimeLabel];
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            inputTextfield = nil;
+            break;
+        }
+        case 3: {
+            [titleLabel setText:@"End Time:"];
+            self.eventEndTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
+            [self.eventEndTimeLabel setText:[self.event startTime]];
+            [cell addSubview:self.eventEndTimeLabel];
+            cell.selectionStyle = UITableViewCellSelectionStyleGray;
+            inputTextfield = nil;
+            break;
+        }
+        case 4: {
+            [titleLabel setText:@"About:"];
+            self.eventDescriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
+            [self.eventDescriptionTextView setText:[self.event eventDetails]];
+            self.eventDescriptionTextView.editable = YES;
+            self.eventDescriptionTextView.scrollEnabled = NO;
+            self.eventDescriptionTextView.delegate = self;
+            [cell addSubview:self.eventDescriptionTextView];
+            inputTextfield = nil;
+            break;
+        }
+    }
+    
+    [cell addSubview:titleLabel];
+    [cell addSubview:inputTextfield];
+    return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"Cell Selected: %zd", indexPath.row);
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.view endEditing:YES];
 }
 
 #pragma mark private methods
@@ -113,7 +241,8 @@
     [self.eventNameTextField setText:[self.event eventName]];
     [self.eventDescriptionTextView setText:[self.event eventDetails]];
     [self.eventLocationTextField setText:[self.event locationName]];
-    [self.eventTimeTextField setText:[self.event startTime]];
+    [self.eventStartTimeLabel setText:[self.event startTime]];
+    [self.eventEndTimeLabel setText:[self.event endTime]];
 }
 
 -(void)updateEvent {
@@ -165,30 +294,31 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 
+
 #pragma mark keyboard movement
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y -= 60;
-        self.view.frame = f;
-    }];
+    if ([self.eventDescriptionTextView isFirstResponder]) {
+        //UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0]];
+        //[self.tableView scrollRectToVisible:cell.frame animated:YES];
+        CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize.height), 0.0);
+        
+        [UIView animateWithDuration:.3 animations:^{
+            self.tableView.contentInset = contentInsets;
+            self.tableView.scrollIndicatorInsets = contentInsets;
+        }];
+        
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:4 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
 }
 
 -(void)keyboardWillHide:(NSNotification *)notification {
-    [UIView animateWithDuration:0.5 animations:^{
-        CGRect f = self.view.frame;
-        f.origin.y += 60;
-        self.view.frame = f;
+    [UIView animateWithDuration:.3 animations:^{
+        self.tableView.contentInset = UIEdgeInsetsZero;
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsZero;
     }];
 }
-
-#pragma mark page navigation
-
--(void)swipeLeft:(UISwipeGestureRecognizer*)sender {
-    //events page
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
