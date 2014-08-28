@@ -33,7 +33,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="AdP-dX-UQY"/>
                     </constraints>
-                    <color key="barTintColor" red="0.95294117649999999" green="0.53333333329999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="barTintColor" red="0.96078431372549022" green="0.53333333333333333" blue="0.396078431372549" alpha="1" colorSpace="calibratedRGB"/>
                     <items>
                         <navigationItem title="Title" id="fmz-lO-58W"/>
                     </items>

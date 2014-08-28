@@ -9,9 +9,10 @@
 #import "GWTFriendsTableViewController.h"
 #import "GWTEventsViewController.h"
 
-@interface GWTFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface GWTFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
 
@@ -43,13 +44,13 @@
     [self queryFollowing];
     
     self.tableView.allowsMultipleSelection = YES;
-    
+    /*
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
-    [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
+    [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];*/
 }
 
 - (void)viewDidLoad {
@@ -57,8 +58,9 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
+    /*
+    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
     if (self.isInviteList) {
         self.tableView.allowsMultipleSelection = YES;
@@ -69,12 +71,26 @@
     }
     else {
         [toolbar setItems:@[cancel]];
-    }
+    }*/
     
-    [self.view addSubview:toolbar];
+    [self.navigationBar setBarTintColor:kNavBarColor];
+    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
+    navItem.titleView = kNavBarTitleView;
+    navItem.leftBarButtonItem = cancel;
+    [self.navigationBar setItems:@[navItem]];
+    
+    //[self.view addSubview:toolbar];
+}
+
+- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
+    return UIBarPositionTopAttached;
 }
 
 -(void)inviteSelected {
+    if (!self.event)
+        return;
+    
     NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
     NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [selectedRows count]; i++) {
@@ -102,15 +118,61 @@
 
 #pragma mark tableview delegate methods
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 38;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
+
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
+    [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
+    [titleLabel setTextColor:[UIColor darkGrayColor]];
+    
+    switch (section) {
+        case 0: {
+            titleLabel.text = @"Friends";
+            break;
+        }
+        case 1:
+            titleLabel.text = @"Groups";
+            break;
+        case 2:
+            titleLabel.text =  @"Organizations";
+            break;
+    }
+    
+    [headerView addSubview:titleLabel];
+    return headerView;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.listOfFriends count];
+    switch (section) {
+        case 0:
+            return [self.listOfFriends count];
+        case 1:
+            return 0; //return the number of groups in the group list
+        case 2:
+            return 0; //return the number of organizations in your organization list
+        default:
+            return 0;
+    }
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    if (indexPath.row < [self.listOfFriends count]) {
-        cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+    if (indexPath.section == 0) {
+        if (indexPath.row < [self.listOfFriends count]) {
+            cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+        }
     }
     
     return cell;

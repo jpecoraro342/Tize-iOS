@@ -57,6 +57,7 @@
 		7CD793A919AFA37B00357D7A /* questionmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A619AFA37B00357D7A /* questionmark@2x.png */; };
 		7CD793AA19AFA37B00357D7A /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A719AFA37B00357D7A /* x@2x.png */; };
 		7CD793AD19AFA53200357D7A /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD793AC19AFA53200357D7A /* UIImage+Color.m */; };
+		7CD793B019AFAFF600357D7A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD793AF19AFAFF600357D7A /* Crashlytics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +138,7 @@
 		7CD793A719AFA37B00357D7A /* x@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@2x.png"; sourceTree = "<group>"; };
 		7CD793AB19AFA53200357D7A /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		7CD793AC19AFA53200357D7A /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
+		7CD793AF19AFAFF600357D7A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B8F5ECCD6831470491ED0072 /* Pods-Tize.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.xcconfig"; path = "Pods/Pods-Tize.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +155,7 @@
 				7C9A5C84195023B2008B2666 /* Security.framework in Frameworks */,
 				7C9A5C82195023A9008B2666 /* QuartzCore.framework in Frameworks */,
 				7C9A5C801950239B008B2666 /* MobileCoreServices.framework in Frameworks */,
+				7CD793B019AFAFF600357D7A /* Crashlytics.framework in Frameworks */,
 				7C9A5C7E1950238E008B2666 /* libz.dylib in Frameworks */,
 				7C9A5C7C1950237D008B2666 /* CoreLocation.framework in Frameworks */,
 				7C9A5C7A1950236B008B2666 /* CFNetwork.framework in Frameworks */,
@@ -252,6 +255,7 @@
 		7C9A5C4519501FBC008B2666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7CD793AF19AFAFF600357D7A /* Crashlytics.framework */,
 				7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */,
 				7C2CF5E9196BA2BD002AE0C6 /* Social.framework */,
 				7C2CF5E7196BA2B8002AE0C6 /* Twitter.framework */,
@@ -376,6 +380,7 @@
 				7C9A5C4119501FBC008B2666 /* Resources */,
 				06D4AB5DFC73438086B308DE /* Copy Pods Resources */,
 				7C9778B51971C6D2008BFF66 /* ShellScript */,
+				7CD793AE19AFAFDB00357D7A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -516,6 +521,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "#Update build number with number of git commits if in release mode\nif [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;";
+		};
+		7CD793AE19AFAFDB00357D7A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 0d2eadfaa76344ef0ce01e05a742a84b9b6b388f c288c7d01cdc342f40f2be1349f35b2e1d85e1528bd3a39667fdf7d59163efc6";
 		};
 /* End PBXShellScriptBuildPhase section */
 

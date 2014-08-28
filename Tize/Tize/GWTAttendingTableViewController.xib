@@ -33,7 +33,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="2hh-po-NAY"/>
                     </constraints>
-                    <color key="barTintColor" red="0.95294117649999999" green="0.53333333329999999" blue="0.41176470590000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="barTintColor" red="0.96078431369999995" green="0.53333333329999999" blue="0.39607843139999999" alpha="1" colorSpace="calibratedRGB"/>
                     <items>
                         <navigationItem title="Title" id="hbT-D8-dUn"/>
                     </items>
