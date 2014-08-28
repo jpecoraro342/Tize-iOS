@@ -8,6 +8,7 @@
 
 #import "GWTEventDetailViewController.h"
 #import "GWTEventsViewController.h"
+#import "UIImage+Color.h"
 
 @interface GWTEventDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
 
@@ -148,20 +149,23 @@
         }
         case 1: {
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 200, 44)];
-            UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+            UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 44, 34)];
             [icon setContentMode:UIViewContentModeScaleAspectFit];
             switch (indexPath.row) {
                 case 0:
                     self.attendingLabel = label;
-                    [icon setImage:[UIImage imageNamed:@"attendingIcon.png"]];
+                    [icon setTintColor:kGreenColor];
+                    [icon setImage:[[UIImage imageNamed:@"checkmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
                     break;
                 case 1:
                     self.maybeAttendingLabel = label;
-                    [icon setImage:[UIImage imageNamed:@"maybeIcon.png"]];
+                    [icon setTintColor:kLightOrangeColor];
+                    [icon setImage:[[UIImage imageNamed:@"questionmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
                     break;
                 case 2:
                     self.notAttendingLabel = label;
-                    [icon setImage:[UIImage imageNamed:@"notAttendingIcon.png"]];
+                    [icon setTintColor:kRedColor];
+                    [icon setImage:[[UIImage imageNamed:@"x.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
                     break;
             }
             [self updateAttendingLabels];
@@ -216,15 +220,18 @@
         case 4: {
             CGFloat width = self.tableView.frame.size.width/3;
             _attendingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 45)];
-            [self.attendingButton setBackgroundImage:[UIImage imageNamed:@"attendingButton.png"] forState:UIControlStateNormal];
+            [self.attendingButton setBackgroundImage:[UIImage imageWithColor:kGreenColor] forState:UIControlStateNormal];
+            [self.attendingButton setImage:[UIImage imageNamed:@"checkmark.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.attendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
             _maybeAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, 45)];
-            [self.maybeAttendingButton setBackgroundImage:[UIImage imageNamed:@"maybeAttendingButton.png"] forState:UIControlStateNormal];
+            [self.maybeAttendingButton setBackgroundImage:[UIImage imageWithColor:kLightOrangeColor] forState:UIControlStateNormal];
+            [self.maybeAttendingButton setImage:[UIImage imageNamed:@"questionmark.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.maybeAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
             _notAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width*2, 0, width, 45)];
-            [self.notAttendingButton setBackgroundImage:[UIImage imageNamed:@"notAttendingButton.png"] forState:UIControlStateNormal];
+            [self.notAttendingButton setBackgroundImage:[UIImage imageWithColor:kRedColor] forState:UIControlStateNormal];
+            [self.notAttendingButton setImage:[UIImage imageNamed:@"x.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.notAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
             [cell addSubview:self.attendingButton];

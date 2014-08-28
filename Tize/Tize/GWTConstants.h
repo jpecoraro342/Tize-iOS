@@ -11,9 +11,18 @@
 
 #import "GWTExtendedNSLog.h"
 
-#define kNavBarColor [UIColor colorWithRed:243/255.0f green:136/255.0f blue:105/255.0f alpha:1]
-#define kNavBarTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"navBarLogo.png"]]
+#define rgbColor(r, g, b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1]
 
+//Colors
+#define kDarkOrangeColor rgbColor(245, 136, 101)
+#define kLightOrangeColor rgbColor(250, 172, 110)
+#define kDarkGrayColor rgbColor(107, 108, 107)
+#define kLightGrayColor rgbColor(167, 168, 166)
+#define kGreenColor rgbColor(137,176,149)
+#define kRedColor rgbColor(241, 95, 90)
+
+#define kNavBarColor kDarkOrangeColor
+#define kNavBarTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_nav_bar.png"]]
 
 //Logging
 #ifdef DEBUG
