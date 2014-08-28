@@ -10,6 +10,7 @@
 #define Tize_GWTConstants_h
 
 #import "GWTExtendedNSLog.h"
+#import <Crashlytics/Crashlytics.h>
 
 #define rgbColor(r, g, b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1]
 
@@ -28,7 +29,7 @@
 #ifdef DEBUG
 #define NSLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
 #else
-//#define NSLog(...) CLS_LOG(__VA_ARGS__)
+#define NSLog(...) CLS_LOG(__VA_ARGS__)
 #endif
 
 #endif
