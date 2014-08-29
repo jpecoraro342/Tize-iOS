@@ -70,9 +70,11 @@
     //set up pickers
     _startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    [self.startDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
     
     _endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    [self.endDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
     [cancel setTintColor:[UIColor darkGrayColor]];
@@ -223,9 +225,11 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row == 2) {
         self.startDateShouldShow = !self.startDateShouldShow;
+        [self.view endEditing:YES];
     }
     else if (indexPath.row == 4) {
         self.endDateShouldShow = !self.endDateShouldShow;
+        [self.view endEditing:YES];
     }
     else {
         return;
@@ -237,6 +241,16 @@
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
+}
+
+#pragma mark Picker View
+
+-(void)setDatePickerDate:(UIDatePicker *)pickerView {
+    [self.event setStartDate:self.startDatePicker.date];
+    [self.event setEndDate:self.endDatePicker.date];
+    
+    [self.eventStartTimeLabel setText:self.event.startTime];
+    [self.eventEndTimeLabel setText:self.event.endTime];
 }
 
 #pragma mark private methods
