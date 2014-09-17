@@ -9,6 +9,8 @@
 #import "GWTAppDelegate.h"
 #import "GWTEvent.h"
 #import "GWTLoginViewController.h"
+#import "GWTBasePageViewController.h"
+#import "GWTEventsViewController.h"
 #import <Parse/Parse.h>
 #import <Crashlytics/Crashlytics.h>
 
@@ -26,10 +28,18 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
-    GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
-    
-    self.window.rootViewController = login;
-    self.window.backgroundColor = [UIColor whiteColor];
+    if ([PFUser currentUser]) {
+        GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] init];
+        GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
+        basePageController.mainEventsView = events;
+        basePageController.currentViewController = events;
+        self.window.rootViewController = basePageController;
+    }
+    else {
+        GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
+        self.window.rootViewController = login;
+    }
+
     [self.window makeKeyAndVisible];
     return YES;
 }
