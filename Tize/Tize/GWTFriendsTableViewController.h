@@ -12,6 +12,8 @@
 @interface GWTFriendsTableViewController : UIViewController
 
 @property (nonatomic, strong) NSMutableArray* listOfFriends;
+@property (nonatomic, strong) NSMutableArray* listOfGroups;
+@property (nonatomic, strong) NSMutableArray* listOfOrganizations;
 @property (nonatomic, assign) BOOL isInviteList;
 @property (nonatomic, strong) GWTEvent* event;
 

@@ -164,11 +164,13 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark Query
 
 -(void)queryEvents {
+    //Get all the events we are invited to
     PFQuery *getEventUsers = [PFQuery queryWithClassName:@"EventUsers"];
     PFQuery *getAllEventsWeAreInvitedTo = [PFQuery queryWithClassName:@"Event"];
     
@@ -185,7 +187,8 @@
         }
         [self.tableView reloadData];
     }];
-    
+
+    //get all of our own events
     PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
     [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
     [getAllEventsForCurrentUser orderByDescending:@"date"];
@@ -199,6 +202,28 @@
             }
         }
         [self.tableView reloadData];
+    }];
+    
+    //get all the events for Organizations we are following
+    PFQuery *getAllOrganizationFollowingEvents = [PFQuery queryWithClassName:@"OrganizationFollowers"];
+    PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
+    PFQuery *getAllEventsFromOrganizations = [PFQuery queryWithClassName:@"Event"];
+    
+    [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
+    [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
+    [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];
+    [getAllEventsFromOrganizations findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            _promotionalEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            _cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            for (GWTEvent* event in objects) {
+                [_promotionalEvents addObject:event];
+                [_cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
+            }
+        }
+        else {
+            
+        }
     }];
 }
 

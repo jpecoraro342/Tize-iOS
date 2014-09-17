@@ -8,6 +8,7 @@
 
 #import "GWTFriendsTableViewController.h"
 #import "GWTEventsViewController.h"
+#import "UIImage+Color.h"
 
 @interface GWTFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
 
@@ -23,6 +24,8 @@
     if (self) {
         _listOfFriends = [[NSMutableArray alloc] init];
         [self queryFollowing];
+        [self queryGroups];
+        [self queryOrganizations];
     }
     return self;
 }
@@ -34,6 +37,8 @@
         self.event = event;
         _listOfFriends = [[NSMutableArray alloc] init];
         [self queryFollowing];
+        [self queryGroups];
+        [self queryOrganizations];
     }
     return self;
 }
@@ -73,12 +78,15 @@
         [toolbar setItems:@[cancel]];
     }*/
     
+    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"settings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(settings)];
+    
     [self.navigationBar setBarTintColor:kNavBarColor];
-    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
+    navItem.rightBarButtonItem = settings;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setTintColor:[UIColor whiteColor]];
     
     //[self.view addSubview:toolbar];
 }
@@ -136,13 +144,20 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
     [titleLabel setTextColor:[UIColor darkGrayColor]];
     
+    UIButton *addItem = [[UIButton alloc] initWithFrame:CGRectMake(tableView.frame.size.width - 50, 2, 36, 36)];
+    [addItem setImage:[UIImage imageNamed:@"plus" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
+    
     switch (section) {
         case 0: {
             titleLabel.text = @"Friends";
+            [addItem addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
+            [headerView addSubview:addItem];
             break;
         }
         case 1:
-            titleLabel.text = @"Groups";
+            titleLabel.text = @"My Groups";
+            [addItem addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
+            [headerView addSubview:addItem];
             break;
         case 2:
             titleLabel.text =  @"Organizations";
@@ -158,9 +173,9 @@
         case 0:
             return [self.listOfFriends count];
         case 1:
-            return 0; //return the number of groups in the group list
+            return [self.listOfGroups count];
         case 2:
-            return 0; //return the number of organizations in your organization list
+            return [self.listOfOrganizations count];
         default:
             return 0;
     }
@@ -169,10 +184,27 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    if (indexPath.section == 0) {
-        if (indexPath.row < [self.listOfFriends count]) {
-            cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+    switch (indexPath.section) {
+        case 0: {
+            if (indexPath.row < [self.listOfFriends count]) {
+                cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+            }
+            break;
         }
+        case 1: {
+            if (indexPath.row < [self.listOfGroups count]) {
+                //cell.textLabel.text = [[self.listOfGroups objectAtIndex:indexPath.row] groupName];
+            }
+            break;
+        }
+        case 2: {
+            if (indexPath.row < [self.listOfOrganizations count]) {
+                cell.textLabel.text = [self.listOfOrganizations objectAtIndex:indexPath.row][@"name"];
+            }
+            break;
+        }
+        default:
+            break;
     }
     
     return cell;
@@ -198,6 +230,41 @@
             [self.tableView reloadData];
         }
     }];
+}
+
+-(void)queryGroups {
+    
+}
+
+-(void)queryOrganizations {
+    PFQuery *getAllOrganizationFollowingEvents = [PFQuery queryWithClassName:@"OrganizationFollowers"];
+    PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
+    
+    [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
+    [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
+    [getAllOrganizationsWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.listOfOrganizations = [objects mutableCopy];
+            [self.tableView reloadData];
+        }
+        else {
+            
+        }
+    }];
+}
+
+#pragma mark Other
+
+-(void)addFriends {
+    NSLog(@"Add Friends");
+}
+
+-(void)createGroup {
+    NSLog(@"Create Group");
+}
+
+-(void)settings {
+    NSLog(@"Settings");
 }
 
 - (void)didReceiveMemoryWarning {
