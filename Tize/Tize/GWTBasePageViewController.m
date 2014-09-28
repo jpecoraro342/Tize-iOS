@@ -145,20 +145,17 @@
 
 -(void)goForwardToEventsPage {
     [self.currentViewController viewWillDisappear:YES];
+    [self.mainEventsView viewWillAppear:YES];
     [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
     [self.currentViewController viewDidDisappear:YES];
     [self.currentViewController removeFromParentViewController];
     self.currentViewController = self.mainEventsView;
     [self addChildViewController:self.currentViewController];
+    [self.mainEventsView viewDidAppear:YES];
 }
 
 -(void)goBackwardToEventsPage {
-    [self.currentViewController viewWillDisappear:YES];
-    [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];
-    [self.currentViewController viewDidDisappear:YES];
-    [self.currentViewController removeFromParentViewController];
-    self.currentViewController = self.mainEventsView;
-    [self addChildViewController:self.currentViewController];
+    [self goForwardToEventsPage];
 }
 
 - (void)didReceiveMemoryWarning {

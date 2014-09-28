@@ -266,12 +266,14 @@
 }
 
 - (IBAction)createEvent:(id)sender {
-    [self.event saveInBackground];
-    if (self.isEdit) {
-        [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
-    }
-    else {
-        [self dismissViewControllerAnimated:YES completion:nil];
+    if ([self validateFields]) {
+        [self.event saveInBackground];
+        if (self.isEdit) {
+            [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+        }
+        else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
@@ -295,6 +297,38 @@
     [self.eventLocationTextField setText:[self.event locationName]];
     [self.eventStartTimeLabel setText:[self.event startTime]];
     [self.eventEndTimeLabel setText:[self.event endTime]];
+}
+
+-(BOOL)validateFields {
+    if (![self validateEmpty:self.eventNameTextField.text withMessage:@"Event name cannot be blank"])
+        return NO;
+    if (![self validateEmpty:self.eventLocationTextField.text withMessage:@"Event location cannot be blank"])
+        return NO;
+    if (![self validateEmpty:self.eventDescriptionTextView.text withMessage:@"Event description cannot be blank!"])
+        return NO;
+    if (![self validateStartBeforeEnd])
+        return NO;
+    
+    return YES;
+}
+
+-(BOOL)validateEmpty:(NSString*)text withMessage:(NSString*)alertMessage {
+    if (text.length == 0) {
+        [[[UIAlertView alloc] initWithTitle:@"Could not create event" message:alertMessage delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        return NO;
+    }
+    return YES;
+}
+
+-(BOOL)validateStartBeforeEnd {
+    NSDate *date = self.startDatePicker.date;
+    NSDate *endDate = self.endDatePicker.date;
+    
+    if ([date compare:endDate] == NSOrderedDescending) {
+        [[[UIAlertView alloc] initWithTitle:@"Could Not Create Event" message:@"Start date must be before end date" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        return NO;
+    }
+    return YES;
 }
 
 -(void)updateEvent {

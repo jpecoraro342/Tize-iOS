@@ -9,6 +9,7 @@
 #import "GWTFriendsTableViewController.h"
 #import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTAddFriendViewController.h"
 #import "UIImage+Color.h"
 
 @interface GWTFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
@@ -24,9 +25,7 @@
     self = [super init];
     if (self) {
         _listOfFriends = [[NSMutableArray alloc] init];
-        [self queryFollowing];
-        [self queryGroups];
-        [self queryOrganizations];
+        [self queryAll];
     }
     return self;
 }
@@ -240,7 +239,6 @@
 -(void)queryOrganizations {
     PFQuery *getAllOrganizationFollowingEvents = [PFQuery queryWithClassName:@"OrganizationFollowers"];
     PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
-    
     [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
     [getAllOrganizationsWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -256,12 +254,22 @@
 
 #pragma mark Other
 
+-(void)queryAll {
+    [self queryFollowing];
+    [self queryGroups];
+    [self queryOrganizations];
+}
+
 -(void)addFriends {
-    NSLog(@"Add Friends");
+    GWTAddFriendViewController *addFriends = [[GWTAddFriendViewController alloc] init];
+    addFriends.dismissBlock = ^{
+        [self queryFollowing];
+    };
+    [self presentViewController:addFriends animated:YES completion:nil];
 }
 
 -(void)createGroup {
-    NSLog(@"Create Group");
+    [[[UIAlertView alloc] initWithTitle:@"I'm not that good" message:@"Woah there buddy, don't get ahead of yourself. I'm not that far along yet" delegate:self cancelButtonTitle:@"Hurry up Joe!" otherButtonTitles:nil] show];
 }
 
 -(void)settings {
