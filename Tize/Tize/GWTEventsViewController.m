@@ -15,6 +15,7 @@
 #import "GWTFriendsTableViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
+#import "GWTSettingsViewController.h"
 
 @interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
 
@@ -248,18 +249,26 @@
 #pragma mark Navigation Methods
 
 -(void)settings {
-    
+    GWTSettingsViewController *settingsPage = [[GWTSettingsViewController alloc] init];
+    UINavigationController *settingsNavController = [[UINavigationController alloc] initWithRootViewController:settingsPage];
+    [self presentViewController:settingsNavController animated:YES completion:nil];
 }
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
     NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
     switch (cellIndex.section) {
         case 0:
-            return self.upcomingEvents[cellIndex.row];
+            if (cellIndex.row < [self.upcomingEvents count]) {
+                return self.upcomingEvents[cellIndex.row];
+            }
         case 1:
-            return self.myEvents[cellIndex.row];
+            if (cellIndex.row < [self.myEvents count]) {
+                return self.myEvents[cellIndex.row];
+            }
         case 2:
-            return self.promotionalEvents[cellIndex.row];
+            if (cellIndex.row < [self.promotionalEvents count]) {
+                return self.promotionalEvents[cellIndex.row];
+            }
     }
     return nil;
 }

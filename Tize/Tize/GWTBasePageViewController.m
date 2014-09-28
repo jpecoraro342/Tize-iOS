@@ -38,6 +38,16 @@
     if ([self.currentViewController isEqual:self.mainEventsView]) {
         GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
         NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
+        if (!event) {
+            //cancell scrolling
+            self.scrollView.scrollEnabled = NO;
+            self.scrollView.scrollEnabled = YES;
+    
+            NSLog(@"No Event, Don't Scroll");
+            self.noEventDontScroll = YES;
+            return;
+        }
+        self.noEventDontScroll = NO;
         BOOL isEdit = [self setEditOrDetailEventViewWithEvent:event];
         [self updateControllersWithEvent:event];
         
@@ -54,6 +64,12 @@
         else if (translation.x < 0) {
             [[self.viewControllers objectAtIndex:2] viewWillAppear:YES];
         }
+    }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (self.noEventDontScroll) {
+        [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:NO];
     }
 }
 

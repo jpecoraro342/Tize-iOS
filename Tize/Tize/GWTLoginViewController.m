@@ -8,17 +8,38 @@
 
 #import <Parse/Parse.h>
 #import "GWTLoginViewController.h"
+#import "GWTSignUpViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTEditEventViewController.h"
 #import "GWTEventDetailViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 
-@interface GWTLoginViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
+@interface GWTLoginViewController () <PFLogInViewControllerDelegate>
 
 @end
 
 @implementation GWTLoginViewController
+
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        self.fields = PFLogInFieldsUsernameAndPassword
+        | PFLogInFieldsLogInButton
+        | PFLogInFieldsSignUpButton
+        | PFLogInFieldsPasswordForgotten;
+        
+        self.delegate = self;
+        
+        GWTSignUpViewController *signupVC = [[GWTSignUpViewController alloc] init];
+        self.signUpController = signupVC;
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
 
 -(void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
     NSLog(@"\nUser could not be logged in: \n%@\n\n", error);
@@ -32,32 +53,6 @@
     
 }
 
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self loadMainView];
-}
-
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
-    NSLog(@"\nUser could not be signed up: \n%@\n\n", error);
-}
-
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-
-    if ([PFUser currentUser]) {
-        [self loadMainView];
-    }
-    else {
-        self.delegate = self;
-        
-        // Create the sign up view controller
-        PFSignUpViewController *signUpViewController = [[PFSignUpViewController alloc] init];
-        [signUpViewController setDelegate:self]; // Set ourselves as the delegate
-        
-        // Assign our sign up controller to be displayed from the login controller
-        [self setSignUpController:signUpViewController];
-    }
-}
-
 -(void)loadMainView {
     GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] init];
     
@@ -66,10 +61,6 @@
     basePageController.currentViewController = events;
     
     [self presentViewController:basePageController animated:YES completion:nil];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning {

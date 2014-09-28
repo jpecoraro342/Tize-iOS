@@ -16,6 +16,8 @@
 @property (nonatomic, strong) GWTEventsViewController *mainEventsView;
 @property (nonatomic, strong) UIViewController *currentViewController;
 
+@property (nonatomic, assign) BOOL noEventDontScroll;
+
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;
 

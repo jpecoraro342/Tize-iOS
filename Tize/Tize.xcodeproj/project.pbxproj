@@ -19,6 +19,8 @@
 		7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5634195D0367008FD5F5 /* GWTFriendsTableViewController.xib */; };
 		7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */; };
 		7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */; };
+		7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */; };
+		7C6F11FC19D36BD50080E636 /* GWTSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */; };
 		7C723AB119AF9B0500003825 /* logo_nav_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C723AB019AF9B0500003825 /* logo_nav_bar@2x.png */; };
 		7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */; };
 		7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */; };
@@ -58,6 +60,7 @@
 		7CD793AA19AFA37B00357D7A /* x@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A719AFA37B00357D7A /* x@2x.png */; };
 		7CD793AD19AFA53200357D7A /* UIImage+Color.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CD793AC19AFA53200357D7A /* UIImage+Color.m */; };
 		7CD793B019AFAFF600357D7A /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CD793AF19AFAFF600357D7A /* Crashlytics.framework */; };
+		7CE1562219D375F70066FD71 /* GWTSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1562119D375F70066FD71 /* GWTSignUpViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,9 @@
 		7C3B5637195D0380008FD5F5 /* GWTAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTAttendingTableViewController.h; sourceTree = "<group>"; };
 		7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTAttendingTableViewController.m; sourceTree = "<group>"; };
 		7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTAttendingTableViewController.xib; sourceTree = "<group>"; };
+		7C6F11F819D36BD50080E636 /* GWTSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTSettingsViewController.h; sourceTree = "<group>"; };
+		7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSettingsViewController.m; sourceTree = "<group>"; };
+		7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTSettingsViewController.xib; sourceTree = "<group>"; };
 		7C723AB019AF9B0500003825 /* logo_nav_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_nav_bar@2x.png"; sourceTree = "<group>"; };
 		7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTBasePageViewController.h; sourceTree = "<group>"; };
 		7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTBasePageViewController.m; sourceTree = "<group>"; };
@@ -139,6 +145,8 @@
 		7CD793AB19AFA53200357D7A /* UIImage+Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Color.h"; sourceTree = "<group>"; };
 		7CD793AC19AFA53200357D7A /* UIImage+Color.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Color.m"; sourceTree = "<group>"; };
 		7CD793AF19AFAFF600357D7A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		7CE1562019D375F70066FD71 /* GWTSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTSignUpViewController.h; sourceTree = "<group>"; };
+		7CE1562119D375F70066FD71 /* GWTSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSignUpViewController.m; sourceTree = "<group>"; };
 		B8F5ECCD6831470491ED0072 /* Pods-Tize.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.xcconfig"; path = "Pods/Pods-Tize.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,14 +191,15 @@
 		7C3B562A195D0278008FD5F5 /* Header */ = {
 			isa = PBXGroup;
 			children = (
-				7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */,
 				7C9A5C9319512112008B2666 /* GWTLoginViewController.h */,
+				7CE1562019D375F70066FD71 /* GWTSignUpViewController.h */,
 				7C9A5C9819512132008B2666 /* GWTEventsViewController.h */,
 				7C3B5625195D026E008FD5F5 /* GWTEventDetailViewController.h */,
 				7C3B562D195D02CA008FD5F5 /* GWTEditEventViewController.h */,
 				7C3B5632195D0367008FD5F5 /* GWTFriendsTableViewController.h */,
 				7C3B5637195D0380008FD5F5 /* GWTAttendingTableViewController.h */,
 				7C97794B197AE3B2008BFF66 /* GWTEventBasedViewController.h */,
+				7C6F11F819D36BD50080E636 /* GWTSettingsViewController.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -198,14 +207,15 @@
 		7C3B562B195D027F008FD5F5 /* Implementation */ = {
 			isa = PBXGroup;
 			children = (
-				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
 				7C9A5C9419512112008B2666 /* GWTLoginViewController.m */,
+				7CE1562119D375F70066FD71 /* GWTSignUpViewController.m */,
 				7C9A5C9919512132008B2666 /* GWTEventsViewController.m */,
 				7C3B5626195D026E008FD5F5 /* GWTEventDetailViewController.m */,
 				7C3B562E195D02CA008FD5F5 /* GWTEditEventViewController.m */,
 				7C3B5633195D0367008FD5F5 /* GWTFriendsTableViewController.m */,
 				7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */,
 				7C97794C197AE3B2008BFF66 /* GWTEventBasedViewController.m */,
+				7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */,
 			);
 			name = Implementation;
 			sourceTree = "<group>";
@@ -218,8 +228,20 @@
 				7C3B562F195D02CA008FD5F5 /* GWTEditEventViewController.xib */,
 				7C3B5634195D0367008FD5F5 /* GWTFriendsTableViewController.xib */,
 				7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */,
+				7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */,
 			);
 			name = Xibs;
+			sourceTree = "<group>";
+		};
+		7C6F11FD19D370AF0080E636 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */,
+				7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */,
+				7CD793AB19AFA53200357D7A /* UIImage+Color.h */,
+				7CD793AC19AFA53200357D7A /* UIImage+Color.m */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		7C8C3A9B1971BB2D00F38328 /* BaseViewController */ = {
@@ -280,11 +302,7 @@
 		7C9A5C4C19501FBC008B2666 /* Tize */ = {
 			isa = PBXGroup;
 			children = (
-				7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */,
-				7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */,
-				7CD793AB19AFA53200357D7A /* UIImage+Color.h */,
-				7CD793AC19AFA53200357D7A /* UIImage+Color.m */,
-				7C9778C319749DC3008BFF66 /* GWTConstants.h */,
+				7C6F11FD19D370AF0080E636 /* Utilities */,
 				7C8C3A9B1971BB2D00F38328 /* BaseViewController */,
 				7C9A5C9E195125DC008B2666 /* Model */,
 				7C9A5C9D195125D3008B2666 /* Controller */,
@@ -338,6 +356,9 @@
 		7C9A5C9E195125DC008B2666 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7C9778C319749DC3008BFF66 /* GWTConstants.h */,
+				7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */,
+				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
 				7C9A5C9F19512628008B2666 /* GWTEvent.h */,
 				7C9A5CA019512628008B2666 /* GWTEvent.m */,
 			);
@@ -450,6 +471,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C6F11FC19D36BD50080E636 /* GWTSettingsViewController.xib in Resources */,
 				7C3B5631195D02CA008FD5F5 /* GWTEditEventViewController.xib in Resources */,
 				7CD793A419AF9FFC00357D7A /* settings@2x.png in Resources */,
 				7C9A5C5119501FBC008B2666 /* InfoPlist.strings in Resources */,
@@ -545,6 +567,7 @@
 				7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */,
 				7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
+				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
 				7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */,
 				7C9A5C5319501FBC008B2666 /* main.m in Sources */,
 				7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */,
@@ -552,6 +575,7 @@
 				7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */,
 				7C3B5628195D026E008FD5F5 /* GWTEventDetailViewController.m in Sources */,
 				7CD793AD19AFA53200357D7A /* UIImage+Color.m in Sources */,
+				7CE1562219D375F70066FD71 /* GWTSignUpViewController.m in Sources */,
 				7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */,
 				7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */,
 				7C3B5635195D0367008FD5F5 /* GWTFriendsTableViewController.m in Sources */,

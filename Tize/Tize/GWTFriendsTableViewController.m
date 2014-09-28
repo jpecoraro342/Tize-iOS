@@ -7,6 +7,7 @@
 //
 
 #import "GWTFriendsTableViewController.h"
+#import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
 #import "UIImage+Color.h"
 
@@ -264,7 +265,9 @@
 }
 
 -(void)settings {
-    NSLog(@"Settings");
+    GWTSettingsViewController *settingsPage = [[GWTSettingsViewController alloc] init];
+    UINavigationController *settingsNavController = [[UINavigationController alloc] initWithRootViewController:settingsPage];
+    [self presentViewController:settingsNavController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
