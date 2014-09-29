@@ -10,6 +10,7 @@
 #import "GWTEventsViewController.h"
 #import "GWTFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
+#import "GWTInviteFriendsViewController.h"
 
 @interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
 
@@ -32,6 +33,8 @@
 
 @property (assign, nonatomic) BOOL isEdit;
 @property (assign, nonatomic) BOOL shouldSaveChanges;
+
+@property (nonatomic, strong) NSArray *peopleToInvite;
 
 @end
 
@@ -77,12 +80,11 @@
     [self.endDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
-    [cancel setTintColor:[UIColor darkGrayColor]];
     
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(createEvent:)];
-    [done setTintColor:[UIColor darkGrayColor]];
     
     [self.navigationBar setBarTintColor:kNavBarColor];
+    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.leftBarButtonItem = cancel;
@@ -114,6 +116,8 @@
                     return self.endDateShouldShow ? 216 : 0;
                 case 6:
                     return 120;
+                case 7:
+                    return 55;
             }
         }
         case 1:
@@ -136,7 +140,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 7;
+    return 8;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -161,59 +165,67 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 200, 10)];
     [titleLabel setFont:[UIFont systemFontOfSize:12]];
     
-    switch (indexPath.row) {
-        case 0: {
-            [titleLabel setText:@"Event Name: "];
-            self.eventNameTextField = inputTextfield;
-            [inputTextfield setText:self.event.eventName];
-            break;
+        switch (indexPath.row) {
+            case 0: {
+                [titleLabel setText:@"Event Name: "];
+                self.eventNameTextField = inputTextfield;
+                [inputTextfield setText:self.event.eventName];
+                break;
+            }
+            case 1: {
+                [titleLabel setText:@"Location:"];
+                self.eventLocationTextField = inputTextfield;
+                [inputTextfield setText:self.event.locationName];
+                break;
+            }
+            case 2: {
+                [titleLabel setText:@"Start Time:"];
+                self.eventStartTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
+                [self.eventStartTimeLabel setText:[self.event startTime]];
+                [cell addSubview:self.eventStartTimeLabel];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                inputTextfield = nil;
+                break;
+            }
+            case 3: {
+                [cell addSubview:self.startDatePicker];
+                cell.clipsToBounds = YES;
+                break;
+            }
+            case 4: {
+                [titleLabel setText:@"End Time:"];
+                self.eventEndTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
+                [self.eventEndTimeLabel setText:[self.event startTime]];
+                [cell addSubview:self.eventEndTimeLabel];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                inputTextfield = nil;
+                break;
+            }
+            case 5: {
+                [cell addSubview:self.endDatePicker];
+                cell.clipsToBounds = YES;
+                break;
+            }
+            case 6: {
+                [titleLabel setText:@"About:"];
+                self.eventDescriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
+                [self.eventDescriptionTextView setText:[self.event eventDetails]];
+                self.eventDescriptionTextView.editable = YES;
+                self.eventDescriptionTextView.scrollEnabled = NO;
+                self.eventDescriptionTextView.delegate = self;
+                [cell addSubview:self.eventDescriptionTextView];
+                inputTextfield = nil;
+                break;
+            }
+            case 7: {
+                cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 55)];
+                titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, cell.frame.size.width - 20, 55)];
+                titleLabel.text = @"Invite Friends";
+                inputTextfield = nil;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            }
         }
-        case 1: {
-            [titleLabel setText:@"Location:"];
-            self.eventLocationTextField = inputTextfield;
-            [inputTextfield setText:self.event.locationName];
-            break;
-        }
-        case 2: {
-            [titleLabel setText:@"Start Time:"];
-            self.eventStartTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
-            [self.eventStartTimeLabel setText:[self.event startTime]];
-            [cell addSubview:self.eventStartTimeLabel];
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            inputTextfield = nil;
-            break;
-        }
-        case 3: {
-            [cell addSubview:self.startDatePicker];
-            cell.clipsToBounds = YES;
-            break;
-        }
-        case 4: {
-            [titleLabel setText:@"End Time:"];
-            self.eventEndTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
-            [self.eventEndTimeLabel setText:[self.event startTime]];
-            [cell addSubview:self.eventEndTimeLabel];
-            cell.selectionStyle = UITableViewCellSelectionStyleGray;
-            inputTextfield = nil;
-            break;
-        }
-        case 5: {
-            [cell addSubview:self.endDatePicker];
-            cell.clipsToBounds = YES;
-            break;
-        }
-        case 6: {
-            [titleLabel setText:@"About:"];
-            self.eventDescriptionTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
-            [self.eventDescriptionTextView setText:[self.event eventDetails]];
-            self.eventDescriptionTextView.editable = YES;
-            self.eventDescriptionTextView.scrollEnabled = NO;
-            self.eventDescriptionTextView.delegate = self;
-            [cell addSubview:self.eventDescriptionTextView];
-            inputTextfield = nil;
-            break;
-        }
-    }
     
     [cell addSubview:titleLabel];
     [cell addSubview:inputTextfield];
@@ -223,6 +235,11 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Cell Selected: %zd", indexPath.row);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //add friends
+    if (indexPath.row == 7) {
+        [self inviteFriends];
+        return;
+    }
     if (indexPath.row == 2) {
         self.startDateShouldShow = !self.startDateShouldShow;
         [self.view endEditing:YES];
@@ -267,7 +284,16 @@
 
 - (IBAction)createEvent:(id)sender {
     if ([self validateFields]) {
-        [self.event saveInBackground];
+        [self.event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
+            if (!error) {
+                if (succeeded) {
+                    [self sendOutInvites:self.event];
+                }
+            }
+            else {
+                NSLog(@"\nError: %@", error.localizedDescription);
+            }
+        }];
         if (self.isEdit) {
             [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
         }
@@ -284,7 +310,13 @@
 
 -(void)inviteFriends {
     [self updateEvent];
-    GWTFriendsTableViewController *friends = [[GWTFriendsTableViewController alloc] initWithEvent:self.event];
+    GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] init];
+    friends.dismissBlock = ^(NSMutableArray *friendsToInvite) {
+        self.peopleToInvite = [friendsToInvite copy];
+        if (self.event.objectId) {
+            [self sendOutInvites:self.event];
+        }
+    };
     [self presentViewController:friends animated:YES completion:nil];
 }
 
@@ -336,6 +368,28 @@
     [self.event setLocationName:self.eventLocationTextField.text];
     [self.event setStartDate:self.startDatePicker.date];
     [self.event setEndDate:self.endDatePicker.date];
+}
+
+-(void)sendOutInvites:(GWTEvent*)event {
+    NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [self.peopleToInvite count]; i++) {
+        PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
+        invite[@"userID"] = [[self.peopleToInvite objectAtIndex:i] objectId];
+        invite[@"attendingStatus"] = [NSNumber numberWithInt:3];
+        invite[@"eventID"] = event.objectId;
+        [eventUserObjects addObject:invite];
+    }
+    NSLog(@"\nInviting %d friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
+    [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"\nFriends successfully invited!\n\n");
+        }
+        else {
+            NSLog(@"\nError: %@", error.localizedDescription);
+        }
+    }];
+    
+    self.peopleToInvite = nil;
 }
 
 #pragma mark textview and textfield delegates

@@ -25,6 +25,8 @@
 @property (strong, nonatomic) NSMutableArray* promotionalEvents;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+
 @end
 
 @implementation GWTEventsViewController {
@@ -68,6 +70,12 @@
     [toolbar setTintColor:[UIColor darkGrayColor]];
     
     [self.view addSubview:toolbar];
+    
+    UITableViewController *tableController = [[UITableViewController alloc] init];
+    tableController.tableView = self.tableView;
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(queryEvents) forControlEvents:UIControlEventValueChanged];
+    tableController.refreshControl = self.refreshControl;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -179,6 +187,9 @@
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
     [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            if (self.refreshControl && self.refreshControl.isRefreshing) {
+                [self.refreshControl endRefreshing];
+            }
             _upcomingEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             _cellIsSelected[0] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
@@ -195,6 +206,9 @@
     [getAllEventsForCurrentUser orderByDescending:@"date"];
     [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            if (self.refreshControl && self.refreshControl.isRefreshing) {
+                [self.refreshControl endRefreshing];
+            }
             _myEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             _cellIsSelected[1] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
@@ -215,6 +229,9 @@
     [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];
     [getAllEventsFromOrganizations findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
+            if (self.refreshControl && self.refreshControl.isRefreshing) {
+                [self.refreshControl endRefreshing];
+            }
             _promotionalEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             _cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {

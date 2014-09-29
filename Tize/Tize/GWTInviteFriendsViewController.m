@@ -1,5 +1,5 @@
 //
-//  GWTAddFriendViewController.m
+//  GWTInviteFriendsViewController.m
 //  Tize
 //
 //  Created by Joseph Pecoraro on 9/28/14.
@@ -11,23 +11,27 @@
 #import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
 #import "UIImage+Color.h"
+#import "GWTInviteFriendsViewController.h"
 
-@interface GWTAddFriendViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
+@interface GWTInviteFriendsViewController ()
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray *everybody;
+@property (strong, nonatomic) NSMutableArray *listOfFriends;
+@property (strong, nonatomic) NSMutableArray *listOfInvited;
+
+@property (strong, nonatomic) NSMutableArray *isSelected;
 
 @end
 
-@implementation GWTAddFriendViewController
+@implementation GWTInviteFriendsViewController
 
 -(instancetype)init {
     self = [super init];
     if (self) {
-        _everybody = [[NSMutableArray alloc] init];
-        [self queryEverybody];
+        _listOfFriends = [[NSMutableArray alloc] init];
+        [self querylistOfFriends];
     }
     return self;
 }
@@ -39,15 +43,15 @@
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
     
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAddingFriends)];
+    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Invite Selected" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
     
     [self.navigationBar setBarTintColor:kNavBarColor];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
-    navItem.rightBarButtonItem = done;
+    navItem.rightBarButtonItem = invite;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
@@ -57,11 +61,7 @@
 #pragma mark tableview delegate methods
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 85;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-    return 0.01;
+    return 38;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -69,52 +69,56 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 85)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
     [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 85)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
     [titleLabel setTextColor:[UIColor darkGrayColor]];
-    [titleLabel setNumberOfLines:4];
-    [titleLabel setFont:[UIFont systemFontOfSize:13]];
     
-    titleLabel.text = @"These are all the users in the database, in the future it wont look like this, but I figured this was the easiest way to let you add people for now. Just click on a person and youll following them";
+    titleLabel.text = @"Select Friends To Invite";
     
     [headerView addSubview:titleLabel];
     return headerView;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.everybody count];
+    return [self.listOfFriends count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = [[self.everybody objectAtIndex:indexPath.row] username];
+    cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [self addFriendAtIndex:indexPath.row];
+    if ([self.isSelected[indexPath.row] boolValue]) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        self.isSelected[indexPath.row] = [NSNumber numberWithBool:NO];
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        self.isSelected[indexPath.row] = [NSNumber numberWithBool:YES];
+    }
 }
 
 #pragma mark query
 
--(void)queryEverybody {
+-(void)querylistOfFriends {
+    PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
     PFQuery *getAllUsersWeAreFollowing = [PFUser query];
     
+    [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
     [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
         if(!error) {
+            self.listOfFriends = [[NSMutableArray alloc] init];
+            self.isSelected = [[NSMutableArray alloc] init];
             for (PFUser *object in objects) {
-                if ([object.objectId isEqualToString:[[PFUser currentUser] objectId]]) {
-                    continue;
-                }
-                else {
-                    [self.everybody addObject:object];
-                }
+                [self.listOfFriends addObject:object];
+                [self.isSelected addObject:[NSNumber numberWithBool:NO]];
             }
             [self.tableView reloadData];
         }
@@ -126,22 +130,26 @@
 -(void)addFriendAtIndex:(NSInteger)index {
     PFObject *following = [PFObject objectWithClassName:@"Following"];
     following[@"user"] = [[PFUser currentUser] objectId];
-    following[@"following"] = [[self.everybody objectAtIndex:index] objectId];
+    following[@"following"] = [[self.listOfFriends objectAtIndex:index] objectId];
     [following saveInBackground];
 }
 
 -(void)cancelAddingFriends {
-    [self dismissViewControllerAnimated:YES completion:^{
-        if (self.dismissBlock) {
-            self.dismissBlock();
-        }
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)doneAddingFriends {
+-(void)inviteSelected {
+    self.listOfInvited = [[NSMutableArray alloc] init];
+    
+    for (int i = 0; i < [self.isSelected count]; i++) {
+        if ([self.isSelected[i] boolValue]) {
+            [self.listOfInvited addObject:self.listOfFriends[i]];
+        }
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.dismissBlock) {
-            self.dismissBlock();
+            self.dismissBlock(self.listOfInvited);
         }
     }];
 }

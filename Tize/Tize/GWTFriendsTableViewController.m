@@ -30,60 +30,16 @@
     return self;
 }
 
--(instancetype)initWithEvent:(GWTEvent *)event {
-    self = [super init];
-    if (self) {
-        self.isInviteList = YES;
-        self.event = event;
-        _listOfFriends = [[NSMutableArray alloc] init];
-        [self queryFollowing];
-        [self queryGroups];
-        [self queryOrganizations];
-    }
-    return self;
-}
-
--(void)reloadWithEvent:(GWTEvent *)event {
-    self.isInviteList = YES;
-    self.event = event;
-    [self queryFollowing];
-    
-    self.tableView.allowsMultipleSelection = YES;
-    /*
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
-    
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
-    UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
-    [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];*/
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
-    /*
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
-    
-    if (self.isInviteList) {
-        self.tableView.allowsMultipleSelection = YES;
-        
-        UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-        UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Invite" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
-        [toolbar setItems:[NSArray arrayWithObjects:friends, flex, cancel, nil]];
-    }
-    else {
-        [toolbar setItems:@[cancel]];
-    }*/
-    
-    UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"settings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(settings)];
     
     [self.navigationBar setBarTintColor:kNavBarColor];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
-    navItem.rightBarButtonItem = settings;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
     [self.navigationBar setTintColor:[UIColor whiteColor]];
@@ -93,31 +49,6 @@
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
     return UIBarPositionTopAttached;
-}
-
--(void)inviteSelected {
-    if (!self.event)
-        return;
-    
-    NSArray *selectedRows = [self.tableView indexPathsForSelectedRows];
-    NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [selectedRows count]; i++) {
-        PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
-        invite[@"userID"] = [[self.listOfFriends objectAtIndex:[[selectedRows objectAtIndex:i] row]] objectId];
-        invite[@"attendingStatus"] = [NSNumber numberWithInt:3];
-        invite[@"eventID"] = self.event.objectId;
-        [eventUserObjects addObject:invite];
-    }
-    NSLog(@"\nInviting %d friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
-     [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
-         if (succeeded) {
-             NSLog(@"\nFriends successfully invited!\n\n");
-         }
-         else {
-             NSLog(@"\nError: %@", error.localizedDescription);
-         }
-    }];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)cancelAddingFriends {
@@ -207,11 +138,8 @@
             break;
     }
     
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 #pragma mark query
@@ -270,12 +198,6 @@
 
 -(void)createGroup {
     [[[UIAlertView alloc] initWithTitle:@"I'm not that good" message:@"Woah there buddy, don't get ahead of yourself. I'm not that far along yet" delegate:self cancelButtonTitle:@"Hurry up Joe!" otherButtonTitles:nil] show];
-}
-
--(void)settings {
-    GWTSettingsViewController *settingsPage = [[GWTSettingsViewController alloc] init];
-    UINavigationController *settingsNavController = [[UINavigationController alloc] initWithRootViewController:settingsPage];
-    [self presentViewController:settingsNavController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
