@@ -34,6 +34,7 @@
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
     NSLog(@"\nUser could not be signed up: \n%@\n\n", error);
+    [[[UIAlertView alloc] initWithTitle:@"Could Not Register" message:error.userInfo[@"error"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 -(void)loadMainView {

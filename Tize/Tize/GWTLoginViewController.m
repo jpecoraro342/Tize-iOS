@@ -43,6 +43,7 @@
 
 -(void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
     NSLog(@"\nUser could not be logged in: \n%@\n\n", error);
+    [[[UIAlertView alloc] initWithTitle:@"Could Not Log In" message:error.userInfo[@"error"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
