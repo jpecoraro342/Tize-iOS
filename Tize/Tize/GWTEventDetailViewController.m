@@ -52,10 +52,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNavItems];
     [self.navigationBar setBarTintColor:kNavBarColor];
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
-    navItem.titleView = kNavBarTitleView;
-    [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : kNavBarTintColor}];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
@@ -64,8 +63,14 @@
 
 -(void)reloadWithEvent:(GWTEvent *)event {
     self.event = event;
+    [self setNavItems];
     [self updateFields];
     [self queryAttendingStatus];
+}
+
+-(void)setNavItems {
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.hostUser.username];
+    [self.navigationBar setItems:@[navItem]];
 }
 
 #pragma mark Tableview Delegate
@@ -112,6 +117,7 @@
     switch (section) {
         case 0: {
             titleLabel.text = self.event.eventName;
+            [titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
             _eventNameLabel = titleLabel;
             break;
         }

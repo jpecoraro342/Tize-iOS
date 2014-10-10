@@ -52,12 +52,12 @@
     
     UIBarButtonItem *settings = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"settings.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(settings)];
     
-    [self.navigationBar setBarTintColor:kNavBarColor];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.rightBarButtonItem = settings;
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTintColor:kNavBarTintColor];
+    [self.navigationBar setBarTintColor:kNavBarColor];
     
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
@@ -67,7 +67,7 @@
     UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Contacts" style:UIBarButtonItemStyleBordered target:self action:@selector(viewFriends)];
     [toolbar setItems:[NSArray arrayWithObjects:addItem, flex, friends, nil]];
     [toolbar setBarTintColor:[UIColor lightGrayColor]];
-    [toolbar setTintColor:[UIColor darkGrayColor]];
+    [toolbar setTintColor:kNavBarTintColor];
     
     [self.view addSubview:toolbar];
     
@@ -164,6 +164,7 @@
     cell.eventNameLabel.text = tempEvent.eventName;
     cell.eventTimeLabel.text = tempEvent.startTime;
     cell.eventLocationLabel.text = tempEvent.locationName;
+    cell.eventHostLabel.text = tempEvent.hostUser.username;
     
     return cell;
 }
@@ -173,7 +174,7 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
-    [self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
 #pragma mark Query
@@ -182,6 +183,7 @@
     //Get all the events we are invited to
     PFQuery *getEventUsers = [PFQuery queryWithClassName:@"EventUsers"];
     PFQuery *getAllEventsWeAreInvitedTo = [PFQuery queryWithClassName:@"Event"];
+    [getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
@@ -202,6 +204,7 @@
 
     //get all of our own events
     PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
+    [getAllEventsForCurrentUser includeKey:@"hostUser"];
     [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
     [getAllEventsForCurrentUser orderByDescending:@"date"];
     [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -224,6 +227,7 @@
     PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
     PFQuery *getAllEventsFromOrganizations = [PFQuery queryWithClassName:@"Event"];
     
+    [getAllEventsFromOrganizations includeKey:@"hostUser"];
     [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
     [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];

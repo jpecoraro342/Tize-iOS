@@ -23,17 +23,24 @@
     self.event = event;
     [self initArrays];
     [self loadTableData];
+    [self setNavItems];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setNavItems];
     [self.navigationBar setBarTintColor:kNavBarColor];
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
-    navItem.titleView = kNavBarTitleView;
-    [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setTintColor:kNavBarTintColor];
+    [self.navigationBar setTintColor:kNavBarTintColor];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+}
+
+-(void)setNavItems {
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.eventName];
+    [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : kNavBarTintColor}];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
@@ -85,6 +92,8 @@
         cell.textLabel.text = [[self.listOfNotResponded objectAtIndex:indexPath.row] username];
     }
     
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     return cell;
 }
 
@@ -109,7 +118,11 @@
             break;
     }
     
+    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
+    [borderView setBackgroundColor:kBorderColor];
+    
     [headerView addSubview:titleLabel];
+    [headerView addSubview:borderView];
     return headerView;
 }
 

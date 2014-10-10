@@ -47,6 +47,7 @@
         self.shouldSaveChanges = YES;
         _event = [[GWTEvent alloc] init];
         [_event setHost:[[PFUser currentUser] objectId]];
+        [_event setHostUser:[PFUser currentUser]];
         [_event setStartDate:[NSDate date]];
     }
     return self;
@@ -83,13 +84,13 @@
     
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(createEvent:)];
     
-    [self.navigationBar setBarTintColor:kNavBarColor];
-    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.leftBarButtonItem = cancel;
     navItem.rightBarButtonItem = done;
     [self.navigationBar setItems:@[navItem]];
+    [self.navigationBar setBarTintColor:kNavBarColor];
+    [self.navigationBar setTintColor:kNavBarTintColor];
     
     self.eventTypeLabel.text = @"Create Event";
 }

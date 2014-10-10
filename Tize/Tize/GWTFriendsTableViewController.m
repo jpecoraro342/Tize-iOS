@@ -37,12 +37,13 @@
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
     
-    [self.navigationBar setBarTintColor:kNavBarColor];
+    
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTintColor:kNavBarTintColor];
+    [self.navigationBar setBarTintColor:kNavBarColor];
     
     //[self.view addSubview:toolbar];
 }
@@ -151,6 +152,7 @@
     [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
     [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
     [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        self.listOfFriends = [[NSMutableArray alloc] init];
         if(!error) {
             for (PFUser *object in objects) {
                 [self.listOfFriends addObject:object];

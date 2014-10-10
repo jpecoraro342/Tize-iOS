@@ -45,13 +45,13 @@
     
     UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Invite Selected" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
     
-    [self.navigationBar setBarTintColor:kNavBarColor];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.rightBarButtonItem = invite;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:[UIColor darkGrayColor]];
+    [self.navigationBar setTintColor:kNavBarTintColor];
+    [self.navigationBar setBarTintColor:kNavBarColor];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {

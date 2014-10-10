@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
+@property (weak, nonatomic) IBOutlet UILabel *eventHostLabel;
 
 @end

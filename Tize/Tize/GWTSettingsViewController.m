@@ -21,7 +21,7 @@
     
     [self.navigationController.navigationBar setBarTintColor:kNavBarColor];
     self.navigationItem.titleView = kNavBarTitleView;
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTintColor:kNavBarTintColor];
     
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneEditing)];
     self.navigationItem.rightBarButtonItem = done;

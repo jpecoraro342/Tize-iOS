@@ -15,6 +15,7 @@
 @property (nonatomic, copy) NSString* locationName; //the name of the location
 
 @property (nonatomic, copy) NSString* host;
+@property (nonatomic, strong) PFUser* hostUser;
 
 @property (nonatomic, strong) NSDate* startDate;
 @property (nonatomic, strong) NSDate* endDate;

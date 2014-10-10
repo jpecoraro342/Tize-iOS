@@ -41,13 +41,13 @@
     
     UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneAddingFriends)];
     
-    [self.navigationBar setBarTintColor:kNavBarColor];
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
     navItem.titleView = kNavBarTitleView;
     navItem.rightBarButtonItem = done;
     navItem.leftBarButtonItem = cancel;
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationBar setTintColor:kNavBarTintColor];
+    [self.navigationBar setBarTintColor:kNavBarColor];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
