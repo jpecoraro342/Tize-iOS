@@ -40,7 +40,7 @@
 -(void)setNavItems {
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.eventName];
     [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : kNavBarTintColor}];
+    [self.navigationBar setTitleTextAttributes:kNavBarTitleDictionary];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {

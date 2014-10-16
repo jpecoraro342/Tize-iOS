@@ -92,6 +92,8 @@
     [self.navigationBar setBarTintColor:kNavBarColor];
     [self.navigationBar setTintColor:kNavBarTintColor];
     
+    [self.navigationBar setTitleTextAttributes:kNavBarTitleDictionary];
+    
     self.eventTypeLabel.text = @"Create Event";
 }
 
@@ -137,28 +139,43 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 8;
+    switch (section) {
+        case 0:
+            return 8;
+        case 1:
+            return 1;
+    }
+    return 0;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
-    [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
-    [titleLabel setTextColor:[UIColor darkGrayColor]];
     
-    //set title label text
-    
-    [headerView addSubview:titleLabel];
+    switch (section) {
+        case 0:
+            [headerView setBackgroundColor:[UIColor lightGrayColor]];
+            break;
+        case 1:
+            [headerView setBackgroundColor:[UIColor colorWithRed:244/255.0f green:244/255.0f blue:244/255.0f alpha:1]];
+            break;
+    }
+
     return headerView;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    
+    if (indexPath.section == 1) {
+        [cell addSubview:[self deleteButton]];
+        return cell;
+    }
+    
     UITextField *inputTextfield = [[UITextField alloc] initWithFrame:CGRectMake(10, 12, 310, 28)];
     inputTextfield.delegate = self;
     inputTextfield.borderStyle = UITextBorderStyleNone;
@@ -261,11 +278,30 @@
     [self.view endEditing:YES];
 }
 
+#pragma mark - Views
+
+-(UIButton*)deleteButton {
+    UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    [deleteButton setBackgroundColor:[UIColor colorWithRed:230/255.0f green:30/255.0f blue:30/255.0f alpha:1]];
+    [deleteButton setTitle:@"Delete Event" forState:UIControlStateNormal];
+    [deleteButton addTarget:self action:@selector(deleteEvent:) forControlEvents:UIControlEventTouchUpInside];
+    
+    return deleteButton;
+}
+
 #pragma mark Picker View
 
 -(void)setDatePickerDate:(UIDatePicker *)pickerView {
-    [self.event setStartDate:self.startDatePicker.date];
-    [self.event setEndDate:self.endDatePicker.date];
+    NSDate *date = self.startDatePicker.date;
+    NSDate *endDate = self.endDatePicker.date;
+    
+    if ([date compare:endDate] == NSOrderedDescending) {
+        endDate = [date dateByAddingTimeInterval:60*60];
+        self.endDatePicker.date = endDate;
+    }
+    
+    [self.event setStartDate:date];
+    [self.event setEndDate:endDate];
     
     [self.eventStartTimeLabel setText:self.event.startTime];
     [self.eventEndTimeLabel setText:self.event.endTime];
@@ -305,8 +341,9 @@
 }
 
 - (IBAction)deleteEvent:(id)sender {
-    [self.event deleteInBackground];
+    //TODO:Show Warning
     [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
+    [self.event deleteInBackground];
 }
 
 -(void)inviteFriends {
@@ -337,8 +374,8 @@
         return NO;
     if (![self validateEmpty:self.eventLocationTextField.text withMessage:@"Event location cannot be blank"])
         return NO;
-    if (![self validateEmpty:self.eventDescriptionTextView.text withMessage:@"Event description cannot be blank!"])
-        return NO;
+    //if (![self validateEmpty:self.eventDescriptionTextView.text withMessage:@"Event description cannot be blank!"])
+       // return NO;
     if (![self validateStartBeforeEnd])
         return NO;
     

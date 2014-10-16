@@ -54,7 +54,7 @@
     
     [self setNavItems];
     [self.navigationBar setBarTintColor:kNavBarColor];
-    [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : kNavBarTintColor}];
+    [self.navigationBar setTitleTextAttributes:kNavBarTitleDictionary];
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
@@ -69,7 +69,7 @@
 }
 
 -(void)setNavItems {
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.hostUser.username];
+    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.eventName];
     [self.navigationBar setItems:@[navItem]];
 }
 
@@ -112,13 +112,17 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
     [headerView setBackgroundColor:[UIColor lightGrayColor]];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
-    [titleLabel setTextColor:[UIColor darkGrayColor]];
     
     switch (section) {
         case 0: {
-            titleLabel.text = self.event.eventName;
-            [titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+            UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, self.tableView.frame.size.width - 10, 28)];
+            infoLabel.text = @"Host: ";
+            infoLabel.font = [UIFont systemFontOfSize:16];
+            titleLabel.frame = CGRectOffset(titleLabel.frame, 50, 0);
+            titleLabel.text = self.event.hostUser.username;
+            [titleLabel setFont:[UIFont systemFontOfSize:18]];
             _eventNameLabel = titleLabel;
+            [headerView addSubview:infoLabel];
             break;
         }
         case 1:
@@ -154,7 +158,7 @@
             return [self cellForRow:indexPath.row];
         }
         case 1: {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, 200, 44)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, tableView.frame.size.width-44, 44)];
             UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 44, 34)];
             [icon setContentMode:UIViewContentModeScaleAspectFit];
             switch (indexPath.row) {
@@ -190,8 +194,8 @@
 -(UITableViewCell *)cellForRow:(NSInteger)row {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12, 200, 28)];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, 200, 10)];
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12, self.tableView.frame.size.width - 10, 28)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, self.tableView.frame.size.width - 10, 10)];
     [titleLabel setFont:[UIFont systemFontOfSize:12]];
     
     switch (row) {
@@ -258,7 +262,7 @@
 #pragma mark Other
 
 -(void)updateFields {
-    [self.eventNameLabel setText:[self.event eventName]];
+    [self.eventNameLabel setText:[self.event.hostUser username]];
     [self.aboutTextView setText:[self.event eventDetails]];
     [self.locationLabel setText:[self.event locationName]];
     [self.startDateLabel setText:[self.event startTime]];
