@@ -17,4 +17,6 @@
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer*)gesture;
 
+-(void)deleteEvent:(GWTEvent*)event;
+
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class GWTEventsViewController;
+@class GWTEvent;
 
 @interface GWTBasePageViewController : UIViewController
 
@@ -20,5 +21,7 @@
 
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;
+
+-(void)deleteEvent:(GWTEvent*)event;
 
 @end

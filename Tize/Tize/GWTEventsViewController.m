@@ -187,6 +187,7 @@
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
+    [getAllEventsWeAreInvitedTo whereKey:@"endDate" lessThanOrEqualTo:[NSDate date]];
     [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
@@ -229,6 +230,7 @@
     
     [getAllEventsFromOrganizations includeKey:@"hostUser"];
     [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
+    [getAllEventsFromOrganizations whereKey:@"endDate" lessThanOrEqualTo:[NSDate date]];
     [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
     [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];
     [getAllEventsFromOrganizations findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
@@ -292,6 +294,10 @@
             }
     }
     return nil;
+}
+
+-(void)deleteEvent:(GWTEvent *)event {
+    [self.myEvents removeObject:event];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -12,7 +12,7 @@
 #import "GWTBasePageViewController.h"
 #import "GWTInviteFriendsViewController.h"
 
-@interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate>
+@interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIActionSheetDelegate>
 
 @property (strong, nonatomic) UILabel *eventTypeLabel;
 @property (strong, nonatomic) UITextField *eventNameTextField;
@@ -48,7 +48,10 @@
         _event = [[GWTEvent alloc] init];
         [_event setHost:[[PFUser currentUser] objectId]];
         [_event setHostUser:[PFUser currentUser]];
-        [_event setStartDate:[NSDate date]];
+        NSDate *startDate = [self nextHourDate:[NSDate date]];
+        NSDate *endDate = [startDate dateByAddingTimeInterval:60*60];
+        [_event setStartDate:startDate];
+        [_event setEndDate:endDate];
     }
     return self;
 }
@@ -75,10 +78,12 @@
     _startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [self.startDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
+    _startDatePicker.date = self.event.startDate;
     
     _endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [self.endDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
+    _endDatePicker.date = self.event.endDate;
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
     
@@ -284,7 +289,7 @@
     UIButton *deleteButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
     [deleteButton setBackgroundColor:[UIColor colorWithRed:230/255.0f green:30/255.0f blue:30/255.0f alpha:1]];
     [deleteButton setTitle:@"Delete Event" forState:UIControlStateNormal];
-    [deleteButton addTarget:self action:@selector(deleteEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [deleteButton addTarget:self action:@selector(showDeleteConfirmation:) forControlEvents:UIControlEventTouchUpInside];
     
     return deleteButton;
 }
@@ -307,7 +312,23 @@
     [self.eventEndTimeLabel setText:self.event.endTime];
 }
 
+#pragma mark action sheet actions
+
+-(void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+        [self deleteEvent];
+    }
+    return;
+}
+
 #pragma mark private methods
+
+- (NSDate*) nextHourDate:(NSDate*)inDate{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *comps = [calendar components: NSEraCalendarUnit|NSYearCalendarUnit| NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit fromDate: inDate];
+    [comps setHour: [comps hour]+1]; // Here you may also need to check if it's the last hour of the day
+    return [calendar dateFromComponents:comps];
+}
 
 -(void)cancelEdit {
     self.shouldSaveChanges = NO;
@@ -340,8 +361,13 @@
     }
 }
 
-- (IBAction)deleteEvent:(id)sender {
-    //TODO:Show Warning
+- (IBAction)showDeleteConfirmation:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Are you sure you want to delete this event? (This cannot be undone)" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"Delete" otherButtonTitles:nil];
+    [actionSheet showInView:self.view];
+}
+
+-(void)deleteEvent {
+    [(GWTBasePageViewController*)self.parentViewController deleteEvent:self.event];
     [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
     [self.event deleteInBackground];
 }

@@ -14,8 +14,7 @@
 
 @property (nonatomic, strong) UILabel *eventNameLabel;
 @property (nonatomic, strong) UILabel *locationLabel;
-@property (nonatomic, strong) UILabel *startDateLabel;
-@property (nonatomic, strong) UILabel *endDateLabel;
+@property (nonatomic, strong) UILabel *dateLabel;
 @property (nonatomic, strong) UITextView *aboutTextView;
 
 @property (nonatomic, strong) UILabel *numAttendingLabel;
@@ -81,11 +80,10 @@
             switch (indexPath.row) {
                 case 0:
                 case 1:
-                case 2:
                     return 44;
-                case 3:
+                case 2:
                     return 120;
-                case 4:
+                case 3:
                     return 60;
             }
         }
@@ -140,7 +138,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 5;
+            return 4;
         case 1:
             return 3;
         case 2:
@@ -206,18 +204,12 @@
             break;
         }
         case 1: {
-            [titleLabel setText:@"Start Time:"];
-            _startDateLabel = infoLabel;
-            [infoLabel setText:[self.event startTime]];
+            [titleLabel setText:@"Time:"];
+            _dateLabel = infoLabel;
+            [self setDateLabelText];
             break;
         }
         case 2: {
-            [titleLabel setText:@"End Time:"];
-            _endDateLabel = infoLabel;
-            [infoLabel setText:[self.event endTime]];
-            break;
-        }
-        case 3: {
             [titleLabel setText:@"About:"];
             _aboutTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
             [_aboutTextView setText:[self.event eventDetails]];
@@ -227,7 +219,7 @@
             [cell addSubview:_aboutTextView];
             return cell;
         }
-        case 4: {
+        case 3: {
             CGFloat width = self.tableView.frame.size.width/3;
             _attendingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 45)];
             [self.attendingButton setBackgroundImage:[UIImage imageWithColor:kGreenColor] forState:UIControlStateNormal];
@@ -265,14 +257,17 @@
     [self.eventNameLabel setText:[self.event.hostUser username]];
     [self.aboutTextView setText:[self.event eventDetails]];
     [self.locationLabel setText:[self.event locationName]];
-    [self.startDateLabel setText:[self.event startTime]];
-    [self.endDateLabel setText:[self.event startTime]];
+    [self setDateLabelText];
 }
 
 -(void)updateAttendingLabels {
     [self.attendingLabel setText:[NSString stringWithFormat:@"Attending (%zd)", self.usersAttending]];
     [self.maybeAttendingLabel setText:[NSString stringWithFormat:@"Maybe (%zd)", self.usersMaybeAttending]];
     [self.notAttendingLabel setText:[NSString stringWithFormat:@"Declined (%zd)", self.usersNotAttending]];
+}
+
+-(void)setDateLabelText {
+    [self.dateLabel setText:[NSString stringWithFormat:@"%@ - %@", [self.event startTime], [self.event endTime]]];
 }
 
 -(void)queryAttendingStatus {
