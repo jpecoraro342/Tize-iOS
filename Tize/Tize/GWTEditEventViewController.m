@@ -74,6 +74,7 @@
     self.createEventButton.titleLabel.text = @"Update Event";
     
     [self updateFields];
+    //TODO:Update the selected icon
 }
 
 - (void)viewDidLoad {
@@ -319,6 +320,7 @@
     UICollectionViewCell *cell = [self.iconCollectionView cellForItemAtIndexPath:indexPath];
     [cell setSelected:YES];
     self.event.icon = self.iconArray[indexPath.row];
+    NSLog(@"%@ Icon Selected", self.iconArray[indexPath.row]);
 }
 
 #pragma mark - Views

@@ -7,10 +7,12 @@
 //
 
 #import "GWTEvent.h"
+#import "NSDateFormatter+RelativeDateFormat.h"
 #import <Parse/PFObject+Subclass.h>
 
-@implementation GWTEvent
-
+@implementation GWTEvent {
+    NSDateFormatter *_dateFormatter;
+}
 
 @dynamic eventName;
 @dynamic locationName;
@@ -24,17 +26,23 @@
 
 //Converts the date string into a readable time format, that is also relative to today
 -(NSString*)startTime {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [dateFormatter stringFromDate:self.startDate];
+    if (!_dateFormatter) {
+        [self initDateFormatter];
+    }
+    return [_dateFormatter relativeStringFromDateIfPossible:self.startDate];
 }
 
 -(NSString*)endTime {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterShortStyle];
-    return [dateFormatter stringFromDate:self.endDate];
+    if (!_dateFormatter) {
+        [self initDateFormatter];
+    }
+    return [_dateFormatter relativeStringFromDateIfPossible:self.endDate];
+}
+
+-(void)initDateFormatter {
+    _dateFormatter = [[NSDateFormatter alloc] init];
+    [_dateFormatter setDateFormat:@"MMM dd HH:mm a"];
+    //[_dateFormatter setDoesRelativeDateFormatting:YES];
 }
 
 +(NSString*)parseClassName {

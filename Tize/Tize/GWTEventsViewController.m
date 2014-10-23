@@ -92,7 +92,7 @@
     if ([_cellIsSelected[indexPath.section][indexPath.row] boolValue]) {
         return 120;
     }
-    return 64;
+    return 66;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -30,6 +30,7 @@
 		7C95A61E19F893F8000D805C /* GWTIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A61D19F893F8000D805C /* GWTIconCell.xib */; };
 		7C95A62119F897FE000D805C /* food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A61F19F897FE000D805C /* food@2x.png */; };
 		7C95A62219F897FE000D805C /* handshake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A62019F897FE000D805C /* handshake@2x.png */; };
+		7C95A62519F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C95A62419F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m */; };
 		7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */; };
 		7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */; };
 		7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */; };
@@ -128,6 +129,8 @@
 		7C95A61D19F893F8000D805C /* GWTIconCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTIconCell.xib; sourceTree = "<group>"; };
 		7C95A61F19F897FE000D805C /* food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "food@2x.png"; sourceTree = "<group>"; };
 		7C95A62019F897FE000D805C /* handshake@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handshake@2x.png"; sourceTree = "<group>"; };
+		7C95A62319F89F98000D805C /* NSDateFormatter+RelativeDateFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+RelativeDateFormat.h"; sourceTree = "<group>"; };
+		7C95A62419F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+RelativeDateFormat.m"; sourceTree = "<group>"; };
 		7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTBasePageViewController.h; sourceTree = "<group>"; };
 		7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTBasePageViewController.m; sourceTree = "<group>"; };
 		7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTExtendedNSLog.h; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */,
 				7CD793AB19AFA53200357D7A /* UIImage+Color.h */,
 				7CD793AC19AFA53200357D7A /* UIImage+Color.m */,
+				7C95A62319F89F98000D805C /* NSDateFormatter+RelativeDateFormat.h */,
+				7C95A62419F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -670,6 +675,7 @@
 				7C4CACD019D8BD8500EC31C9 /* GWTInviteFriendsViewController.m in Sources */,
 				7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */,
 				7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */,
+				7C95A62519F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
 				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,
 				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
