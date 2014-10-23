@@ -11,8 +11,9 @@
 #import "GWTFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTInviteFriendsViewController.h"
+#import "GWTIconCell.h"
 
-@interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIActionSheetDelegate>
+@interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 
 @property (strong, nonatomic) UILabel *eventTypeLabel;
 @property (strong, nonatomic) UITextField *eventNameTextField;
@@ -36,6 +37,10 @@
 
 @property (nonatomic, strong) NSArray *peopleToInvite;
 
+@property (nonatomic, strong) UICollectionView *iconCollectionView;
+
+@property (nonatomic, strong) NSArray *iconArray;
+
 @end
 
 @implementation GWTEditEventViewController
@@ -43,6 +48,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.iconArray = kIconImages;
         self.isEdit = NO;
         self.shouldSaveChanges = YES;
         _event = [[GWTEvent alloc] init];
@@ -52,6 +58,7 @@
         NSDate *endDate = [startDate dateByAddingTimeInterval:60*60];
         [_event setStartDate:startDate];
         [_event setEndDate:endDate];
+        [_event setIcon:self.iconArray[0]];
     }
     return self;
 }
@@ -125,6 +132,8 @@
                 case 6:
                     return 120;
                 case 7:
+                    return 80;
+                case 8:
                     return 55;
             }
         }
@@ -150,7 +159,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 8;
+            return 9;
         case 1:
             return 1;
     }
@@ -241,12 +250,19 @@
                 break;
             }
             case 7: {
+                cell = [self collectionViewTableCell];
+                inputTextfield = nil;
+                break;
+            }
+            case 8: {
                 cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 55)];
                 titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, cell.frame.size.width - 20, 55)];
                 titleLabel.text = @"Invite Friends";
                 inputTextfield = nil;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                break;
+                
             }
         }
     
@@ -259,7 +275,7 @@
     NSLog(@"Cell Selected: %zd", indexPath.row);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     //add friends
-    if (indexPath.row == 7) {
+    if (indexPath.row == 8) {
         [self inviteFriends];
         return;
     }
@@ -283,6 +299,28 @@
     [self.view endEditing:YES];
 }
 
+#pragma mark - Collection View
+
+-(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return [self.iconArray count];
+}
+
+-(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    GWTIconCell *cell = (GWTIconCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
+    
+    cell.imageView.image = [UIImage imageNamed:self.iconArray[indexPath.row]];
+    
+    return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [self.iconCollectionView cellForItemAtIndexPath:indexPath];
+    [cell setSelected:YES];
+    self.event.icon = self.iconArray[indexPath.row];
+}
+
 #pragma mark - Views
 
 -(UIButton*)deleteButton {
@@ -292,6 +330,28 @@
     [deleteButton addTarget:self action:@selector(showDeleteConfirmation:) forControlEvents:UIControlEventTouchUpInside];
     
     return deleteButton;
+}
+
+-(UITableViewCell *)collectionViewTableCell {
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 80)];
+    if (self.iconCollectionView) {
+        [cell.contentView addSubview:self.iconCollectionView];
+    }
+    else {
+        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+        layout.sectionInset = UIEdgeInsetsMake(5, 5, 5, 5);
+        layout.itemSize = CGSizeMake(68, 68);
+        layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        self.iconCollectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 80) collectionViewLayout:layout];
+        UINib *cellNib = [UINib nibWithNibName:@"GWTIconCell" bundle:nil];
+        [self.iconCollectionView registerNib:cellNib forCellWithReuseIdentifier:@"collectionCell"];
+        self.iconCollectionView.backgroundColor = [UIColor whiteColor];
+        self.iconCollectionView.showsHorizontalScrollIndicator = NO;
+        self.iconCollectionView.dataSource = self;
+        self.iconCollectionView.delegate = self;
+        [cell.contentView addSubview:self.iconCollectionView];
+    }
+    return cell;
 }
 
 #pragma mark Picker View

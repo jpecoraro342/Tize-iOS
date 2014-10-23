@@ -26,6 +26,10 @@
 		7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */; };
 		7C6F11FC19D36BD50080E636 /* GWTSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */; };
 		7C723AB119AF9B0500003825 /* logo_nav_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C723AB019AF9B0500003825 /* logo_nav_bar@2x.png */; };
+		7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C95A61B19F89385000D805C /* GWTIconCell.m */; };
+		7C95A61E19F893F8000D805C /* GWTIconCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A61D19F893F8000D805C /* GWTIconCell.xib */; };
+		7C95A62119F897FE000D805C /* food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A61F19F897FE000D805C /* food@2x.png */; };
+		7C95A62219F897FE000D805C /* handshake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C95A62019F897FE000D805C /* handshake@2x.png */; };
 		7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */; };
 		7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9778C119749D96008BFF66 /* GWTExtendedNSLog.m */; };
 		7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C977949197AD83E008BFF66 /* GWTBasePageViewController.xib */; };
@@ -57,6 +61,21 @@
 		7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA019512628008B2666 /* GWTEvent.m */; };
 		7C9A5CA5195126A3008B2666 /* GWTEventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA3195126A3008B2666 /* GWTEventCell.m */; };
 		7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */; };
+		7C9EE79019F854F900E2305F /* coffee@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE77E19F854F900E2305F /* coffee@2x.png */; };
+		7C9EE79119F854F900E2305F /* drinks@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE77F19F854F900E2305F /* drinks@2x.png */; };
+		7C9EE79219F854F900E2305F /* entertainment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78019F854F900E2305F /* entertainment@2x.png */; };
+		7C9EE79519F854F900E2305F /* heart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78319F854F900E2305F /* heart@2x.png */; };
+		7C9EE79719F854F900E2305F /* meeting@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78519F854F900E2305F /* meeting@2x.png */; };
+		7C9EE79819F854F900E2305F /* movie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78619F854F900E2305F /* movie@2x.png */; };
+		7C9EE79919F854F900E2305F /* music@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78719F854F900E2305F /* music@2x.png */; };
+		7C9EE79A19F854F900E2305F /* nature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78819F854F900E2305F /* nature@2x.png */; };
+		7C9EE79B19F854F900E2305F /* outdoors@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78919F854F900E2305F /* outdoors@2x.png */; };
+		7C9EE79C19F854F900E2305F /* party@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78A19F854F900E2305F /* party@2x.png */; };
+		7C9EE79D19F854F900E2305F /* present@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78B19F854F900E2305F /* present@2x.png */; };
+		7C9EE79E19F854F900E2305F /* sports@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78C19F854F900E2305F /* sports@2x.png */; };
+		7C9EE79F19F854F900E2305F /* study@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78D19F854F900E2305F /* study@2x.png */; };
+		7C9EE7A019F854F900E2305F /* tize@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78E19F854F900E2305F /* tize@2x.png */; };
+		7C9EE7A119F854F900E2305F /* tv@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C9EE78F19F854F900E2305F /* tv@2x.png */; };
 		7CD793A319AF9FFC00357D7A /* plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A119AF9FFC00357D7A /* plus@2x.png */; };
 		7CD793A419AF9FFC00357D7A /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A219AF9FFC00357D7A /* settings@2x.png */; };
 		7CD793A819AFA37B00357D7A /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7CD793A519AFA37B00357D7A /* checkmark@2x.png */; };
@@ -104,6 +123,11 @@
 		7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSettingsViewController.m; sourceTree = "<group>"; };
 		7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTSettingsViewController.xib; sourceTree = "<group>"; };
 		7C723AB019AF9B0500003825 /* logo_nav_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo_nav_bar@2x.png"; sourceTree = "<group>"; };
+		7C95A61A19F89385000D805C /* GWTIconCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTIconCell.h; sourceTree = "<group>"; };
+		7C95A61B19F89385000D805C /* GWTIconCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTIconCell.m; sourceTree = "<group>"; };
+		7C95A61D19F893F8000D805C /* GWTIconCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTIconCell.xib; sourceTree = "<group>"; };
+		7C95A61F19F897FE000D805C /* food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "food@2x.png"; sourceTree = "<group>"; };
+		7C95A62019F897FE000D805C /* handshake@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "handshake@2x.png"; sourceTree = "<group>"; };
 		7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTBasePageViewController.h; sourceTree = "<group>"; };
 		7C9778B81971C7BB008BFF66 /* GWTBasePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTBasePageViewController.m; sourceTree = "<group>"; };
 		7C9778C019749D96008BFF66 /* GWTExtendedNSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTExtendedNSLog.h; sourceTree = "<group>"; };
@@ -147,6 +171,21 @@
 		7C9A5CA2195126A3008B2666 /* GWTEventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventCell.h; sourceTree = "<group>"; };
 		7C9A5CA3195126A3008B2666 /* GWTEventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventCell.m; sourceTree = "<group>"; };
 		7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventCell.xib; sourceTree = "<group>"; };
+		7C9EE77E19F854F900E2305F /* coffee@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coffee@2x.png"; sourceTree = "<group>"; };
+		7C9EE77F19F854F900E2305F /* drinks@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "drinks@2x.png"; sourceTree = "<group>"; };
+		7C9EE78019F854F900E2305F /* entertainment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "entertainment@2x.png"; sourceTree = "<group>"; };
+		7C9EE78319F854F900E2305F /* heart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@2x.png"; sourceTree = "<group>"; };
+		7C9EE78519F854F900E2305F /* meeting@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "meeting@2x.png"; sourceTree = "<group>"; };
+		7C9EE78619F854F900E2305F /* movie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "movie@2x.png"; sourceTree = "<group>"; };
+		7C9EE78719F854F900E2305F /* music@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "music@2x.png"; sourceTree = "<group>"; };
+		7C9EE78819F854F900E2305F /* nature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nature@2x.png"; sourceTree = "<group>"; };
+		7C9EE78919F854F900E2305F /* outdoors@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outdoors@2x.png"; sourceTree = "<group>"; };
+		7C9EE78A19F854F900E2305F /* party@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "party@2x.png"; sourceTree = "<group>"; };
+		7C9EE78B19F854F900E2305F /* present@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "present@2x.png"; sourceTree = "<group>"; };
+		7C9EE78C19F854F900E2305F /* sports@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sports@2x.png"; sourceTree = "<group>"; };
+		7C9EE78D19F854F900E2305F /* study@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "study@2x.png"; sourceTree = "<group>"; };
+		7C9EE78E19F854F900E2305F /* tize@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tize@2x.png"; sourceTree = "<group>"; };
+		7C9EE78F19F854F900E2305F /* tv@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tv@2x.png"; sourceTree = "<group>"; };
 		7CD793A119AF9FFC00357D7A /* plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus@2x.png"; sourceTree = "<group>"; };
 		7CD793A219AF9FFC00357D7A /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		7CD793A519AFA37B00357D7A /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkmark@2x.png"; sourceTree = "<group>"; };
@@ -387,13 +426,41 @@
 				7C9A5CA2195126A3008B2666 /* GWTEventCell.h */,
 				7C9A5CA3195126A3008B2666 /* GWTEventCell.m */,
 				7C9A5CA4195126A3008B2666 /* GWTEventCell.xib */,
+				7C95A61A19F89385000D805C /* GWTIconCell.h */,
+				7C95A61B19F89385000D805C /* GWTIconCell.m */,
+				7C95A61D19F893F8000D805C /* GWTIconCell.xib */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		7C9EE77D19F854F900E2305F /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				7C95A61F19F897FE000D805C /* food@2x.png */,
+				7C95A62019F897FE000D805C /* handshake@2x.png */,
+				7C9EE77E19F854F900E2305F /* coffee@2x.png */,
+				7C9EE77F19F854F900E2305F /* drinks@2x.png */,
+				7C9EE78019F854F900E2305F /* entertainment@2x.png */,
+				7C9EE78319F854F900E2305F /* heart@2x.png */,
+				7C9EE78519F854F900E2305F /* meeting@2x.png */,
+				7C9EE78619F854F900E2305F /* movie@2x.png */,
+				7C9EE78719F854F900E2305F /* music@2x.png */,
+				7C9EE78819F854F900E2305F /* nature@2x.png */,
+				7C9EE78919F854F900E2305F /* outdoors@2x.png */,
+				7C9EE78A19F854F900E2305F /* party@2x.png */,
+				7C9EE78B19F854F900E2305F /* present@2x.png */,
+				7C9EE78C19F854F900E2305F /* sports@2x.png */,
+				7C9EE78D19F854F900E2305F /* study@2x.png */,
+				7C9EE78E19F854F900E2305F /* tize@2x.png */,
+				7C9EE78F19F854F900E2305F /* tv@2x.png */,
+			);
+			path = Icons;
 			sourceTree = "<group>";
 		};
 		7CE3E2A619ACF454000892B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C9EE77D19F854F900E2305F /* Icons */,
 				7CD793A519AFA37B00357D7A /* checkmark@2x.png */,
 				7CD793A619AFA37B00357D7A /* questionmark@2x.png */,
 				7CD793A719AFA37B00357D7A /* x@2x.png */,
@@ -488,21 +555,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C6F11FC19D36BD50080E636 /* GWTSettingsViewController.xib in Resources */,
+				7C9EE79B19F854F900E2305F /* outdoors@2x.png in Resources */,
+				7C9EE79119F854F900E2305F /* drinks@2x.png in Resources */,
 				7C3B5631195D02CA008FD5F5 /* GWTEditEventViewController.xib in Resources */,
 				7CD793A419AF9FFC00357D7A /* settings@2x.png in Resources */,
 				7C9A5C5119501FBC008B2666 /* InfoPlist.strings in Resources */,
 				7CD793A819AFA37B00357D7A /* checkmark@2x.png in Resources */,
 				7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */,
+				7C9EE7A119F854F900E2305F /* tv@2x.png in Resources */,
+				7C9EE79219F854F900E2305F /* entertainment@2x.png in Resources */,
+				7C9EE79719F854F900E2305F /* meeting@2x.png in Resources */,
 				7C97794A197AD83E008BFF66 /* GWTBasePageViewController.xib in Resources */,
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
+				7C9EE79D19F854F900E2305F /* present@2x.png in Resources */,
 				7CD793A919AFA37B00357D7A /* questionmark@2x.png in Resources */,
 				7C3B5636195D0367008FD5F5 /* GWTFriendsTableViewController.xib in Resources */,
+				7C9EE79F19F854F900E2305F /* study@2x.png in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
 				7CD793AA19AFA37B00357D7A /* x@2x.png in Resources */,
+				7C95A62119F897FE000D805C /* food@2x.png in Resources */,
+				7C95A62219F897FE000D805C /* handshake@2x.png in Resources */,
 				7C4CACCC19D894D500EC31C9 /* GWTAddFriendViewController.xib in Resources */,
+				7C9EE79A19F854F900E2305F /* nature@2x.png in Resources */,
+				7C9EE79C19F854F900E2305F /* party@2x.png in Resources */,
+				7C95A61E19F893F8000D805C /* GWTIconCell.xib in Resources */,
+				7C9EE79819F854F900E2305F /* movie@2x.png in Resources */,
 				7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */,
+				7C9EE79019F854F900E2305F /* coffee@2x.png in Resources */,
+				7C9EE79919F854F900E2305F /* music@2x.png in Resources */,
 				7C4CACD119D8BD8500EC31C9 /* GWTInviteFriendsViewController.xib in Resources */,
+				7C9EE7A019F854F900E2305F /* tize@2x.png in Resources */,
 				7CD793A319AF9FFC00357D7A /* plus@2x.png in Resources */,
+				7C9EE79E19F854F900E2305F /* sports@2x.png in Resources */,
+				7C9EE79519F854F900E2305F /* heart@2x.png in Resources */,
 				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
 				7C723AB119AF9B0500003825 /* logo_nav_bar@2x.png in Resources */,
 			);
@@ -586,6 +671,7 @@
 				7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */,
 				7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
+				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,
 				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
 				7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */,
 				7C9A5C5319501FBC008B2666 /* main.m in Sources */,

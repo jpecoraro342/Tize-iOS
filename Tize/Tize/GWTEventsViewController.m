@@ -92,7 +92,7 @@
     if ([_cellIsSelected[indexPath.section][indexPath.row] boolValue]) {
         return 120;
     }
-    return 60;
+    return 64;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -165,6 +165,7 @@
     cell.eventTimeLabel.text = tempEvent.startTime;
     cell.eventLocationLabel.text = tempEvent.locationName;
     cell.eventHostLabel.text = tempEvent.hostUser.username;
+    cell.eventImageView.image = [UIImage imageNamed:tempEvent.icon];
     
     return cell;
 }

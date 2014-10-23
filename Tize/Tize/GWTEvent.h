@@ -24,6 +24,8 @@
 
 @property (nonatomic, strong) NSString* eventDetails;
 
+@property (nonatomic, copy) NSString* icon;
+
 +(NSString*)parseClassName;
 -(NSString*)startTime;
 -(NSString*)endTime;

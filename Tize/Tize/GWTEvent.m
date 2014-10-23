@@ -18,6 +18,7 @@
 @dynamic hostUser;
 @dynamic startDate;
 @dynamic endDate;
+@dynamic icon;
 @dynamic eventDetails;
 @synthesize address;
 
