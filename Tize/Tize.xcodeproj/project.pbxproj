@@ -54,7 +54,6 @@
 		7C9A5C801950239B008B2666 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C7F1950239B008B2666 /* MobileCoreServices.framework */; };
 		7C9A5C82195023A9008B2666 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C81195023A9008B2666 /* QuartzCore.framework */; };
 		7C9A5C84195023B2008B2666 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C83195023B2008B2666 /* Security.framework */; };
-		7C9A5C86195023BF008B2666 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C85195023BF008B2666 /* StoreKit.framework */; };
 		7C9A5C88195023D0008B2666 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */; };
 		7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9419512112008B2666 /* GWTLoginViewController.m */; };
 		7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C9919512132008B2666 /* GWTEventsViewController.m */; };
@@ -162,7 +161,6 @@
 		7C9A5C7F1950239B008B2666 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		7C9A5C81195023A9008B2666 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		7C9A5C83195023B2008B2666 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		7C9A5C85195023BF008B2666 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		7C9A5C9319512112008B2666 /* GWTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTLoginViewController.h; sourceTree = "<group>"; };
 		7C9A5C9419512112008B2666 /* GWTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTLoginViewController.m; sourceTree = "<group>"; };
@@ -211,7 +209,6 @@
 				7C2CF5EA196BA2BD002AE0C6 /* Social.framework in Frameworks */,
 				7C2CF5E8196BA2B8002AE0C6 /* Twitter.framework in Frameworks */,
 				7C9A5C88195023D0008B2666 /* SystemConfiguration.framework in Frameworks */,
-				7C9A5C86195023BF008B2666 /* StoreKit.framework in Frameworks */,
 				7C9A5C84195023B2008B2666 /* Security.framework in Frameworks */,
 				7C9A5C82195023A9008B2666 /* QuartzCore.framework in Frameworks */,
 				7C9A5C801950239B008B2666 /* MobileCoreServices.framework in Frameworks */,
@@ -342,7 +339,6 @@
 				7C2CF5E9196BA2BD002AE0C6 /* Social.framework */,
 				7C2CF5E7196BA2B8002AE0C6 /* Twitter.framework */,
 				7C9A5C87195023D0008B2666 /* SystemConfiguration.framework */,
-				7C9A5C85195023BF008B2666 /* StoreKit.framework */,
 				7C9A5C83195023B2008B2666 /* Security.framework */,
 				7C9A5C81195023A9008B2666 /* QuartzCore.framework */,
 				7C9A5C7F1950239B008B2666 /* MobileCoreServices.framework */,
@@ -530,6 +526,11 @@
 				TargetAttributes = {
 					7C9A5C4219501FBC008B2666 = {
 						DevelopmentTeam = E6F2F2QY8V;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 0;
+							};
+						};
 					};
 					7C9A5C5D19501FBC008B2666 = {
 						TestTargetID = 7C9A5C4219501FBC008B2666;
@@ -824,7 +825,7 @@
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383fb1c3-829b-4774-be3e-0b826376139d";
+				PROVISIONING_PROFILE = "9a5917ac-d97f-4b86-b0cd-68ed36f5f315";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -847,7 +848,7 @@
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "383fb1c3-829b-4774-be3e-0b826376139d";
+				PROVISIONING_PROFILE = "9a5917ac-d97f-4b86-b0cd-68ed36f5f315";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

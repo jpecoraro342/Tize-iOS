@@ -188,7 +188,8 @@
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
-    [getAllEventsWeAreInvitedTo whereKey:@"endDate" lessThanOrEqualTo:[NSDate date]];
+    [getAllEventsWeAreInvitedTo whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
+    [getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
     [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
@@ -208,7 +209,7 @@
     PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
     [getAllEventsForCurrentUser includeKey:@"hostUser"];
     [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
-    [getAllEventsForCurrentUser orderByDescending:@"date"];
+    [getAllEventsForCurrentUser orderByAscending:@"startDate"];
     [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
@@ -231,9 +232,10 @@
     
     [getAllEventsFromOrganizations includeKey:@"hostUser"];
     [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
-    [getAllEventsFromOrganizations whereKey:@"endDate" lessThanOrEqualTo:[NSDate date]];
+    [getAllEventsFromOrganizations whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
     [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
     [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];
+    [getAllEventsFromOrganizations orderByAscending:@"startDate"];
     [getAllEventsFromOrganizations findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {

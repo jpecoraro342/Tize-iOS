@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (strong, nonatomic) NSMutableArray *everybody;
+@property (strong, nonatomic) NSMutableArray *following;
 
 @end
 
@@ -28,6 +29,7 @@
     if (self) {
         _everybody = [[NSMutableArray alloc] init];
         [self queryEverybody];
+        [self queryFollowing];
     }
     return self;
 }
@@ -97,8 +99,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    [self addFriendAtIndex:indexPath.row];
+    if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        [self removeFriendAtIndexPath:indexPath];
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [self addFriendAtIndexPath:indexPath];
+    }
 }
 
 #pragma mark query
@@ -117,17 +125,73 @@
                 }
             }
             [self.tableView reloadData];
+            [self checkFollowing];
         }
     }];
 }
 
+-(void)queryFollowing {
+    //getAllUsers we are already following
+    PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
+    PFQuery *getAllUsersWeAreFollowing = [PFUser query];
+    
+    [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
+    [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            self.following = [objects mutableCopy];
+            [self checkFollowing];
+        }
+    }];
+}
+
+-(void)queryAllFollowingUs {
+    //getAllUsers we are already following
+    PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
+    PFQuery *getAllUsersFollowingUs = [PFUser query];
+    
+    [getAllFollowingEvents whereKey:@"following" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersFollowingUs whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
+    [getAllUsersFollowingUs findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            self.following = [objects mutableCopy];
+            [self checkFollowing];
+        }
+    }];
+}
+
+-(void)checkFollowing {
+    for (PFUser* friend in self.following) {
+        NSInteger indexOfFriend = [self indexOfUser:friend];
+        if (indexOfFriend < [self.everybody count]) {
+            UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:indexOfFriend inSection:0]];
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
+    }
+}
+
+-(NSInteger)indexOfUser:(PFUser*)friend {
+    for (int i = 0; i < [self.everybody count]; i++) {
+        //NSLog(@"\n%i \n%i", [[self.everybody[i] objectId] hash], [[friend objectId] hash])
+        if ([[self.everybody[i] objectId] hash] == [[friend objectId] hash]) {
+            return i;
+        }
+    }
+    
+    return NSNotFound;
+}
+
 #pragma mark Other
 
--(void)addFriendAtIndex:(NSInteger)index {
+-(void)addFriendAtIndexPath:(NSIndexPath*)indexPath {
     PFObject *following = [PFObject objectWithClassName:@"Following"];
     following[@"user"] = [[PFUser currentUser] objectId];
-    following[@"following"] = [[self.everybody objectAtIndex:index] objectId];
+    following[@"following"] = [[self.everybody objectAtIndex:indexPath.row] objectId];
     [following saveInBackground];
+}
+
+-(void)removeFriendAtIndexPath:(NSIndexPath*) indexPath {
+    //TODO:Write the code to remove a friend
 }
 
 -(void)cancelAddingFriends {

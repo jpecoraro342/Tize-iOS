@@ -125,6 +125,21 @@
     }];
 }
 
+-(void)queryInvited {
+    PFQuery *eventUsers = [PFQuery queryWithClassName:@"EventUsers"];
+    //[eventUsers whereKey:@"eventID" equalTo:self.event.objectId];
+    PFQuery *getAllUsersInvited = [PFUser query];
+    [getAllUsersInvited whereKey:@"objectId" matchesKey:@"userID" inQuery:eventUsers];
+    [getAllUsersInvited findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            for (PFUser *object in objects) {
+                
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
+
 #pragma mark Other
 
 -(void)addFriendAtIndex:(NSInteger)index {
