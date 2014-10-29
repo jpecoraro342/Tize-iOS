@@ -34,7 +34,7 @@
 #define kNavBarTitleDictionary @{NSForegroundColorAttributeName : kNavBarTintColor, NSFontAttributeName : [UIFont boldSystemFontOfSize:20]}
 #define kNavBarTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_nav_bar.png"]]
 
-#define kIconImages @[@"tize", @"sports", @"entertainment", @"heart", @"party", @"outdoors", @"meeting", @"handshake", @"drinks", @"nature", @"study", @"coffee", @"present", @"movie", @"tv", @"music", @"food"]
+#define kIconImages @[@"tize", @"sports", @"trophy", @"entertainment", @"heart", @"party", @"outdoors", @"meeting", @"handshake", @"drinks", @"nature", @"study", @"coffee", @"present", @"movie", @"tv", @"music", @"food"]
 
 //Logging
 #ifdef DEBUG

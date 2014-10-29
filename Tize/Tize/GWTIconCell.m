@@ -10,4 +10,8 @@
 
 @implementation GWTIconCell
 
+-(void)setSelected:(BOOL)selected {
+    self.checkMark.hidden = !selected;
+}
+
 @end

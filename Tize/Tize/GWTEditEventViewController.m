@@ -74,7 +74,7 @@
     self.createEventButton.titleLabel.text = @"Update Event";
     
     [self updateFields];
-    //TODO:Update the selected icon
+    [self selectIcon];
 }
 
 - (void)viewDidLoad {
@@ -323,6 +323,14 @@
     NSLog(@"%@ Icon Selected", self.iconArray[indexPath.row]);
 }
 
+-(void)selectIcon {
+    for (int i = 0; i < [self.iconArray count]; i++) {
+        if ([self.event.icon isEqualToString:self.iconArray[i]]) {
+            [self collectionView:self.iconCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+        }
+    }
+}
+
 #pragma mark - Views
 
 -(UIButton*)deleteButton {
@@ -393,6 +401,7 @@
 }
 
 -(void)cancelEdit {
+    [self.view endEditing:YES];
     self.shouldSaveChanges = NO;
     if (self.isEdit) {
         [(GWTBasePageViewController*)self.parentViewController goForwardToEventsPage];
@@ -403,6 +412,7 @@
 }
 
 - (IBAction)createEvent:(id)sender {
+    [self.view endEditing:YES];
     if ([self validateFields]) {
         [self.event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (!error) {
@@ -505,7 +515,7 @@
         invite[@"eventID"] = event.objectId;
         [eventUserObjects addObject:invite];
     }
-    NSLog(@"\nInviting %d friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
+    NSLog(@"\nInviting %zd friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
     [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"\nFriends successfully invited!\n\n");
