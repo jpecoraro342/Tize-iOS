@@ -31,6 +31,7 @@
 
 @implementation GWTEventsViewController {
     NSMutableArray *_cellIsSelected;
+    NSIndexPath *_indexPathForSwipingCell;
 }
 
 -(instancetype)init {
@@ -79,6 +80,7 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self queryEvents];
 }
 
@@ -254,12 +256,6 @@
     }];
 }
 
-#pragma mark Touch Events
-
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"\nTouches Began \nEvent: %@\n\n", [self getEventForTransitionFromGesture:[touches anyObject]]);
-}
-
 #pragma mark User Management
 
 -(void)addEvent {
@@ -281,19 +277,23 @@
 }
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
-    NSIndexPath *cellIndex = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
-    switch (cellIndex.section) {
+    _indexPathForSwipingCell = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
+    [cell setHighlighted:YES animated:YES];
+    NSLog(@"Highlighting Cell");
+    
+    switch (_indexPathForSwipingCell.section) {
         case 0:
-            if (cellIndex.row < [self.upcomingEvents count]) {
-                return self.upcomingEvents[cellIndex.row];
+            if (_indexPathForSwipingCell.row < [self.upcomingEvents count]) {
+                return self.upcomingEvents[_indexPathForSwipingCell.row];
             }
         case 1:
-            if (cellIndex.row < [self.myEvents count]) {
-                return self.myEvents[cellIndex.row];
+            if (_indexPathForSwipingCell.row < [self.myEvents count]) {
+                return self.myEvents[_indexPathForSwipingCell.row];
             }
         case 2:
-            if (cellIndex.row < [self.promotionalEvents count]) {
-                return self.promotionalEvents[cellIndex.row];
+            if (_indexPathForSwipingCell.row < [self.promotionalEvents count]) {
+                return self.promotionalEvents[_indexPathForSwipingCell.row];
             }
     }
     return nil;
@@ -306,6 +306,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Main Events VC"];
 }
 
 @end

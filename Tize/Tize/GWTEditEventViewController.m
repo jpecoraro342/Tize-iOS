@@ -320,7 +320,7 @@
     UICollectionViewCell *cell = [self.iconCollectionView cellForItemAtIndexPath:indexPath];
     [cell setSelected:YES];
     self.event.icon = self.iconArray[indexPath.row];
-    NSLog(@"%@ Icon Selected", self.iconArray[indexPath.row]);
+    //NSLog(@"%@ Icon Selected", self.iconArray[indexPath.row]);
 }
 
 -(void)selectIcon {
@@ -600,6 +600,10 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Edit Event VC"];
 }
 
 @end

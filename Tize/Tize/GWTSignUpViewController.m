@@ -57,4 +57,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Sign Up Controller"];
+}
+
 @end

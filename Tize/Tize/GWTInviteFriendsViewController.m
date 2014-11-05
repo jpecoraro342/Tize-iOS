@@ -173,4 +173,8 @@
     [super didReceiveMemoryWarning];
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Invite Friends to Event VC"];
+}
+
 @end

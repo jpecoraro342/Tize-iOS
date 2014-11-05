@@ -206,4 +206,9 @@
     [super didReceiveMemoryWarning];
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"List of Friends VC"];
+}
+
+
 @end

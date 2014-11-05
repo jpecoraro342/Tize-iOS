@@ -37,13 +37,13 @@
     [self.currentViewController viewWillDisappear:YES];
     if ([self.currentViewController isEqual:self.mainEventsView]) {
         GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
-        NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
+        //NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
         if (!event) {
             //cancell scrolling
             self.scrollView.scrollEnabled = NO;
             self.scrollView.scrollEnabled = YES;
     
-            NSLog(@"No Event, Don't Scroll");
+            //NSLog(@"No Event, Don't Scroll");
             self.noEventDontScroll = YES;
             return;
         }
@@ -90,7 +90,7 @@
     [self.currentViewController viewDidAppear:YES];
     [self addChildViewController:self.currentViewController];
     
-    NSLog(@"\nPage Changed\nCurrent View Controller:%@\n\n", self.currentViewController);
+    NSLog(@"Page Changed\nCurrent View Controller:%@\n\n", self.currentViewController);
 }
 
 #pragma mark Private
@@ -129,14 +129,14 @@
 -(BOOL)setEditOrDetailEventViewWithEvent:(GWTEvent*)event {
     if ([event.host isEqualToString:[[PFUser currentUser] objectId]]) {
         //we are the owner, show the edit event view controller, hide the detail one (note, removing from superview is probably a better option
-        NSLog(@"\nWe are the event owner: show the edit page\n\n");
+        //NSLog(@"\nWe are the event owner: show the edit page\n\n");
         [[[self.viewControllers objectAtIndex:0] view] setHidden:NO];
         [[[self.viewControllers objectAtIndex:1] view] setHidden:YES];
         return YES;
     }
     else {
         //we are not the owner, we just want the detail view
-        NSLog(@"\nWe are not the event owner: show the detail page\n\n");
+        //NSLog(@"\nWe are not the event owner: show the detail page\n\n");
         [[[self.viewControllers objectAtIndex:0] view] setHidden:YES];
         [[[self.viewControllers objectAtIndex:1] view] setHidden:NO];
         return NO;

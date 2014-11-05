@@ -214,4 +214,8 @@
     [super didReceiveMemoryWarning];
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Add Friends VC"];
+}
+
 @end

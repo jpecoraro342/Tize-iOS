@@ -69,4 +69,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Login View Controller"];
+}
+
 @end

@@ -49,4 +49,8 @@
     return @"Event";
 }
 
+-(NSString*)description {
+    return [NSString stringWithFormat:@"Event Name: %@\nEventHost: %@", self.eventName, self.hostUser.username];
+}
+
 @end
