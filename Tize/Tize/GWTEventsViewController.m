@@ -22,7 +22,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* upcomingEvents;
 @property (strong, nonatomic) NSMutableArray* myEvents;
-@property (strong, nonatomic) NSMutableArray* promotionalEvents;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -106,7 +105,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 2;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -122,9 +121,6 @@
         case 1:
             titleLabel.text = @"My Events";
             break;
-        case 2:
-            titleLabel.text =  @"Promotions";
-            break;
     }
     
     [headerView addSubview:titleLabel];
@@ -137,8 +133,6 @@
             return [self.upcomingEvents count];
         case 1:
             return [self.myEvents count];
-        case 2:
-            return [self.promotionalEvents count];
         default:
             return 0;
     }
@@ -155,10 +149,6 @@
         }
         case 1: {
             tempEvent = [self.myEvents objectAtIndex:indexPath.row];
-            break;
-        }
-        case 2: {
-            tempEvent = [self.promotionalEvents objectAtIndex:indexPath.row];
             break;
         }
     }
@@ -226,34 +216,6 @@
         }
         [self.tableView reloadData];
     }];
-    
-    //get all the events for Organizations we are following
-    PFQuery *getAllOrganizationFollowingEvents = [PFQuery queryWithClassName:@"OrganizationFollowers"];
-    PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
-    PFQuery *getAllEventsFromOrganizations = [PFQuery queryWithClassName:@"Event"];
-    
-    [getAllEventsFromOrganizations includeKey:@"hostUser"];
-    [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
-    [getAllEventsFromOrganizations whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
-    [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
-    [getAllEventsFromOrganizations whereKey:@"host" matchesKey:@"objectId" inQuery:getAllOrganizationsWeAreFollowing];
-    [getAllEventsFromOrganizations orderByAscending:@"startDate"];
-    [getAllEventsFromOrganizations findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            if (self.refreshControl && self.refreshControl.isRefreshing) {
-                [self.refreshControl endRefreshing];
-            }
-            _promotionalEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            _cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            for (GWTEvent* event in objects) {
-                [_promotionalEvents addObject:event];
-                [_cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
-            }
-        }
-        else {
-            
-        }
-    }];
 }
 
 #pragma mark User Management
@@ -290,10 +252,6 @@
         case 1:
             if (_indexPathForSwipingCell.row < [self.myEvents count]) {
                 return self.myEvents[_indexPathForSwipingCell.row];
-            }
-        case 2:
-            if (_indexPathForSwipingCell.row < [self.promotionalEvents count]) {
-                return self.promotionalEvents[_indexPathForSwipingCell.row];
             }
     }
     return nil;
