@@ -83,6 +83,12 @@
     [self queryEvents];
 }
 
+-(void)viewDidDisappear:(BOOL)animated {
+    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
+    cell.shouldStayHighlighted = NO;
+    [cell setHighlighted:NO animated:NO];
+}
+
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
     return UIBarPositionTopAttached;
 }
@@ -240,8 +246,9 @@
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
     _indexPathForSwipingCell = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
+    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
     [cell setHighlighted:YES animated:YES];
+    cell.shouldStayHighlighted = YES;
     NSLog(@"Highlighting Cell");
     
     switch (_indexPathForSwipingCell.section) {

@@ -11,8 +11,9 @@
 @implementation GWTEventCell
 
 -(void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
-    [super setHighlighted:highlighted animated:animated];
-    self.backgroundColor = highlighted ? [UIColor lightGrayColor] : [UIColor whiteColor];
+    if (!self.shouldStayHighlighted) {
+        [super setHighlighted:highlighted animated:animated];
+    } 
 }
 
 @end

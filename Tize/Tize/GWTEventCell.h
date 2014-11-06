@@ -16,4 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventLocationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventHostLabel;
 
+@property (nonatomic, assign) BOOL shouldStayHighlighted;
+
 @end
