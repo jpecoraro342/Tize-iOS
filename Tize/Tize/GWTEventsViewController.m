@@ -246,10 +246,11 @@
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
     _indexPathForSwipingCell = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    
+    //Highlight the cell
     GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
-    [cell setHighlighted:YES animated:YES];
+    [cell setHighlighted:YES animated:NO];
     cell.shouldStayHighlighted = YES;
-    NSLog(@"Highlighting Cell");
     
     switch (_indexPathForSwipingCell.section) {
         case 0:

@@ -43,7 +43,9 @@
 
 @end
 
-@implementation GWTEditEventViewController
+@implementation GWTEditEventViewController {
+    NSIndexPath *_indexPathForSelectedIcon;
+}
 
 -(instancetype)init {
     self = [super init];
@@ -310,15 +312,15 @@
 -(UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     GWTIconCell *cell = (GWTIconCell*)[collectionView dequeueReusableCellWithReuseIdentifier:@"collectionCell" forIndexPath:indexPath];
-    
     cell.imageView.image = [UIImage imageNamed:self.iconArray[indexPath.row]];
+
+    cell.checkMark.hidden = ![_indexPathForSelectedIcon isEqual:indexPath];
     
     return cell;
 }
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [self.iconCollectionView cellForItemAtIndexPath:indexPath];
-    [cell setSelected:YES];
+    [self selectIconAtIndexPath:indexPath];
     self.event.icon = self.iconArray[indexPath.row];
     //NSLog(@"%@ Icon Selected", self.iconArray[indexPath.row]);
 }
@@ -326,9 +328,19 @@
 -(void)selectIcon {
     for (int i = 0; i < [self.iconArray count]; i++) {
         if ([self.event.icon isEqualToString:self.iconArray[i]]) {
-            [self collectionView:self.iconCollectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
+            [self selectIconAtIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
         }
     }
+}
+
+-(void)selectIconAtIndexPath:(NSIndexPath*)indexPath {
+    GWTIconCell *cell = (GWTIconCell*)[self.iconCollectionView cellForItemAtIndexPath:indexPath];
+    GWTIconCell *oldSelectedCell = (GWTIconCell*)[self.iconCollectionView cellForItemAtIndexPath:_indexPathForSelectedIcon];
+    cell.checkMark.hidden = NO;
+    if (oldSelectedCell) {
+        oldSelectedCell.checkMark.hidden = YES;
+    }
+    _indexPathForSelectedIcon = indexPath;
 }
 
 #pragma mark - Views

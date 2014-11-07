@@ -123,12 +123,15 @@
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"New Friend Requests";
+                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"newFriendRequestNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 case 1:
                     cell.textLabel.text = @"Event Invites";
+                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"newEventInvitesNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 case 2:
                     cell.textLabel.text = @"Events Upcoming";
+                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"upcomingEventsNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 default:
                     break;
@@ -222,15 +225,30 @@
 -(void)toggleNotification:(NSIndexPath*)indexPath {
     NSInteger row = indexPath.row;
     switch (row) {
-        case 0:
+        case 0: {
             //toggle new friend requests
+            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"newFriendRequestNotification"];
+            selected = !selected;
+            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"newFriendRequestNotification"];
+            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             break;
-        case 1:
+        }
+        case 1: {
             //toggle eventInvites Notification
+            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"newEventInvitesNotification"];
+            selected = !selected;
+            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"newEventInvitesNotification"];
+            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             break;
-        case 2:
+        }
+        case 2: {
             //toggle upcoming events
+            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"upcomingEventsNotification"];
+            selected = !selected;
+            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"upcomingEventsNotification"];
+            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             break;
+        }
     }
 }
 
