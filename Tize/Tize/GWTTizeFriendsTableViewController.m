@@ -6,26 +6,29 @@
 //  Copyright (c) 2014 GrayWolfTechnologies. All rights reserved.
 //
 
-#import "GWTFriendsTableViewController.h"
+#import "GWTTizeFriendsTableViewController.h"
 #import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTAddFriendViewController.h"
 #import "UIImage+Color.h"
 
-@interface GWTFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate>
+@interface GWTTizeFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @end
 
-@implementation GWTFriendsTableViewController
+@implementation GWTTizeFriendsTableViewController
 
 -(instancetype)init {
     self = [super init];
     if (self) {
         _listOfFriends = [[NSMutableArray alloc] init];
         [self queryAll];
+        UITabBarItem *tize = self.tabBarItem;
+        [tize setTitle:@"My Tize"];
+        [tize setImage:[UIImage imageNamed:@"logo_tab_bar.png"]];
     }
     return self;
 }

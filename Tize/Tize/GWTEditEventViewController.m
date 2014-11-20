@@ -8,7 +8,7 @@
 
 #import "GWTEditEventViewController.h"
 #import "GWTEventsViewController.h"
-#import "GWTFriendsTableViewController.h"
+#import "GWTTizeFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTInviteFriendsViewController.h"
 #import "GWTIconCell.h"

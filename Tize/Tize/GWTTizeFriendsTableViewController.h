@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
 
-@interface GWTFriendsTableViewController : UIViewController
+@interface GWTTizeFriendsTableViewController : UIViewController
 
 @property (nonatomic, strong) NSMutableArray* listOfFriends;
 @property (nonatomic, strong) NSMutableArray* listOfGroups;

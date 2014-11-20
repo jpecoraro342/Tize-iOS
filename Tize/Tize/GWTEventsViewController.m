@@ -12,7 +12,7 @@
 #import "GWTEvent.h"
 #import "GWTEventDetailViewController.h"
 #import "GWTEditEventViewController.h"
-#import "GWTFriendsTableViewController.h"
+#import "GWTContactsViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTSettingsViewController.h"
@@ -232,7 +232,7 @@
 }
 
 -(void)viewFriends {
-    GWTFriendsTableViewController *friends = [[GWTFriendsTableViewController alloc] init];
+    GWTContactsViewController *friends = [[GWTContactsViewController alloc] init];
     [self presentViewController:friends animated:YES completion:nil];
 }
 
