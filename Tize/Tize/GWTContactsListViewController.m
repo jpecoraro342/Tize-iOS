@@ -8,11 +8,9 @@
 
 #import "GWTContactsListViewController.h"
 #import "GWTAddressBook.h"
+#import "GWTContact.h"
 
-@interface GWTContactsListViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@interface GWTContactsListViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -26,5 +24,30 @@
     }
     return self;
 }
+
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self setViewHasTabBar:YES];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self.addressBook.listOfContacts count];
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSString*)titleForHeaderInSection:(NSInteger)section {
+    return @"Contacts";
+}
+
+-(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    GWTContact *contact = [self.addressBook.listOfContacts objectAtIndex:indexPath.row];
+    return [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
+}
+
+
 
 @end

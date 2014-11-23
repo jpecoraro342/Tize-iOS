@@ -18,6 +18,7 @@
 #define kDarkOrangeColor rgbColor(245, 136, 101)
 #define kLightOrangeColor rgbColor(250, 172, 110)
 #define kDarkGrayColor rgbColor(107, 108, 107)
+#define kOffWhiteColor rgbColor(240, 240, 240)
 #define kLightGrayColor rgbColor(167, 168, 166)
 #define kGreenColor rgbColor(137,176,149)
 #define kRedColor rgbColor(241, 95, 90)

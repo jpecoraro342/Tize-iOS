@@ -53,14 +53,14 @@
 
 -(void)loadContacts {
     NSArray *contacts = (NSArray *)CFBridgingRelease(ABAddressBookCopyArrayOfAllPeople(_addressBook));
-    NSMutableString *contactList = [[NSMutableString alloc] init];
+    
+    _listOfContacts = [[NSMutableArray alloc] init];
     for (int i = 0; i < [contacts count]; i++) {
         ABRecordRef record = (ABRecordRef)CFBridgingRetain([contacts objectAtIndex:i]);
         GWTContact *contact = [[GWTContact alloc] initWithABContact:record];
         [self.listOfContacts addObject:contact];
-        [contactList appendFormat:@"%@", contact];
     }
-    NSLog(@"%@", contactList);
+    
 }
 
 @end
