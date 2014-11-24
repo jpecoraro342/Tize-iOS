@@ -16,12 +16,15 @@
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTSettingsViewController.h"
+#import "UIImage+Color.h"
 
 @interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* upcomingEvents;
 @property (strong, nonatomic) NSMutableArray* myEvents;
+@property (strong, nonatomic) NSMutableDictionary* attendingStatusMap;
+
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -37,7 +40,7 @@
     self = [super init];
     if (self) {
         _cellIsSelected = [[NSMutableArray alloc] initWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
-        [self queryEvents];
+        [self queryData];
     }
     return self;
 }
@@ -74,7 +77,7 @@
     UITableViewController *tableController = [[UITableViewController alloc] init];
     tableController.tableView = self.tableView;
     self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(queryEvents) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(queryData) forControlEvents:UIControlEventValueChanged];
     tableController.refreshControl = self.refreshControl;
 }
 
@@ -163,7 +166,7 @@
     cell.eventTimeLabel.text = tempEvent.startTime;
     cell.eventLocationLabel.text = tempEvent.locationName;
     cell.eventHostLabel.text = tempEvent.hostUser.username;
-    cell.eventImageView.image = [UIImage imageNamed:tempEvent.icon];
+    cell.eventImageView.image = [self iconForIndexPath:indexPath];
     
     return cell;
 }
@@ -177,6 +180,11 @@
 }
 
 #pragma mark Query
+
+-(void)queryData {
+    [self queryEvents];
+    [self queryAttendingStatus];
+}
 
 -(void)queryEvents {
     //Get all the events we are invited to
@@ -224,7 +232,75 @@
     }];
 }
 
+-(void)queryAttendingStatus {
+    //query my attending status
+    PFQuery *attendingStatus = [PFQuery queryWithClassName:@"EventUsers"];
+    [attendingStatus whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
+    [attendingStatus findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError* error) {
+        if (!error) {
+            _attendingStatusMap = [[NSMutableDictionary alloc] init];
+            for (PFObject *attendingStatus in objects) {
+                [_attendingStatusMap setObject:attendingStatus forKey:attendingStatus[@"eventID"]];
+            }
+            [self.tableView reloadData];
+        }
+        else {
+
+        }
+    }];
+}
+
 #pragma mark User Management
+
+-(UIImage*)iconForIndexPath:(NSIndexPath*)indexPath {
+    GWTEvent *event;
+    switch (indexPath.section) {
+        case 0: {
+            event = [self.upcomingEvents objectAtIndex:indexPath.row];
+            break;
+        }
+        case 1: {
+            event = [self.myEvents objectAtIndex:indexPath.row];
+            break;
+        }
+    }
+    
+    if (indexPath.section == 1) {
+        return [UIImage imageNamed:event.icon];
+    }
+    
+    PFObject *attendingStatus = [_attendingStatusMap objectForKey:event.objectId];
+    if (attendingStatus) {
+        NSInteger status = [attendingStatus[@"attendingStatus"] integerValue];
+        switch (status) {
+            case 0: {
+                return [UIImage imageNamed:event.icon];
+                NSLog(@"%zd - Attending", indexPath.row);
+            }
+                break;
+            case 1: {
+                return [UIImage imageNamed:event.icon withColor:kLightOrangeColor];
+                NSLog(@"%zd - Maybe Attending", indexPath.row);
+            }
+                break;
+            case 2: {
+                return [UIImage imageNamed:event.icon withColor:kRedColor];
+                NSLog(@"%zd - Not Attending", indexPath.row);
+            }
+                break;
+            case 3: {
+                return [UIImage imageNamed:event.icon withColor:[UIColor lightGrayColor]];
+                NSLog(@"%zd - Not Responded", indexPath.row);
+            }
+                break;
+                
+            default:
+                break;
+        }
+    }
+    
+    return [UIImage imageNamed:event.icon];
+}
 
 -(void)addEvent {
     GWTEditEventViewController *addEvent = [[GWTEditEventViewController alloc] init];
