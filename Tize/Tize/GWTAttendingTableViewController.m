@@ -78,20 +78,30 @@
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    PFUser *user;
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = [[self.listOfAttending objectAtIndex:indexPath.row] username];
+        if (indexPath.row < [self.listOfAttending count]) {
+            user = [self.listOfAttending objectAtIndex:indexPath.row];
+        }
     }
     else if (indexPath.section == 1) {
-        cell.textLabel.text = [[self.listOfMaybeAttending objectAtIndex:indexPath.row] username];
+        if (indexPath.row < [self.listOfMaybeAttending count]) {
+            user = [self.listOfMaybeAttending objectAtIndex:indexPath.row];
+        }
     }
     else if (indexPath.section == 2) {
-        cell.textLabel.text = [[self.listOfNotAttending objectAtIndex:indexPath.row] username];
+        if (indexPath.row < [self.listOfNotAttending count]) {
+            user = [self.listOfNotAttending objectAtIndex:indexPath.row];
+        }
     }
     else {
-        cell.textLabel.text = [[self.listOfNotResponded objectAtIndex:indexPath.row] username];
+        if (indexPath.row < [self.listOfNotResponded count]) {
+            user = [self.listOfNotResponded objectAtIndex:indexPath.row];
+        }
     }
     
+    cell.textLabel.text = [user username] ?: @"";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
@@ -137,6 +147,7 @@
 }
 
 -(void)loadTableData {
+    [self initArrays];
     [self queryEventStatus:[NSNumber numberWithInt:0] intoList:self.listOfAttending];
     [self queryEventStatus:[NSNumber numberWithInt:1] intoList:self.listOfMaybeAttending];
     [self queryEventStatus:[NSNumber numberWithInt:2] intoList:self.listOfNotAttending];
