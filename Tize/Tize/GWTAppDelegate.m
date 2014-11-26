@@ -34,13 +34,14 @@
         basePageController.mainEventsView = events;
         basePageController.currentViewController = events;
         self.window.rootViewController = basePageController;
+        [self registerForNotifications];
     }
     else {
         GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
         self.window.rootViewController = login;
     }
-
-    [self.window makeKeyAndVisible];
+    
+    [self.window makeKeyAndVisible];    
     return YES;
 }
 
@@ -64,11 +65,48 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Tize Push
+
+-(void)registerForNotifications {
+    NSLog(@"Registering For Push");
+    // Register for Push Notitications, if running iOS 8
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+                                                        UIUserNotificationTypeBadge |
+                                                        UIUserNotificationTypeSound);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+                                                                                 categories:nil];
+        [[UIApplication sharedApplication]  registerUserNotificationSettings:settings];
+        [[UIApplication sharedApplication]  registerForRemoteNotifications];
+    } else {
+        // Register for Push Notifications before iOS 8
+        [[UIApplication sharedApplication]  registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
+                                                                                UIRemoteNotificationTypeAlert |
+                                                                                UIRemoteNotificationTypeSound)];
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSLog(@"Push Accepted, save device token");
+    // Store the deviceToken in the current installation and save it to Parse.
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    [currentInstallation setDeviceTokenFromData:deviceToken];
+    currentInstallation[@"userID"] = [[PFUser currentUser] objectId];
+    currentInstallation[@"user"] = [PFUser currentUser];
+    [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"Push Notification Recieved: %@", userInfo);
+    //[PFPush handlePush:userInfo];
 }
 
 @end

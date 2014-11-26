@@ -60,8 +60,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "appIcon76x1.png",
       "scale" : "1x"
     },
     {

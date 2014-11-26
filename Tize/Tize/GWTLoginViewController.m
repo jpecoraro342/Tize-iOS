@@ -14,6 +14,7 @@
 #import "GWTEventDetailViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
+#import "GWTAppDelegate.h"
 
 @interface GWTLoginViewController () <PFLogInViewControllerDelegate>
 
@@ -48,6 +49,7 @@
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
     [self loadMainView];
+    [((GWTAppDelegate*)[[UIApplication sharedApplication] delegate]) registerForNotifications];
 }
 
 -(void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
