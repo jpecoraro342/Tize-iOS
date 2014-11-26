@@ -276,6 +276,9 @@
 				7C4CACCD19D8BD8500EC31C9 /* GWTInviteFriendsViewController.h */,
 				7C3B5637195D0380008FD5F5 /* GWTAttendingTableViewController.h */,
 				7C6F11F819D36BD50080E636 /* GWTSettingsViewController.h */,
+				7C3B5632195D0367008FD5F5 /* GWTTizeFriendsTableViewController.h */,
+				7C1F44811A19DB99000C06CE /* GWTContactsListViewController.h */,
+				7C1F44841A19DBC6000C06CE /* GWTGroupsViewController.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -292,6 +295,9 @@
 				7C4CACCE19D8BD8500EC31C9 /* GWTInviteFriendsViewController.m */,
 				7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */,
 				7C6F11F919D36BD50080E636 /* GWTSettingsViewController.m */,
+				7C3B5633195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m */,
+				7C1F44821A19DB99000C06CE /* GWTContactsListViewController.m */,
+				7C1F44851A19DBC6000C06CE /* GWTGroupsViewController.m */,
 			);
 			name = Implementation;
 			sourceTree = "<group>";
@@ -307,6 +313,7 @@
 				7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */,
 				7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */,
 				7CB33CEB1A2269B100C07BF7 /* GWTTizeTableViewController.xib */,
+				7C3B5634195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -418,15 +425,6 @@
 				7C3B562A195D0278008FD5F5 /* Header */,
 				7C3B562B195D027F008FD5F5 /* Implementation */,
 				7C3B562C195D028E008FD5F5 /* Xibs */,
-				7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */,
-				7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */,
-				7C3B5632195D0367008FD5F5 /* GWTTizeFriendsTableViewController.h */,
-				7C3B5633195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m */,
-				7C3B5634195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib */,
-				7C1F44811A19DB99000C06CE /* GWTContactsListViewController.h */,
-				7C1F44821A19DB99000C06CE /* GWTContactsListViewController.m */,
-				7C1F44841A19DBC6000C06CE /* GWTGroupsViewController.h */,
-				7C1F44851A19DBC6000C06CE /* GWTGroupsViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -495,6 +493,8 @@
 				7CB33CE81A2268F000C07BF7 /* GWTTizeTableViewController.m */,
 				7C97794B197AE3B2008BFF66 /* GWTEventBasedViewController.h */,
 				7C97794C197AE3B2008BFF66 /* GWTEventBasedViewController.m */,
+				7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */,
+				7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */,
 			);
 			name = Superclasses;
 			sourceTree = "<group>";

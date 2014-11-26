@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* upcomingEvents;
 @property (strong, nonatomic) NSMutableArray* myEvents;
+@property (strong, nonatomic) NSMutableArray* myPastEvents;
+
 @property (strong, nonatomic) NSMutableDictionary* attendingStatusMap;
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
@@ -114,7 +116,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -130,6 +132,9 @@
         case 1:
             titleLabel.text = @"My Events";
             break;
+        case 2:
+            titleLabel.text = @"My Past Events";
+            break;
     }
     
     [headerView addSubview:titleLabel];
@@ -142,9 +147,10 @@
             return [self.upcomingEvents count];
         case 1:
             return [self.myEvents count];
-        default:
-            return 0;
+        case 2:
+            return [self.myPastEvents count];
     }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -158,6 +164,10 @@
         }
         case 1: {
             tempEvent = [self.myEvents objectAtIndex:indexPath.row];
+            break;
+        }
+        case 2: {
+            tempEvent = [self.myPastEvents objectAtIndex:indexPath.row];
             break;
         }
     }
@@ -215,6 +225,7 @@
     PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
     [getAllEventsForCurrentUser includeKey:@"hostUser"];
     [getAllEventsForCurrentUser whereKey:@"host" equalTo:[PFUser currentUser].objectId];
+    [getAllEventsForCurrentUser whereKey:@"endDate" greaterThanOrEqualTo:[[NSDate date] dateByAddingTimeInterval:-60*60*24*7]]; //Events where the endDate is more than 1 week ago
     [getAllEventsForCurrentUser orderByAscending:@"startDate"];
     [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
@@ -222,10 +233,18 @@
                 [self.refreshControl endRefreshing];
             }
             _myEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            _myPastEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             _cellIsSelected[1] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            _cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
-                [_myEvents addObject:event];
-                [_cellIsSelected[1] addObject:[NSNumber numberWithBool:NO]];
+                if ([event.endDate compare:[NSDate new]] != NSOrderedAscending) {
+                    [_myEvents addObject:event];
+                    [_cellIsSelected[1] addObject:[NSNumber numberWithBool:NO]];
+                }
+                else {
+                    [_myPastEvents addObject:event];
+                    [_cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
+                }
             }
         }
         [self.tableView reloadData];
@@ -263,9 +282,14 @@
             event = [self.myEvents objectAtIndex:indexPath.row];
             break;
         }
+        case 2: {
+            event = [self.myPastEvents objectAtIndex:indexPath.row];
+            break;
+        }
+            
     }
     
-    if (indexPath.section == 1) {
+    if (indexPath.section > 0) {
         return [UIImage imageNamed:event.icon];
     }
     
@@ -275,22 +299,18 @@
         switch (status) {
             case 0: {
                 return [UIImage imageNamed:event.icon];
-                NSLog(@"%zd - Attending", indexPath.row);
             }
                 break;
             case 1: {
                 return [UIImage imageNamed:event.icon withColor:kLightOrangeColor];
-                NSLog(@"%zd - Maybe Attending", indexPath.row);
             }
                 break;
             case 2: {
                 return [UIImage imageNamed:event.icon withColor:kRedColor];
-                NSLog(@"%zd - Not Attending", indexPath.row);
             }
                 break;
             case 3: {
                 return [UIImage imageNamed:event.icon withColor:[UIColor lightGrayColor]];
-                NSLog(@"%zd - Not Responded", indexPath.row);
             }
                 break;
                 
@@ -337,12 +357,17 @@
             if (_indexPathForSwipingCell.row < [self.myEvents count]) {
                 return self.myEvents[_indexPathForSwipingCell.row];
             }
+        case 2:
+            if (_indexPathForSwipingCell.row < [self.myPastEvents count]) {
+                return self.myPastEvents[_indexPathForSwipingCell.row];
+            }
     }
     return nil;
 }
 
 -(void)deleteEvent:(GWTEvent *)event {
     [self.myEvents removeObject:event];
+    [self.myPastEvents removeObject:event];
 }
 
 - (void)didReceiveMemoryWarning {
