@@ -22,5 +22,9 @@
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section;
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath;
+-(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath;
+
+-(void)dismissModal;
+-(void)popFromNavigationController;
 
 @end

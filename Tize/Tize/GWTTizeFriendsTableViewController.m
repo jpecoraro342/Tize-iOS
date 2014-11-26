@@ -24,7 +24,6 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        _listOfFriends = [[NSMutableArray alloc] init];
         [self queryAll];
         UITabBarItem *tize = self.tabBarItem;
         [tize setTitle:@"My Tize"];
@@ -38,7 +37,7 @@
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismiss)];
     
     
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
@@ -55,7 +54,7 @@
     return UIBarPositionTopAttached;
 }
 
--(void)cancelAddingFriends {
+-(void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -70,7 +69,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return 1;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -79,24 +78,11 @@
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
     [titleLabel setTextColor:[UIColor darkGrayColor]];
     
-    UIButton *addItem = [[UIButton alloc] initWithFrame:CGRectMake(tableView.frame.size.width - 50, 2, 36, 36)];
-    [addItem setImage:[UIImage imageNamed:@"plus" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
-    
     switch (section) {
         case 0: {
-            titleLabel.text = @"Friends";
-            [addItem addTarget:self action:@selector(addFriends) forControlEvents:UIControlEventTouchUpInside];
-            [headerView addSubview:addItem];
+            titleLabel.text = @"Tize Requests";
             break;
         }
-        case 1:
-            titleLabel.text = @"My Groups";
-            [addItem addTarget:self action:@selector(createGroup) forControlEvents:UIControlEventTouchUpInside];
-            [headerView addSubview:addItem];
-            break;
-        case 2:
-            titleLabel.text =  @"Organizations";
-            break;
     }
     
     [headerView addSubview:titleLabel];
@@ -106,14 +92,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.listOfFriends count];
-        case 1:
-            return [self.listOfGroups count];
-        case 2:
-            return [self.listOfOrganizations count];
-        default:
-            return 0;
+            return [self.friendsWhoAddedMe count];
     }
+    return 0;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -121,88 +102,93 @@
     
     switch (indexPath.section) {
         case 0: {
-            if (indexPath.row < [self.listOfFriends count]) {
-                cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+            if (indexPath.row < [self.friendsWhoAddedMe count]) {
+                PFUser *userFollowing = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+                cell.textLabel.text = [userFollowing username];
+                cell.accessoryType = [self.friendsIveAdded objectForKey:[userFollowing objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             }
             break;
         }
-        case 1: {
-            if (indexPath.row < [self.listOfGroups count]) {
-                //cell.textLabel.text = [[self.listOfGroups objectAtIndex:indexPath.row] groupName];
-            }
-            break;
-        }
-        case 2: {
-            if (indexPath.row < [self.listOfOrganizations count]) {
-                cell.textLabel.text = [self.listOfOrganizations objectAtIndex:indexPath.row][@"name"];
-            }
-            break;
-        }
-        default:
-            break;
     }
     
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PFUser *friend = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+    if ([self.friendsIveAdded objectForKey:[friend objectId]]) {
+        [self removeFriendAtIndexPath:indexPath];
+    }
+    else {
+        [self addFriendAtIndexPath:indexPath];
+    }
+}
+
 #pragma mark query
 
--(void)queryFollowing {
+-(void)queryAll {
+    [self queryMyFollowing];
+    [self queryFollingMe];
+}
+
+-(void)queryFollingMe {
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
-    PFQuery *getAllUsersWeAreFollowing = [PFUser query];
+    PFQuery *getAllUsersFollowingMe = [PFUser query];
     
-    [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
-    [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
-    [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
-        self.listOfFriends = [[NSMutableArray alloc] init];
+    [getAllFollowingEvents whereKey:@"following" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersFollowingMe whereKey:@"objectId" matchesKey:@"user" inQuery:getAllFollowingEvents];
+    [getAllUsersFollowingMe findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        self.friendsWhoAddedMe = [[NSMutableArray alloc] init];
         if(!error) {
             for (PFUser *object in objects) {
-                [self.listOfFriends addObject:object];
+                [self.friendsWhoAddedMe addObject:object];
             }
             [self.tableView reloadData];
         }
     }];
 }
 
--(void)queryGroups {
+-(void)queryMyFollowing {
+    PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
+    PFQuery *getAllUsersWeAreFollowing = [PFUser query];
     
-}
-
--(void)queryOrganizations {
-    PFQuery *getAllOrganizationFollowingEvents = [PFQuery queryWithClassName:@"OrganizationFollowers"];
-    PFQuery *getAllOrganizationsWeAreFollowing = [PFQuery queryWithClassName:@"Organization"];
-    [getAllOrganizationFollowingEvents whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
-    [getAllOrganizationsWeAreFollowing whereKey:@"objectId" matchesKey:@"organizationID" inQuery:getAllOrganizationFollowingEvents];
-    [getAllOrganizationsWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            self.listOfOrganizations = [objects mutableCopy];
+    [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
+    [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        self.friendsIveAdded = [[NSMutableDictionary alloc] init];
+        if(!error) {
+            for (PFUser *object in objects) {
+                [self.friendsIveAdded setObject:object forKey:[object objectId]];
+            }
             [self.tableView reloadData];
-        }
-        else {
-            
         }
     }];
 }
 
 #pragma mark Other
 
--(void)queryAll {
-    [self queryFollowing];
-    [self queryGroups];
-    [self queryOrganizations];
+-(void)addFriendAtIndexPath:(NSIndexPath*)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    PFUser *user = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+    PFObject *following = [PFObject objectWithClassName:@"Following"];
+    following[@"user"] = [[PFUser currentUser] objectId];
+    following[@"following"] = [user objectId];
+    [following saveInBackground];
+    
+    [self.friendsIveAdded setObject:user forKey:[user objectId]];
 }
 
--(void)addFriends {
-    GWTAddFriendViewController *addFriends = [[GWTAddFriendViewController alloc] init];
-    addFriends.dismissBlock = ^{
-        [self queryFollowing];
-    };
-    [self presentViewController:addFriends animated:YES completion:nil];
-}
-
--(void)createGroup {
-    [[[UIAlertView alloc] initWithTitle:@"I'm not that good" message:@"Woah there buddy, don't get ahead of yourself. I'm not that far along yet" delegate:self cancelButtonTitle:@"Hurry up Joe!" otherButtonTitles:nil] show];
+-(void)removeFriendAtIndexPath:(NSIndexPath*) indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    PFUser *user = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+    [self.friendsIveAdded removeObjectForKey:[user objectId]];
+    //TODO:Write the code to remove a friend
 }
 
 - (void)didReceiveMemoryWarning {

@@ -8,10 +8,7 @@
 
 #import "GWTGroupsViewController.h"
 
-@interface GWTGroupsViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@interface GWTGroupsViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -25,6 +22,45 @@
         [groups setImage:[UIImage imageNamed:@"groupstab.png"]];
     }
     return self;
+}
+    
+-(void)viewDidLoad {
+    [super viewDidLoad];
+    
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissModal)];
+    self.leftBarButtonItem = cancel;
+    
+    [self setViewHasTabBar:YES];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 44;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+            return 0;
+        case 1:
+            return 0;
+    }
+    return 0;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+-(NSString*)titleForHeaderInSection:(NSInteger)section {
+    return @"My Groups";
+}
+
+-(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    return @"";
+}
+
+-(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    return @"";
 }
 
 @end

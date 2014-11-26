@@ -28,19 +28,38 @@
 -(void)viewDidLoad {
     [super viewDidLoad];
     
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissModal)];
+    self.leftBarButtonItem = cancel;
+    
     [self setViewHasTabBar:YES];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 50;
+}
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.addressBook.listOfContacts count];
+    switch (section) {
+        case 0:
+            return 0;
+        case 1:
+            return [self.addressBook.listOfContacts count];
+    }
+    return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
-    return @"Contacts";
+    switch (section) {
+        case 0:
+            return @"Tize In My Contacts";
+        case 1:
+            return @"Add Tize";
+    }
+    return nil;
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -48,6 +67,9 @@
     return [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
 }
 
-
+-(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    GWTContact *contact = [self.addressBook.listOfContacts objectAtIndex:indexPath.row];
+    return contact.listOfPhoneNumbers.firstObject;
+}
 
 @end

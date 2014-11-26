@@ -41,15 +41,15 @@
     [self.navigationBar setTintColor:kNavBarTintColor];
     
     [self setNavItems];
-    
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 -(void)setNavItems {
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.title];
-    if (!self.title) {
-        navItem.titleView = self.titleView;
+    if (!self.title || [self.title isEqualToString:@""]) {
+        navItem.titleView = kNavBarTitleView;
+        //navItem.titleView = self.titleView;
     }
+    
     navItem.rightBarButtonItem = self.rightBarButtonItem;
     navItem.leftBarButtonItem = self.leftBarButtonItem;
     
@@ -82,9 +82,13 @@
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"subtitlecell"];
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"subtitlecell"];
+    }
     
     cell.textLabel.text = [self titleForCellAtIndexPath:indexPath];
+    cell.detailTextLabel.text = [self subtitleForCellAtIndexPath:indexPath] ?: @"";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = kOffWhiteColor;
@@ -127,9 +131,36 @@
     return nil;
 }
 
+-(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    [NSException raise:@"Invalid Call to Superclass" format:@"Method: subtitleForCellAtIndexPath:(NSIndexPath*)indexPath must be overriden in subclass"];
+    return nil;
+}
+
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
     [NSException raise:@"Invalid Call to Superclass" format:@"Method: titleForHeaderInSection:(NSInteger)section must be overriden in subclass"];
     return nil;
+}
+
+#pragma mark - View Dismissal
+
+-(void)popFromNavigationController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)dismissModal {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Private
+
+-(void)setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
+    _leftBarButtonItem = leftBarButtonItem;
+    [self setNavItems];
+}
+
+-(void)setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem {
+    _rightBarButtonItem = rightBarButtonItem;
+    [self setNavItems];
 }
 
 -(void)didReceiveMemoryWarning {

@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GWTTizeTableViewController.h"
 
-@interface GWTGroupsViewController : UIViewController
+@interface GWTGroupsViewController : GWTTizeTableViewController
 
 @end
