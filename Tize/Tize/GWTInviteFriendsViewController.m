@@ -19,9 +19,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSMutableArray *listOfFriends;
-@property (strong, nonatomic) NSMutableArray *listOfInvited;
-
-@property (strong, nonatomic) NSMutableArray *isSelected;
+@property (strong, nonatomic) NSMutableDictionary *listOfInvited;
 
 @end
 
@@ -30,8 +28,18 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        _listOfFriends = [[NSMutableArray alloc] init];
-        [self querylistOfFriends];
+        self.listOfInvited = [[NSMutableDictionary alloc] init];
+        [self query];
+    }
+    return self;
+}
+
+-(instancetype)initWithEvent:(GWTEvent *)event {
+    self = [super init];
+    if (self) {
+        self.event = event;
+        self.listOfInvited = [[NSMutableDictionary alloc] init];
+        [self query];
     }
     return self;
 }
@@ -86,25 +94,33 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
-    
-    cell.textLabel.text = [[self.listOfFriends objectAtIndex:indexPath.row] username];
+
+    if (indexPath.row < [self.listOfFriends count]) {
+        PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+        cell.textLabel.text = [friend username];
+        cell.accessoryType = [self.listOfInvited objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    }
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if ([self.isSelected[indexPath.row] boolValue]) {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        self.isSelected[indexPath.row] = [NSNumber numberWithBool:NO];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+    if ([self.listOfInvited objectForKey:[friend objectId]]) {
+        [self removeFriendAtIndexPath:indexPath];
     }
     else {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-        self.isSelected[indexPath.row] = [NSNumber numberWithBool:YES];
+        [self addFriendAtIndexPath:indexPath];
     }
 }
 
 #pragma mark query
+
+-(void)query {
+    [self querylistOfFriends];
+    [self queryInvited];
+}
 
 -(void)querylistOfFriends {
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
@@ -115,10 +131,8 @@
     [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
         if(!error) {
             self.listOfFriends = [[NSMutableArray alloc] init];
-            self.isSelected = [[NSMutableArray alloc] init];
             for (PFUser *object in objects) {
                 [self.listOfFriends addObject:object];
-                [self.isSelected addObject:[NSNumber numberWithBool:NO]];
             }
             [self.tableView reloadData];
         }
@@ -126,27 +140,39 @@
 }
 
 -(void)queryInvited {
-    PFQuery *eventUsers = [PFQuery queryWithClassName:@"EventUsers"];
-    //[eventUsers whereKey:@"eventID" equalTo:self.event.objectId];
-    PFQuery *getAllUsersInvited = [PFUser query];
-    [getAllUsersInvited whereKey:@"objectId" matchesKey:@"userID" inQuery:eventUsers];
-    [getAllUsersInvited findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
-        if(!error) {
-            for (PFUser *object in objects) {
-                
+    if (self.event.objectId) {
+        PFQuery *eventUsers = [PFQuery queryWithClassName:@"EventUsers"];
+        [eventUsers whereKey:@"eventID" equalTo:self.event.objectId];
+        PFQuery *getAllUsersInvited = [PFUser query];
+        [getAllUsersInvited whereKey:@"objectId" matchesKey:@"userID" inQuery:eventUsers];
+        [getAllUsersInvited findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+            if(!error) {
+                for (PFUser *object in objects) {
+                    [self.listOfInvited setObject:object forKey:[object objectId]];
+                }
+                [self.tableView reloadData];
             }
-            [self.tableView reloadData];
-        }
-    }];
+        }];
+    }
 }
 
 #pragma mark Other
 
--(void)addFriendAtIndex:(NSInteger)index {
-    PFObject *following = [PFObject objectWithClassName:@"Following"];
-    following[@"user"] = [[PFUser currentUser] objectId];
-    following[@"following"] = [[self.listOfFriends objectAtIndex:index] objectId];
-    [following saveInBackground];
+-(void)addFriendAtIndexPath:(NSIndexPath*)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
+    [self.listOfInvited setObject:user forKey:[user objectId]];
+}
+
+-(void)removeFriendAtIndexPath:(NSIndexPath*) indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
+    [self.listOfInvited removeObjectForKey:[user objectId]];
+    //TODO:Write the code to remove a friend
 }
 
 -(void)cancelAddingFriends {
@@ -154,17 +180,15 @@
 }
 
 -(void)inviteSelected {
-    self.listOfInvited = [[NSMutableArray alloc] init];
+    NSMutableArray *invited = [[NSMutableArray alloc] init];
     
-    for (int i = 0; i < [self.isSelected count]; i++) {
-        if ([self.isSelected[i] boolValue]) {
-            [self.listOfInvited addObject:self.listOfFriends[i]];
-        }
-    }
+    [self.listOfInvited enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+        [invited addObject:obj];
+    }];
     
     [self dismissViewControllerAnimated:YES completion:^{
         if (self.dismissBlock) {
-            self.dismissBlock(self.listOfInvited);
+            self.dismissBlock(invited);
         }
     }];
 }

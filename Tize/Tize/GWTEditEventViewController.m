@@ -458,7 +458,7 @@
 
 -(void)inviteFriends {
     [self updateEvent];
-    GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] init];
+    GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] initWithEvent:self.event];
     friends.dismissBlock = ^(NSMutableArray *friendsToInvite) {
         self.peopleToInvite = [friendsToInvite copy];
         if (self.event.objectId) {

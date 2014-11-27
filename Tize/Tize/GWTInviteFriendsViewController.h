@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GWTEvent.h"
 
 @interface GWTInviteFriendsViewController : UIViewController
 
 @property (nonatomic, copy) void (^dismissBlock)(NSMutableArray* invited);
+@property (nonatomic, strong) GWTEvent *event;
+
+-(instancetype)initWithEvent:(GWTEvent *)event;
 
 @end

@@ -85,7 +85,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self queryEvents];
+    //[self queryData];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {

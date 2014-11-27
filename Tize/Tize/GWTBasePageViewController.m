@@ -65,6 +65,9 @@
             [[self.viewControllers objectAtIndex:2] viewWillAppear:YES];
         }
     }
+    else {
+        [self.mainEventsView viewWillAppear:YES];
+    }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
