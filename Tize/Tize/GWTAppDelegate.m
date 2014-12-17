@@ -12,6 +12,7 @@
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
 #import <Parse/Parse.h>
+#import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
 @implementation GWTAppDelegate
@@ -24,7 +25,7 @@
                   clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    [Crashlytics startWithAPIKey:@"0d2eadfaa76344ef0ce01e05a742a84b9b6b388f"];
+    [Fabric with:@[CrashlyticsKit]];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
@@ -66,6 +67,8 @@
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    [PFInstallation currentInstallation][@"badge"] = @(0);
+    [[PFInstallation currentInstallation] saveEventually];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

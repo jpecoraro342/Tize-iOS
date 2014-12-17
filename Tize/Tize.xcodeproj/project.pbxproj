@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15ED57491A41261700B24CEB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15ED57481A41261700B24CEB /* Fabric.framework */; };
 		772755060C3A4860AF229729 /* libPods-Tize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F4BB6DD3F5455596323208 /* libPods-Tize.a */; };
 		7C1F44801A19DAF6000C06CE /* GWTContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */; };
 		7C1F44831A19DB99000C06CE /* GWTContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F44821A19DB99000C06CE /* GWTContactsListViewController.m */; };
@@ -48,11 +49,6 @@
 		7C9A5C5319501FBC008B2666 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C5219501FBC008B2666 /* main.m */; };
 		7C9A5C5719501FBC008B2666 /* GWTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */; };
 		7C9A5C5919501FBC008B2666 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C5819501FBC008B2666 /* Images.xcassets */; };
-		7C9A5C6019501FBC008B2666 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C5F19501FBC008B2666 /* XCTest.framework */; };
-		7C9A5C6119501FBC008B2666 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C4619501FBC008B2666 /* Foundation.framework */; };
-		7C9A5C6219501FBC008B2666 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C4A19501FBC008B2666 /* UIKit.framework */; };
-		7C9A5C6A19501FBC008B2666 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7C9A5C6819501FBC008B2666 /* InfoPlist.strings */; };
-		7C9A5C6C19501FBC008B2666 /* TizeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A5C6B19501FBC008B2666 /* TizeTests.m */; };
 		7C9A5C781950235E008B2666 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C771950235E008B2666 /* AudioToolbox.framework */; };
 		7C9A5C7A1950236B008B2666 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C791950236B008B2666 /* CFNetwork.framework */; };
 		7C9A5C7C1950237D008B2666 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C9A5C7B1950237D008B2666 /* CoreLocation.framework */; };
@@ -96,18 +92,9 @@
 		7CE1562219D375F70066FD71 /* GWTSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7CE1562119D375F70066FD71 /* GWTSignUpViewController.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		7C9A5C6319501FBC008B2666 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7C9A5C3B19501FBC008B2666 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C9A5C4219501FBC008B2666;
-			remoteInfo = Tize;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
 		06F4BB6DD3F5455596323208 /* libPods-Tize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tize.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		15ED57481A41261700B24CEB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		25AF874B73DBD15EDD1760FB /* Pods-Tize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tize/Pods-Tize.release.xcconfig"; sourceTree = "<group>"; };
 		7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTContactsViewController.h; sourceTree = "<group>"; };
 		7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTContactsViewController.m; sourceTree = "<group>"; };
@@ -169,11 +156,6 @@
 		7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWTAppDelegate.h; sourceTree = "<group>"; };
 		7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWTAppDelegate.m; sourceTree = "<group>"; };
 		7C9A5C5819501FBC008B2666 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		7C9A5C5E19501FBC008B2666 /* TizeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TizeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C9A5C5F19501FBC008B2666 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		7C9A5C6719501FBC008B2666 /* TizeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TizeTests-Info.plist"; sourceTree = "<group>"; };
-		7C9A5C6919501FBC008B2666 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		7C9A5C6B19501FBC008B2666 /* TizeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TizeTests.m; sourceTree = "<group>"; };
 		7C9A5C771950235E008B2666 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7C9A5C791950236B008B2666 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		7C9A5C7B1950237D008B2666 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -185,7 +167,7 @@
 		7C9A5C9319512112008B2666 /* GWTLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTLoginViewController.h; sourceTree = "<group>"; };
 		7C9A5C9419512112008B2666 /* GWTLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTLoginViewController.m; sourceTree = "<group>"; };
 		7C9A5C9819512132008B2666 /* GWTEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEventsViewController.h; sourceTree = "<group>"; };
-		7C9A5C9919512132008B2666 /* GWTEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventsViewController.m; sourceTree = "<group>"; };
+		7C9A5C9919512132008B2666 /* GWTEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEventsViewController.m; sourceTree = "<group>"; wrapsLines = 1; };
 		7C9A5C9A19512132008B2666 /* GWTEventsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEventsViewController.xib; sourceTree = "<group>"; };
 		7C9A5C9F19512628008B2666 /* GWTEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTEvent.h; sourceTree = "<group>"; };
 		7C9A5CA019512628008B2666 /* GWTEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTEvent.m; sourceTree = "<group>"; };
@@ -247,17 +229,8 @@
 				7C9A5C4919501FBC008B2666 /* CoreGraphics.framework in Frameworks */,
 				7C9A5C4B19501FBC008B2666 /* UIKit.framework in Frameworks */,
 				7C9A5C4719501FBC008B2666 /* Foundation.framework in Frameworks */,
+				15ED57491A41261700B24CEB /* Fabric.framework in Frameworks */,
 				772755060C3A4860AF229729 /* libPods-Tize.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C9A5C5B19501FBC008B2666 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C9A5C6019501FBC008B2666 /* XCTest.framework in Frameworks */,
-				7C9A5C6219501FBC008B2666 /* UIKit.framework in Frameworks */,
-				7C9A5C6119501FBC008B2666 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +308,6 @@
 			isa = PBXGroup;
 			children = (
 				7C9A5C4C19501FBC008B2666 /* Tize */,
-				7C9A5C6519501FBC008B2666 /* TizeTests */,
 				7C9A5C4519501FBC008B2666 /* Frameworks */,
 				7C9A5C4419501FBC008B2666 /* Products */,
 				F43DAF181D3CD54806B23A3F /* Pods */,
@@ -346,7 +318,6 @@
 			isa = PBXGroup;
 			children = (
 				7C9A5C4319501FBC008B2666 /* Tize.app */,
-				7C9A5C5E19501FBC008B2666 /* TizeTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,6 +325,7 @@
 		7C9A5C4519501FBC008B2666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15ED57481A41261700B24CEB /* Fabric.framework */,
 				7CD793AF19AFAFF600357D7A /* Crashlytics.framework */,
 				7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */,
 				7C2CF5E9196BA2BD002AE0C6 /* Social.framework */,
@@ -369,7 +341,6 @@
 				7C9A5C4619501FBC008B2666 /* Foundation.framework */,
 				7C9A5C4819501FBC008B2666 /* CoreGraphics.framework */,
 				7C9A5C4A19501FBC008B2666 /* UIKit.framework */,
-				7C9A5C5F19501FBC008B2666 /* XCTest.framework */,
 				06F4BB6DD3F5455596323208 /* libPods-Tize.a */,
 			);
 			name = Frameworks;
@@ -396,24 +367,6 @@
 				7C9A5C4F19501FBC008B2666 /* InfoPlist.strings */,
 				7C9A5C5219501FBC008B2666 /* main.m */,
 				7C9A5C5419501FBC008B2666 /* Tize-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		7C9A5C6519501FBC008B2666 /* TizeTests */ = {
-			isa = PBXGroup;
-			children = (
-				7C9A5C6B19501FBC008B2666 /* TizeTests.m */,
-				7C9A5C6619501FBC008B2666 /* Supporting Files */,
-			);
-			path = TizeTests;
-			sourceTree = "<group>";
-		};
-		7C9A5C6619501FBC008B2666 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				7C9A5C6719501FBC008B2666 /* TizeTests-Info.plist */,
-				7C9A5C6819501FBC008B2666 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -548,24 +501,6 @@
 			productReference = 7C9A5C4319501FBC008B2666 /* Tize.app */;
 			productType = "com.apple.product-type.application";
 		};
-		7C9A5C5D19501FBC008B2666 /* TizeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 7C9A5C7219501FBC008B2666 /* Build configuration list for PBXNativeTarget "TizeTests" */;
-			buildPhases = (
-				7C9A5C5A19501FBC008B2666 /* Sources */,
-				7C9A5C5B19501FBC008B2666 /* Frameworks */,
-				7C9A5C5C19501FBC008B2666 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				7C9A5C6419501FBC008B2666 /* PBXTargetDependency */,
-			);
-			name = TizeTests;
-			productName = TizeTests;
-			productReference = 7C9A5C5E19501FBC008B2666 /* TizeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -584,9 +519,6 @@
 							};
 						};
 					};
-					7C9A5C5D19501FBC008B2666 = {
-						TestTargetID = 7C9A5C4219501FBC008B2666;
-					};
 				};
 			};
 			buildConfigurationList = 7C9A5C3E19501FBC008B2666 /* Build configuration list for PBXProject "Tize" */;
@@ -602,7 +534,6 @@
 			projectRoot = "";
 			targets = (
 				7C9A5C4219501FBC008B2666 /* Tize */,
-				7C9A5C5D19501FBC008B2666 /* TizeTests */,
 			);
 		};
 /* End PBXProject section */
@@ -652,14 +583,6 @@
 				7C9EE79519F854F900E2305F /* heart@2x.png in Resources */,
 				7C9A5CA6195126A3008B2666 /* GWTEventCell.xib in Resources */,
 				7C723AB119AF9B0500003825 /* logo_nav_bar@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7C9A5C5C19501FBC008B2666 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C9A5C6A19501FBC008B2666 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -720,7 +643,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run 0d2eadfaa76344ef0ce01e05a742a84b9b6b388f c288c7d01cdc342f40f2be1349f35b2e1d85e1528bd3a39667fdf7d59163efc6";
+			shellScript = "./Fabric.framework/run 0d2eadfaa76344ef0ce01e05a742a84b9b6b388f c288c7d01cdc342f40f2be1349f35b2e1d85e1528bd3a39667fdf7d59163efc6";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -758,37 +681,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7C9A5C5A19501FBC008B2666 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7C9A5C6C19501FBC008B2666 /* TizeTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		7C9A5C6419501FBC008B2666 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7C9A5C4219501FBC008B2666 /* Tize */;
-			targetProxy = 7C9A5C6319501FBC008B2666 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		7C9A5C4F19501FBC008B2666 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7C9A5C5019501FBC008B2666 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		7C9A5C6819501FBC008B2666 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				7C9A5C6919501FBC008B2666 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -831,7 +730,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "8603bb85-51ad-4623-868a-0f9bafeea133";
+				PROVISIONING_PROFILE = "0879d536-3a5b-44be-b70b-2b55a39fdde9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -865,7 +764,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "8603bb85-51ad-4623-868a-0f9bafeea133";
+				PROVISIONING_PROFILE = "0879d536-3a5b-44be-b70b-2b55a39fdde9";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -889,7 +788,7 @@
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8603bb85-51ad-4623-868a-0f9bafeea133";
+				PROVISIONING_PROFILE = "0879d536-3a5b-44be-b70b-2b55a39fdde9";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -912,49 +811,9 @@
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8603bb85-51ad-4623-868a-0f9bafeea133";
+				PROVISIONING_PROFILE = "0879d536-3a5b-44be-b70b-2b55a39fdde9";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		7C9A5C7319501FBC008B2666 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Tize.app/Tize";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = "TizeTests/TizeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
-			};
-			name = Debug;
-		};
-		7C9A5C7419501FBC008B2666 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Tize.app/Tize";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
-				INFOPLIST_FILE = "TizeTests/TizeTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
 		};
@@ -975,15 +834,6 @@
 			buildConfigurations = (
 				7C9A5C7019501FBC008B2666 /* Debug */,
 				7C9A5C7119501FBC008B2666 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		7C9A5C7219501FBC008B2666 /* Build configuration list for PBXNativeTarget "TizeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7C9A5C7319501FBC008B2666 /* Debug */,
-				7C9A5C7419501FBC008B2666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

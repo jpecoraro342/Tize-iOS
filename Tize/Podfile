@@ -6,6 +6,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 target "Tize" do
 
 pod 'Parse'
+pod 'ParseUI'
 
 end
 

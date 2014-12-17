@@ -7,6 +7,7 @@
 //
 
 #import <Parse/Parse.h>
+#import <ParseUI/ParseUI.h>
 #import "GWTLoginViewController.h"
 #import "GWTSignUpViewController.h"
 #import "GWTEventsViewController.h"

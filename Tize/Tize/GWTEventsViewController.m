@@ -85,6 +85,9 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    //[self.tableView reloadRowsAtIndexPaths:@[_indexPathForSwipingCell] withRowAnimation:UITableViewRowAnimationNone];
+
     //[self queryData];
 }
 
