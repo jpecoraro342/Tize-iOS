@@ -16,7 +16,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        [self.tabBar setTintColor:kBlueGreenColor];
+        [self.tabBar setTintColor:kGreenColor];
         [self loadTabs];
     }
     return self;

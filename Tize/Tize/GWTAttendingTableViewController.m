@@ -15,12 +15,15 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
+@property (strong, nonatomic) UILabel *titleLabel;
+
 @end
 
 @implementation GWTAttendingTableViewController
 
 -(void)reloadWithEvent:(GWTEvent *)event {
     self.event = event;
+    self.titleLabel.text = self.event.eventName;
     [self initArrays];
     [self loadTableData];
     [self setNavItems];
@@ -39,6 +42,7 @@
 
 -(void)setNavItems {
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.eventName];
+    navItem.titleView = kNavBarTitleView;
     [self.navigationBar setItems:@[navItem]];
     [self.navigationBar setTitleTextAttributes:kNavBarTitleDictionary];
 }
@@ -50,10 +54,13 @@
 #pragma mark table view delegates
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 4;
+    return 5;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 40;
+    }
     return 38;
 }
 
@@ -62,17 +69,19 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return [self.listOfAttending count];
-    }
-    else if (section == 1) {
-        return [self.listOfMaybeAttending count];
-    }
-    else if (section == 2) {
-        return [self.listOfNotAttending count];
-    }
-    else {
-        return [self.listOfNotResponded count];
+    switch (section) {
+        case 0:
+            return 0;
+        case 1:
+            return [self.listOfAttending count];
+        case 2:
+            return [self.listOfMaybeAttending count];
+        case 3:
+            return [self.listOfNotAttending count];
+        case 4:
+            return [self.listOfNotResponded count];
+        default:
+            return 0;
     }
 }
 
@@ -80,22 +89,22 @@
     UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     PFUser *user;
     
-    if (indexPath.section == 0) {
+    if (indexPath.section == 1) {
         if (indexPath.row < [self.listOfAttending count]) {
             user = [self.listOfAttending objectAtIndex:indexPath.row];
         }
     }
-    else if (indexPath.section == 1) {
+    else if (indexPath.section == 2) {
         if (indexPath.row < [self.listOfMaybeAttending count]) {
             user = [self.listOfMaybeAttending objectAtIndex:indexPath.row];
         }
     }
-    else if (indexPath.section == 2) {
+    else if (indexPath.section == 3) {
         if (indexPath.row < [self.listOfNotAttending count]) {
             user = [self.listOfNotAttending objectAtIndex:indexPath.row];
         }
     }
-    else {
+    else if (indexPath.section == 4) {
         if (indexPath.row < [self.listOfNotResponded count]) {
             user = [self.listOfNotResponded objectAtIndex:indexPath.row];
         }
@@ -108,23 +117,37 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
-    [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
-    [titleLabel setTextColor:[UIColor darkGrayColor]];
+    NSInteger height = 38;
+    if (section == 0) {
+        height = 40;
+    }
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, height)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, height)];
+    [titleLabel setTextColor:kOffWhiteColor];
     
     switch (section) {
         case 0:
-            titleLabel.text = @"Attending";
+            titleLabel.text = self.event.eventName;
+            [titleLabel setFont:[UIFont systemFontOfSize:20]];
+            [titleLabel setTextColor:kWhiteColor];
+            self.titleLabel = titleLabel;
+            [headerView setBackgroundColor:[UIColor lightGrayColor]];
             break;
         case 1:
-            titleLabel.text = @"Maybe Attending";
+            titleLabel.text = @"Attending";
+            [headerView setBackgroundColor:kGreenColor];
             break;
         case 2:
-            titleLabel.text = @"Not Attending";
+            titleLabel.text = @"Maybe Attending";
+            [headerView setBackgroundColor:kLightOrangeColor];
             break;
-        default:
+        case 3:
+            titleLabel.text = @"Not Attending";
+            [headerView setBackgroundColor:kRedColor];
+            break;
+        case 4:
             titleLabel.text = @"Not Responded";
+            [headerView setBackgroundColor:[UIColor lightGrayColor]];
             break;
     }
     

@@ -12,6 +12,7 @@
 
 @interface GWTEventDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
 
+@property (nonatomic, strong) UILabel *hostLabel;
 @property (nonatomic, strong) UILabel *eventNameLabel;
 @property (nonatomic, strong) UILabel *locationLabel;
 @property (nonatomic, strong) UILabel *dateLabel;
@@ -69,6 +70,7 @@
 
 -(void)setNavItems {
     UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:self.event.eventName];
+    navItem.titleView = kNavBarTitleView;
     [self.navigationBar setItems:@[navItem]];
 }
 
@@ -80,22 +82,23 @@
             switch (indexPath.row) {
                 case 0:
                 case 1:
-                    return 44;
                 case 2:
-                    return 120;
+                    return 48;
                 case 3:
-                    return 60;
+                    return 120;
+                case 4:
+                    return 48;
             }
         }
         case 1:
         case 2:
         default:
-            return 44;
+            return 48;
     }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 38;
+    return 40;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
@@ -107,20 +110,16 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 40)];
     [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 40)];
+    [titleLabel setFont:[UIFont systemFontOfSize:20]];
+    [titleLabel setTextColor:kWhiteColor];
     
     switch (section) {
         case 0: {
-            UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, self.tableView.frame.size.width - 10, 28)];
-            infoLabel.text = @"Host: ";
-            infoLabel.font = [UIFont systemFontOfSize:16];
-            titleLabel.frame = CGRectOffset(titleLabel.frame, 50, 0);
-            titleLabel.text = self.event.hostUser.username;
-            [titleLabel setFont:[UIFont systemFontOfSize:18]];
-            _eventNameLabel = titleLabel;
-            [headerView addSubview:infoLabel];
+            titleLabel.text = self.event.eventName;
+            self.eventNameLabel = titleLabel;
             break;
         }
         case 1:
@@ -138,7 +137,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 4;
+            return 5;
         case 1:
             return 3;
         case 2:
@@ -149,15 +148,15 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 48)];
     
     switch (indexPath.section) {
         case 0: {
             return [self cellForRow:indexPath.row];
         }
         case 1: {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, tableView.frame.size.width-44, 44)];
-            UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 5, 44, 34)];
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(44, 0, tableView.frame.size.width-44, 48)];
+            UIImageView *icon = [[UIImageView alloc] initWithFrame:CGRectMake(0, 7, 44, 34)];
             [icon setContentMode:UIViewContentModeScaleAspectFit];
             switch (indexPath.row) {
                 case 0:
@@ -190,28 +189,37 @@
 }
 
 -(UITableViewCell *)cellForRow:(NSInteger)row {
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 48)];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 12, self.tableView.frame.size.width - 10, 28)];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 4, self.tableView.frame.size.width - 10, 10)];
-    [titleLabel setFont:[UIFont systemFontOfSize:12]];
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 14, self.tableView.frame.size.width - 10, 28)];
+    [infoLabel setFont:[UIFont systemFontOfSize:19]];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, self.tableView.frame.size.width - 10, 10)];
+    [titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [titleLabel setTextColor:kGrayColor];
     
     switch (row) {
         case 0: {
+            [titleLabel setText:@"Host: "];
+            [infoLabel setText:self.event.hostUser.username];
+            [self setHostLabel:infoLabel];
+            break;
+        }
+        case 1: {
             [titleLabel setText:@"Location:"];
             _locationLabel = infoLabel;
             [infoLabel setText:self.event.locationName];
             break;
         }
-        case 1: {
+        case 2: {
             [titleLabel setText:@"Time:"];
             _dateLabel = infoLabel;
+            [infoLabel setFont:[UIFont systemFontOfSize:17]];
             [self setDateLabelText];
             break;
         }
-        case 2: {
+        case 3: {
             [titleLabel setText:@"About:"];
-            _aboutTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 14, self.tableView.frame.size.width-20, 100)];
+            _aboutTextView = [[UITextView alloc] initWithFrame:CGRectMake(5, 15, self.tableView.frame.size.width-20, 100)];
             [_aboutTextView setText:[self.event eventDetails]];
             _aboutTextView.editable = NO;
             _aboutTextView.scrollEnabled = NO;
@@ -219,19 +227,20 @@
             [cell addSubview:_aboutTextView];
             return cell;
         }
-        case 3: {
+        case 4: {
+            cell.clipsToBounds = NO;
             CGFloat width = self.tableView.frame.size.width/3;
-            _attendingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 45)];
+            _attendingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, 48)];
             [self.attendingButton setBackgroundImage:[UIImage imageWithColor:kGreenColor] forState:UIControlStateNormal];
             [self.attendingButton setImage:[UIImage imageNamed:@"checkmark.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.attendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
-            _maybeAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, 45)];
+            _maybeAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, 48)];
             [self.maybeAttendingButton setBackgroundImage:[UIImage imageWithColor:kLightOrangeColor] forState:UIControlStateNormal];
             [self.maybeAttendingButton setImage:[UIImage imageNamed:@"questionmark.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.maybeAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
             
-            _notAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width*2, 0, width, 45)];
+            _notAttendingButton = [[UIButton alloc] initWithFrame:CGRectMake(width*2, 0, width, 48)];
             [self.notAttendingButton setBackgroundImage:[UIImage imageWithColor:kRedColor] forState:UIControlStateNormal];
             [self.notAttendingButton setImage:[UIImage imageNamed:@"x.png" withColor:[UIColor whiteColor]] forState:UIControlStateNormal];
             [self.notAttendingButton addTarget:self action:@selector(setAttendingStatus:) forControlEvents:UIControlEventTouchUpInside];
@@ -254,7 +263,8 @@
 #pragma mark Other
 
 -(void)updateFields {
-    [self.eventNameLabel setText:[self.event.hostUser username]];
+    [self.hostLabel setText:[self.event.hostUser username]];
+    [self.eventNameLabel setText:[self.event eventName]];
     [self.aboutTextView setText:[self.event eventDetails]];
     [self.locationLabel setText:[self.event locationName]];
     [self setDateLabelText];

@@ -18,19 +18,18 @@
 #define kDarkOrangeColor rgbColor(245, 136, 101)
 #define kLightOrangeColor rgbColor(250, 172, 110)
 #define kDarkGrayColor rgbColor(107, 108, 107)
+#define kGrayColor rgbColor(140, 140, 140)
 #define kOffWhiteColor rgbColor(240, 240, 240)
 #define kLightGrayColor rgbColor(167, 168, 166)
-#define kGreenColor rgbColor(137,176,149)
 #define kRedColor rgbColor(241, 95, 90)
-#define kLightBlueColor rgbColor(12, 110, 220)
-#define kQuiteBlueColor rgbColor(15, 60, 240)
-#define kVeryBlueColor rgbColor(18, 73, 255)
 #define kWhiteColor rgbColor(255, 255, 255)
-#define kBrightOrange rgbColor(255, 149, 0)
-#define kBlueGreenColor rgbColor(38, 131, 108)
+#define kGreenColor rgbColor(38, 131, 108)
 
 #define kBorderColor kDarkGrayColor
-#define kNavBarColor kBlueGreenColor
+
+#define tableViewSectionHeaderColor kWhiteColor
+
+#define kNavBarColor kGreenColor
 #define kNavBarTintColor kWhiteColor
 #define kNavBarTitleDictionary @{NSForegroundColorAttributeName : kNavBarTintColor, NSFontAttributeName : [UIFont boldSystemFontOfSize:20]}
 #define kNavBarTitleView [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_nav_bar.png"]]
