@@ -17,6 +17,14 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
+@property (nonatomic, strong) NSMutableArray* listOfFriendsWhoAddedMe;
+@property (nonatomic, strong) NSMutableDictionary* friendsWhoAddedMe;
+
+@property (nonatomic, strong) NSMutableArray* listOfFriendsIveAdded;
+@property (nonatomic, strong) NSMutableDictionary* friendsIveAdded;
+
+@property (nonatomic, strong) NSMutableArray* peopleImFollowingNotFollowingMe;
+
 @end
 
 @implementation GWTTizeFriendsTableViewController
@@ -69,7 +77,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -83,6 +91,10 @@
             titleLabel.text = @"Tize Requests";
             break;
         }
+        case 1: {
+            titleLabel.text = @"Friends Not Responded";
+            break;
+        }
     }
     
     [headerView addSubview:titleLabel];
@@ -92,7 +104,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.friendsWhoAddedMe count];
+            return [self.listOfFriendsWhoAddedMe count];
+        case 1:
+            return [self.peopleImFollowingNotFollowingMe count];
     }
     return 0;
 }
@@ -102,10 +116,18 @@
     
     switch (indexPath.section) {
         case 0: {
-            if (indexPath.row < [self.friendsWhoAddedMe count]) {
-                PFUser *userFollowing = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+            if (indexPath.row < [self.listOfFriendsWhoAddedMe count]) {
+                PFUser *userFollowing = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
                 cell.textLabel.text = [userFollowing username];
                 cell.accessoryType = [self.friendsIveAdded objectForKey:[userFollowing objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            }
+            break;
+        }
+        case 1: {
+            if (indexPath.row < [self.peopleImFollowingNotFollowingMe count]) {
+                PFUser *userImFollowing = [self.peopleImFollowingNotFollowingMe objectAtIndex:indexPath.row];
+                cell.textLabel.text = [userImFollowing username];
+                cell.accessoryType = UITableViewCellAccessoryNone;
             }
             break;
         }
@@ -117,12 +139,14 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PFUser *friend = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
-    if ([self.friendsIveAdded objectForKey:[friend objectId]]) {
-        [self removeFriendAtIndexPath:indexPath];
-    }
-    else {
-        [self addFriendAtIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        PFUser *friend = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
+        if ([self.friendsIveAdded objectForKey:[friend objectId]]) {
+            [self removeFriendAtIndexPath:indexPath];
+        }
+        else {
+            [self addFriendAtIndexPath:indexPath];
+        }
     }
 }
 
@@ -140,10 +164,11 @@
     [getAllFollowingEvents whereKey:@"following" equalTo:[[PFUser currentUser] objectId]];
     [getAllUsersFollowingMe whereKey:@"objectId" matchesKey:@"user" inQuery:getAllFollowingEvents];
     [getAllUsersFollowingMe findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
-        self.friendsWhoAddedMe = [[NSMutableArray alloc] init];
+        self.listOfFriendsWhoAddedMe = [[NSMutableArray alloc] init];
         if(!error) {
             for (PFUser *object in objects) {
-                [self.friendsWhoAddedMe addObject:object];
+                [self.listOfFriendsWhoAddedMe addObject:object];
+                [self.friendsWhoAddedMe setObject:object forKey:[object objectId]];
             }
             [self.tableView reloadData];
         }
@@ -160,11 +185,21 @@
         self.friendsIveAdded = [[NSMutableDictionary alloc] init];
         if(!error) {
             for (PFUser *object in objects) {
+                [self.listOfFriendsIveAdded addObject:object];
                 [self.friendsIveAdded setObject:object forKey:[object objectId]];
             }
             [self.tableView reloadData];
         }
     }];
+}
+
+-(void)updateMeFollowingNotMe {
+    self.peopleImFollowingNotFollowingMe = [[NSMutableArray alloc] init];
+    for (PFUser *friendsFollowing in self.listOfFriendsIveAdded) {
+        if (![self.friendsWhoAddedMe objectForKey:friendsFollowing.username]) {
+            [self.peopleImFollowingNotFollowingMe addObject:friendsFollowing];
+        }
+    }
 }
 
 #pragma mark Other
@@ -173,7 +208,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    PFUser *user = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+    PFUser *user = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
     PFObject *following = [PFObject objectWithClassName:@"Following"];
     following[@"user"] = [[PFUser currentUser] objectId];
     following[@"following"] = [user objectId];
@@ -186,7 +221,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    PFUser *user = [self.friendsWhoAddedMe objectAtIndex:indexPath.row];
+    PFUser *user = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
     [self.friendsIveAdded removeObjectForKey:[user objectId]];
     //TODO:Write the code to remove a friend
 }

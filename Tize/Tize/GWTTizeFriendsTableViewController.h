@@ -11,9 +11,6 @@
 
 @interface GWTTizeFriendsTableViewController : UIViewController
 
-@property (nonatomic, strong) NSMutableArray* friendsWhoAddedMe;
-@property (nonatomic, strong) NSMutableDictionary* friendsIveAdded;
-
 @property (nonatomic, strong) GWTEvent* event;
 
 @end
