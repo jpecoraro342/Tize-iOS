@@ -31,7 +31,7 @@
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissModal)];
     self.leftBarButtonItem = cancel;
     
-    [self setViewHasTabBar:YES];
+    [self setSizeOfBottomBar:49];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

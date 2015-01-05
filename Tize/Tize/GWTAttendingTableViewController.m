@@ -117,21 +117,18 @@
 }
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSInteger height = 38;
-    if (section == 0) {
-        height = 40;
-    }
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, height)];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, height)];
+    NSInteger headerViewHeight = [self tableView:self.tableView heightForHeaderInSection:section];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, headerViewHeight)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, headerViewHeight)];
     [titleLabel setTextColor:kOffWhiteColor];
-    
+
     switch (section) {
         case 0:
             titleLabel.text = self.event.eventName;
-            [titleLabel setFont:[UIFont systemFontOfSize:20]];
-            [titleLabel setTextColor:kWhiteColor];
+            titleLabel.textAlignment = NSTextAlignmentCenter;
             self.titleLabel = titleLabel;
             [headerView setBackgroundColor:[UIColor lightGrayColor]];
+            [titleLabel setTextColor:[UIColor darkGrayColor]];
             break;
         case 1:
             titleLabel.text = @"Attending";

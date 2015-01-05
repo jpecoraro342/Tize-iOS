@@ -97,9 +97,10 @@
 
 //Sets the header views to the usual layout
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
+    NSInteger headerViewHeight = [self tableView:self.tableView heightForHeaderInSection:section];
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, headerViewHeight)];
     [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, headerViewHeight)];
     [titleLabel setTextColor:[UIColor darkGrayColor]];
     
     titleLabel.text = [self titleForHeaderInSection:section];
@@ -113,15 +114,8 @@
     return headerView;
 }
 
-//Setter for the view has tab bar
--(void)setViewHasTabBar:(BOOL)viewHasTabBar {
-    _viewHasTabBar = viewHasTabBar;
-    if (_viewHasTabBar) {
-        [_tableViewBottom setConstant:49];
-    }
-    else {
-        [_tableViewBottom setConstant:0];
-    }
+-(void)setSizeOfBottomBar:(CGFloat)sizeOfBottomBar {
+    [_tableViewBottom setConstant:sizeOfBottomBar];
 }
 
 #pragma mark Subclasses Must Override

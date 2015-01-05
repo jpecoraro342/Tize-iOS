@@ -99,6 +99,9 @@
 #pragma mark Private
 
 -(void)initializeViewControllers {
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
     GWTEditEventViewController *editEvent = [[GWTEditEventViewController alloc] init];
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
     GWTAttendingTableViewController *attending = [[GWTAttendingTableViewController alloc] init];
@@ -107,7 +110,7 @@
     self.viewControllers = [[NSMutableArray alloc] initWithObjects:editEvent, detailEvent, attending, nil];
     
     CGRect mainEventsFrame = self.mainEventsView.view.frame;
-    mainEventsFrame.origin.x = 320;
+    mainEventsFrame.origin.x = screenWidth;
     self.mainEventsView.view.frame = mainEventsFrame;
     [self.scrollView addSubview:self.mainEventsView.view];
     
