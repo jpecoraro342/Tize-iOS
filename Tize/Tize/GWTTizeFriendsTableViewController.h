@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
+#import "GWTTizeTableViewController.h"
 
-@interface GWTTizeFriendsTableViewController : UIViewController
-
-@property (nonatomic, strong) GWTEvent* event;
+@interface GWTTizeFriendsTableViewController : GWTTizeTableViewController
 
 @end

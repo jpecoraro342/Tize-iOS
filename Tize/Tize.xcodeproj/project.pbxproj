@@ -23,7 +23,6 @@
 		7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B562E195D02CA008FD5F5 /* GWTEditEventViewController.m */; };
 		7C3B5631195D02CA008FD5F5 /* GWTEditEventViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B562F195D02CA008FD5F5 /* GWTEditEventViewController.xib */; };
 		7C3B5635195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B5633195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m */; };
-		7C3B5636195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5634195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib */; };
 		7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */; };
 		7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */; };
 		7C425A921A0197D2004FBBC3 /* trophy@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C425A911A0197D2004FBBC3 /* trophy@2x.png */; };
@@ -117,7 +116,6 @@
 		7C3B562F195D02CA008FD5F5 /* GWTEditEventViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTEditEventViewController.xib; sourceTree = "<group>"; };
 		7C3B5632195D0367008FD5F5 /* GWTTizeFriendsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeFriendsTableViewController.h; sourceTree = "<group>"; };
 		7C3B5633195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeFriendsTableViewController.m; sourceTree = "<group>"; };
-		7C3B5634195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTTizeFriendsTableViewController.xib; sourceTree = "<group>"; };
 		7C3B5637195D0380008FD5F5 /* GWTAttendingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTAttendingTableViewController.h; sourceTree = "<group>"; };
 		7C3B5638195D0380008FD5F5 /* GWTAttendingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTAttendingTableViewController.m; sourceTree = "<group>"; };
 		7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GWTAttendingTableViewController.xib; sourceTree = "<group>"; };
@@ -284,7 +282,6 @@
 				7C3B5639195D0380008FD5F5 /* GWTAttendingTableViewController.xib */,
 				7C6F11FA19D36BD50080E636 /* GWTSettingsViewController.xib */,
 				7CB33CEB1A2269B100C07BF7 /* GWTTizeTableViewController.xib */,
-				7C3B5634195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib */,
 			);
 			name = Xibs;
 			sourceTree = "<group>";
@@ -560,7 +557,6 @@
 				7C9A5C9C19512132008B2666 /* GWTEventsViewController.xib in Resources */,
 				7C9EE79D19F854F900E2305F /* present@2x.png in Resources */,
 				7CD793A919AFA37B00357D7A /* questionmark@2x.png in Resources */,
-				7C3B5636195D0367008FD5F5 /* GWTTizeFriendsTableViewController.xib in Resources */,
 				7C9EE79F19F854F900E2305F /* study@2x.png in Resources */,
 				7C3B563B195D0380008FD5F5 /* GWTAttendingTableViewController.xib in Resources */,
 				7CD793AA19AFA37B00357D7A /* x@2x.png in Resources */,

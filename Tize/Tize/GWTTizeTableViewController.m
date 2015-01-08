@@ -8,7 +8,7 @@
 
 #import "GWTTizeTableViewController.h"
 
-@interface GWTTizeTableViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate>
+@interface GWTTizeTableViewController ()
 
 //TableView Bottom Constraint
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewBottom;

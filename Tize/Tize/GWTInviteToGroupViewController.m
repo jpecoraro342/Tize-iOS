@@ -80,16 +80,11 @@
     return @"";
 }
 
-
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = [self.tableView dequeueReusableCellWithIdentifier:@"subtitlecell"];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"subtitlecell"];
-    }
-    
+    UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+
     if (indexPath.row < [self.listOfFriends count]) {
         PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
-        cell.textLabel.text = [friend username];
         cell.accessoryType = [self.friendsInGroup objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     }
     
@@ -132,14 +127,14 @@
 }
 
 -(void)queryInGroup {
-    PFQuery *eventUsers = [PFQuery queryWithClassName:@"GroupUsers"];
-    [eventUsers whereKey:@"group" equalTo:self.group];
-    PFQuery *getAllUsersInvited = [PFUser query];
-    [getAllUsersInvited whereKey:@"objectId" matchesKey:@"userID" inQuery:eventUsers];
-    [getAllUsersInvited findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+    PFQuery *groupUsers = [PFQuery queryWithClassName:@"GroupUsers"];
+    [groupUsers whereKey:@"group" equalTo:[PFObject objectWithoutDataWithClassName:@"Groups" objectId:self.group.objectId]];
+    [groupUsers includeKey:@"user"];
+    [groupUsers findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
         if(!error) {
             for (PFUser *object in objects) {
-                [self.friendsInGroup setObject:object forKey:[object objectId]];
+                PFUser *user = object[@"user"];
+                [self.friendsInGroup setObject:user forKey:[user objectId]];
             }
             [self.tableView reloadData];
         }
@@ -163,7 +158,7 @@
     
     PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
     [self.friendsInGroup removeObjectForKey:[user objectId]];
-    //TODO:Write the code to remove a friend
+    //TODO:Write the code to remove a friend from the group
 }
 
 -(void)cancelAddingFriends {

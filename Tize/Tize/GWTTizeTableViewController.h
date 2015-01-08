@@ -12,7 +12,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GWTTizeTableViewController : UIViewController
+@interface GWTTizeTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate>
 
 /**
  * UITableView used in the view controller this has public access and is entirely customizable

@@ -11,10 +11,7 @@
 #import "GWTEventsViewController.h"
 #import "UIImage+Color.h"
 
-@interface GWTTizeFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@interface GWTTizeFriendsTableViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray* listOfFriendsWhoAddedMe;
 @property (nonatomic, strong) NSMutableDictionary* friendsWhoAddedMe;
@@ -42,27 +39,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismissModal)];
+    self.leftBarButtonItem = cancel;
     
-    UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(dismiss)];
-    
-    
-    UINavigationItem *navItem = [[UINavigationItem alloc] initWithTitle:@""];
-    navItem.titleView = kNavBarTitleView;
-    navItem.leftBarButtonItem = cancel;
-    [self.navigationBar setItems:@[navItem]];
-    [self.navigationBar setTintColor:kNavBarTintColor];
-    [self.navigationBar setBarTintColor:kNavBarColor];
-    
-    //[self.view addSubview:toolbar];
-}
-
-- (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
-    return UIBarPositionTopAttached;
-}
-
--(void)dismiss {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self setSizeOfBottomBar:49];
 }
 
 #pragma mark - Tableview delegate methods
@@ -79,27 +59,6 @@
     return 2;
 }
 
--(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 38)];
-    [headerView setBackgroundColor:[UIColor lightGrayColor]];
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, 38)];
-    [titleLabel setTextColor:[UIColor darkGrayColor]];
-    
-    switch (section) {
-        case 0: {
-            titleLabel.text = @"Tize Requests";
-            break;
-        }
-        case 1: {
-            titleLabel.text = @"Friends Not Responded";
-            break;
-        }
-    }
-    
-    [headerView addSubview:titleLabel];
-    return headerView;
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
@@ -110,8 +69,29 @@
     return 0;
 }
 
+-(NSString*)titleForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0: {
+            return @"Tize Requests";
+        }
+        case 1: {
+            return @"Friends Not Responded";
+        }
+    }
+    
+    return @"";
+}
+
+-(NSString *)titleForCellAtIndexPath:(NSIndexPath *)indexPath {
+    return @"";
+}
+
+-(NSString *)subtitleForCellAtIndexPath:(NSIndexPath *)indexPath {
+    return @"";
+}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
+    UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
     switch (indexPath.section) {
         case 0: {
