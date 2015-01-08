@@ -7,8 +7,12 @@
 //
 
 #import "GWTGroupsViewController.h"
+#import "GWTInviteToGroupViewController.h"
+#import <Parse/Parse.h>
 
-@interface GWTGroupsViewController () <UITabBarDelegate, UITabBarControllerDelegate>
+@interface GWTGroupsViewController () <UITabBarDelegate, UITabBarControllerDelegate, UIAlertViewDelegate>
+
+@property (nonatomic, strong) NSMutableArray *listOfGroups;
 
 @end
 
@@ -17,6 +21,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        [self queryGroups];
         UITabBarItem *groups = self.tabBarItem;
         [groups setTitle:@"Groups"];
         [groups setImage:[UIImage imageNamed:@"groupstab.png"]];
@@ -33,16 +38,22 @@
     [self setSizeOfBottomBar:49];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    UIBarButtonItem *addGroup = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addGroup)];
+    self.rightBarButtonItem = addGroup;
+}
+
+#pragma mark - Table View
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 44;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 0;
-        case 1:
-            return 0;
+            return [self.listOfGroups count];
     }
     return 0;
 }
@@ -56,11 +67,86 @@
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    return @"";
+    return self.listOfGroups[indexPath.row][@"name"];
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
     return @"";
 }
+
+#pragma mark -
+
+-(void)addGroup {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Create Group" message:@"Enter the group name: " delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [[alertView textFieldAtIndex:0]  setAutocapitalizationType:UITextAutocapitalizationTypeWords];
+    [alertView show];
+}
+
+-(void)queryGroups {
+    PFQuery *getAllMyGroups = [PFQuery queryWithClassName:@"Groups"];
+    
+    [getAllMyGroups whereKey:@"owner" equalTo:[PFUser currentUser]];
+    [getAllMyGroups findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            self.listOfGroups = [[NSMutableArray alloc] init];
+            for (PFUser *object in objects) {
+                [self.listOfGroups addObject:object];
+            }
+            [self.tableView reloadData];
+        }
+    }];
+}
+
+#pragma mark - Alertview
+
+-(BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView {
+    NSString* text = [alertView textFieldAtIndex:0].text;
+    
+    //if the text length is greater than 0, return yes, otherwise return no
+    return text.length > 0 ? YES : NO;
+}
+
+-(void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        UITextField *textField = [alertView textFieldAtIndex:0];
+        NSString *groupName = textField.text;
+        PFObject *group = [PFObject objectWithClassName:@"Groups"];
+        group[@"name"] = groupName;
+        group[@"owner"] = [PFUser currentUser];
+        [self.listOfGroups addObject:group];
+        [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if(!error) {
+                if (succeeded) {
+                    [self loadGroupInvite:group];
+                }
+            }
+        }];
+    }
+}
+
+-(void)loadGroupInvite:(PFObject *)group {
+    GWTInviteToGroupViewController *groupInvite = [[GWTInviteToGroupViewController alloc] initWithGroup:group];
+    groupInvite.dismissBlock = ^(NSMutableArray *friendsToAdd) {
+        NSMutableArray *groupUserObjects = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [friendsToAdd count]; i++) {
+            PFObject *invite = [PFObject objectWithClassName:@"GroupUsers"];
+            invite[@"user"] = [friendsToAdd objectAtIndex:i];
+            invite[@"group"] = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:group.objectId];
+            [groupUserObjects addObject:invite];
+        }
+        NSLog(@"\nInviting %zd friends to \nGroup: %@ \nID: %@\n\n", [groupUserObjects count], group[@"name"], group.objectId);
+        [PFObject saveAllInBackground:groupUserObjects block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"\nFriends successfully added to Group!\n\n");
+            }
+            else {
+                NSLog(@"\nError: %@", error.localizedDescription);
+            }
+        }];
+    };
+    [self presentViewController:groupInvite animated:YES completion:nil];
+}
+
 
 @end

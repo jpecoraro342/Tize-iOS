@@ -9,7 +9,6 @@
 #import "GWTTizeFriendsTableViewController.h"
 #import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
-#import "GWTAddFriendViewController.h"
 #import "UIImage+Color.h"
 
 @interface GWTTizeFriendsTableViewController () <UITableViewDelegate, UITableViewDataSource, UINavigationBarDelegate, UITabBarDelegate, UITabBarControllerDelegate>
@@ -66,7 +65,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark tableview delegate methods
+#pragma mark - Tableview delegate methods
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 38;

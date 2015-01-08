@@ -7,7 +7,6 @@
 //
 
 #import <Parse/Parse.h>
-#import "GWTAddFriendViewController.h"
 #import "GWTSettingsViewController.h"
 #import "GWTEventsViewController.h"
 #import "UIImage+Color.h"

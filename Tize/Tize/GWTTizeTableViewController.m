@@ -91,7 +91,17 @@
     cell.detailTextLabel.text = [self subtitleForCellAtIndexPath:indexPath] ?: @"";
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.backgroundColor = kOffWhiteColor;
+    
+    //Set the seperator insets to zero!
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
     return cell;
 }
 
