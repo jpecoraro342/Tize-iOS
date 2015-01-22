@@ -11,6 +11,7 @@
 #import "GWTTizeFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTInviteFriendsViewController.h"
+#import "GWTContactsViewController.h"
 #import "GWTIconCell.h"
 
 @interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -458,13 +459,7 @@
 
 -(void)inviteFriends {
     [self updateEvent];
-    GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] initWithEvent:self.event];
-    friends.dismissBlock = ^(NSMutableArray *friendsToInvite) {
-        self.peopleToInvite = [friendsToInvite copy];
-        if (self.event.objectId) {
-            [self sendOutInvites:self.event];
-        }
-    };
+    GWTContactsViewController *friends = [[GWTContactsViewController alloc] initAsEventInvite];
     [self presentViewController:friends animated:YES completion:nil];
 }
 

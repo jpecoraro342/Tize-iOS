@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
+#import "GWTTizeTableViewController.h"
 
-@interface GWTInviteFriendsViewController : UIViewController
+@class GWTInviteFriendsToEventCommand;
+@interface GWTInviteFriendsViewController : GWTTizeTableViewController
 
-@property (nonatomic, copy) void (^dismissBlock)(NSMutableArray* invited);
 @property (nonatomic, strong) GWTEvent *event;
+@property (nonatomic, strong) GWTInviteFriendsToEventCommand *inviteCommand;
 
 -(instancetype)initWithEvent:(GWTEvent *)event;
 

@@ -213,5 +213,4 @@
     return [NSString stringWithFormat:@"List of Friends VC"];
 }
 
-
 @end

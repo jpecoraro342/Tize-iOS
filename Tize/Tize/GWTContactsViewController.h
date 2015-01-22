@@ -10,4 +10,6 @@
 
 @interface GWTContactsViewController : UITabBarController
 
+-(instancetype)initAsEventInvite;
+
 @end

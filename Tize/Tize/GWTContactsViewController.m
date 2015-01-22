@@ -11,6 +11,9 @@
 #import "GWTContactsListViewController.h"
 #import "GWTGroupsViewController.h"
 
+#import "GWTInviteFriendsViewController.h"
+#import "GWTGroupsEventInviteViewController.h"
+
 @implementation GWTContactsViewController
 
 -(instancetype)init {
@@ -22,10 +25,29 @@
     return self;
 }
 
+-(instancetype)initAsEventInvite {
+    self = [super init];
+    if (self) {
+        [self.tabBar setTintColor:kGreenColor];
+        [self loadEventInviteTabs];
+    }
+    
+    return self;
+}
+
 -(void)loadTabs {
     GWTTizeFriendsTableViewController *friends = [[GWTTizeFriendsTableViewController alloc] init];
     GWTContactsListViewController *contacts = [[GWTContactsListViewController alloc] init];
     GWTGroupsViewController *groups = [[GWTGroupsViewController alloc] init];
+    
+    [self setViewControllers:@[friends, contacts, groups]];
+    [self setSelectedViewController:friends];
+}
+
+-(void)loadEventInviteTabs {
+    GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] init];
+    GWTContactsListViewController *contacts = [[GWTContactsListViewController alloc] init];
+    GWTGroupsEventInviteViewController *groups = [[GWTGroupsEventInviteViewController alloc] init];
     
     [self setViewControllers:@[friends, contacts, groups]];
     [self setSelectedViewController:friends];
