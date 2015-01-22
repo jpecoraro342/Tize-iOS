@@ -7,6 +7,7 @@
 //
 
 #import "GWTInviteGroupToEventCommand.h"
+#import "GWTInviteFriendsToEventCommand.h"
 
 @implementation GWTInviteGroupToEventCommand
 
@@ -43,10 +44,42 @@
     if (!self.eventId || [self.eventId isEqualToString:@""]) {
         return;
     }
-    //TODO:
-    //get all the user id's of people in that group
-    //invite them all to the event
+    
+    [self queryInGroup];
+}
+
+-(void)queryInGroup {
+    PFQuery *groupUsers = [PFQuery queryWithClassName:@"GroupUsers"];
+    [groupUsers whereKey:@"group" containedIn:self.listOfGroups];
+    [groupUsers includeKey:@"user"];
+    [groupUsers findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+        if(!error) {
+            NSMutableDictionary *friendsInGroup = [[NSMutableDictionary alloc] initWithCapacity:[objects count]]; //for those ugly dups
+            self.listOfPeopleInGroups = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            for (PFUser *object in objects) {
+                PFUser *user = object[@"user"];
+                [friendsInGroup setObject:user forKey:[user objectId]];
+            }
+            //To handle duplicates -- ughh!
+            [friendsInGroup enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                [self.listOfPeopleInGroups addObject:obj];
+            }];
+            
+            [self inviteAllToEvent];
+        }
+        else {
+            NSLog(@"Error: %@", error.localizedDescription);
+        }
+    }];
+}
+
+-(void)inviteAllToEvent {
+    GWTInviteFriendsToEventCommand *invite = [[GWTInviteFriendsToEventCommand alloc] initWithEventID:self.eventId];
+    [invite addFriends:self.listOfPeopleInGroups];
+    [invite execute];
+    
     [self.listOfGroups removeAllObjects];
+    [self.listOfPeopleInGroups removeAllObjects];
 }
 
 @end

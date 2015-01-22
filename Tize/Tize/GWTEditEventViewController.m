@@ -522,6 +522,9 @@
 }
 
 -(void)sendOutInvites:(GWTEvent*)event {
+    self.friendInvites.eventId = [self.event objectId];
+    self.groupInvites.eventId = [self.event objectId];
+    
     [self.friendInvites execute];
     [self.groupInvites execute];
 }

@@ -14,6 +14,7 @@
 
 @property (nonatomic, copy) NSString* eventId;
 @property (nonatomic, strong) NSMutableArray *listOfGroups;
+@property (nonatomic, strong) NSMutableArray *listOfPeopleInGroups;
 
 -(instancetype)initWithEventID:(NSString*)eventId;
 -(instancetype)initWithGroupID:(NSString *)groupId eventId:(NSString*)eventId;
