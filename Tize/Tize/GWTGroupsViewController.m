@@ -147,24 +147,6 @@
 
 -(void)loadGroupInvite:(PFObject *)group {
     GWTInviteToGroupViewController *groupInvite = [[GWTInviteToGroupViewController alloc] initWithGroup:group];
-    groupInvite.dismissBlock = ^(NSMutableArray *friendsToAdd) {
-        NSMutableArray *groupUserObjects = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [friendsToAdd count]; i++) {
-            PFObject *invite = [PFObject objectWithClassName:@"GroupUsers"];
-            invite[@"user"] = [friendsToAdd objectAtIndex:i];
-            invite[@"group"] = [PFObject objectWithoutDataWithClassName:@"Groups" objectId:group.objectId];
-            [groupUserObjects addObject:invite];
-        }
-        NSLog(@"\nInviting %zd friends to \nGroup: %@ \nID: %@\n\n", [groupUserObjects count], group[@"name"], group.objectId);
-        [PFObject saveAllInBackground:groupUserObjects block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"\nFriends successfully added to Group!\n\n");
-            }
-            else {
-                NSLog(@"\nError: %@", error.localizedDescription);
-            }
-        }];
-    };
     [self presentViewController:groupInvite animated:YES completion:nil];
 }
 

@@ -7,11 +7,13 @@
 //
 
 #import "GWTInviteToGroupViewController.h"
+#import "GWTAddToGroupCommand.h"
 #import <Parse/Parse.h>
 
 @interface GWTInviteToGroupViewController ()
 
 @property (strong, nonatomic) NSMutableArray *listOfFriends;
+@property (nonatomic, strong) NSMutableArray *listOfFriendsInGroup;
 @property (strong, nonatomic) NSMutableDictionary *friendsInGroup;
 
 @property (nonatomic, strong) PFObject *group;
@@ -34,6 +36,7 @@
     if (self) {
         self.group = group;
         self.friendsInGroup = [[NSMutableDictionary alloc] init];
+        self.inviteFriendsCommand = [[GWTAddToGroupCommand alloc] initWithGroupID:group.objectId];
         [self query];
     }
     return self;
@@ -43,7 +46,7 @@
     [super viewDidLoad];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddingFriends)];
-    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Add to Group" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
+    UIBarButtonItem *invite = [[UIBarButtonItem alloc] initWithTitle:@"Add New" style:UIBarButtonItemStyleBordered target:self action:@selector(inviteSelected)];
     
     self.leftBarButtonItem = cancel;
     self.rightBarButtonItem = invite;
@@ -59,21 +62,36 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
+            return [self.listOfFriendsInGroup count];
+        case 1:
             return [self.listOfFriends count];
     }
     return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
-    return self.group[@"name"];
+    switch (section) {
+        case 0:
+            return self.group[@"name"];
+        case 1:
+            return @"Invite to Group";
+    }
+    
+    return @"";
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    return [self.listOfFriends[indexPath.row] username];
+    switch (indexPath.section) {
+        case 0:
+            return [self.listOfFriendsInGroup[indexPath.row] username];
+        case 1:
+            return [self.listOfFriends[indexPath.row] username];
+    }
+    return @"";
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -83,9 +101,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
 
-    if (indexPath.row < [self.listOfFriends count]) {
-        PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
-        cell.accessoryType = [self.friendsInGroup objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    switch (indexPath.section) {
+        case 0: {
+            cell.accessoryType = UITableViewCellAccessoryNone;
+            break;
+        }
+        case 1: {
+            if (indexPath.row < [self.listOfFriends count]) {
+                PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+                cell.accessoryType = [self.friendsInGroup objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            }
+            break;
+        }
     }
     
     return cell;
@@ -93,12 +120,15 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
-    if ([self.friendsInGroup objectForKey:[friend objectId]]) {
-        [self removeFriendAtIndexPath:indexPath];
-    }
-    else {
-        [self addFriendAtIndexPath:indexPath];
+    
+    if (indexPath.section == 1) {
+        PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+        if ([self.friendsInGroup objectForKey:[friend objectId]]) {
+            [self removeFriendAtIndexPath:indexPath];
+        }
+        else {
+            [self addFriendAtIndexPath:indexPath];
+        }
     }
 }
 
@@ -132,10 +162,16 @@
     [groupUsers includeKey:@"user"];
     [groupUsers findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
         if(!error) {
+            self.listOfFriendsInGroup = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (PFUser *object in objects) {
                 PFUser *user = object[@"user"];
                 [self.friendsInGroup setObject:user forKey:[user objectId]];
             }
+            //To handle duplicates -- ughh!
+            [self.friendsInGroup enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                [self.listOfFriendsInGroup addObject:obj];
+            }];
+            
             [self.tableView reloadData];
         }
     }];
@@ -150,6 +186,9 @@
     
     PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
     [self.friendsInGroup setObject:user forKey:[user objectId]];
+    
+    //[self.listOfFriendsInGroup addObject:user];
+    //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.listOfFriendsInGroup count] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
 }
 
 -(void)removeFriendAtIndexPath:(NSIndexPath*) indexPath {
@@ -158,6 +197,10 @@
     
     PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
     [self.friendsInGroup removeObjectForKey:[user objectId]];
+    
+    //[self.listOfFriendsInGroup removeObject:user];
+    //[self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[self.listOfFriendsInGroup count] - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationBottom];
+    
     //TODO:Write the code to remove a friend from the group
 }
 
@@ -173,9 +216,8 @@
     }];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        if (self.dismissBlock) {
-            self.dismissBlock(invited);
-        }
+        self.inviteFriendsCommand.listOfFriends = invited;
+        [self.inviteFriendsCommand execute];
     }];
 }
 

@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */; };
 		15ED57491A41261700B24CEB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15ED57481A41261700B24CEB /* Fabric.framework */; };
+		15F712F21A70CB2A004B601D /* GWTAddToGroupCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F712F11A70CB2A004B601D /* GWTAddToGroupCommand.m */; };
+		15F712F51A70CB3A004B601D /* GWTInviteGroupToEventCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F712F41A70CB3A004B601D /* GWTInviteGroupToEventCommand.m */; };
+		15F712F81A70CB46004B601D /* GWTCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F712F71A70CB46004B601D /* GWTCommand.m */; };
+		15F712FB1A70CE8D004B601D /* GWTGroupCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F712FA1A70CE8D004B601D /* GWTGroupCommand.m */; };
 		772755060C3A4860AF229729 /* libPods-Tize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F4BB6DD3F5455596323208 /* libPods-Tize.a */; };
 		7C1F44801A19DAF6000C06CE /* GWTContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */; };
 		7C1F44831A19DB99000C06CE /* GWTContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F44821A19DB99000C06CE /* GWTContactsListViewController.m */; };
@@ -96,6 +100,14 @@
 		156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteToGroupViewController.h; sourceTree = "<group>"; };
 		1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTInviteToGroupViewController.m; sourceTree = "<group>"; };
 		15ED57481A41261700B24CEB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		15F712F01A70CB2A004B601D /* GWTAddToGroupCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTAddToGroupCommand.h; sourceTree = "<group>"; };
+		15F712F11A70CB2A004B601D /* GWTAddToGroupCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTAddToGroupCommand.m; sourceTree = "<group>"; };
+		15F712F31A70CB3A004B601D /* GWTInviteGroupToEventCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteGroupToEventCommand.h; sourceTree = "<group>"; };
+		15F712F41A70CB3A004B601D /* GWTInviteGroupToEventCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTInviteGroupToEventCommand.m; sourceTree = "<group>"; };
+		15F712F61A70CB46004B601D /* GWTCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTCommand.h; sourceTree = "<group>"; };
+		15F712F71A70CB46004B601D /* GWTCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTCommand.m; sourceTree = "<group>"; };
+		15F712F91A70CE8D004B601D /* GWTGroupCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTGroupCommand.h; sourceTree = "<group>"; };
+		15F712FA1A70CE8D004B601D /* GWTGroupCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTGroupCommand.m; sourceTree = "<group>"; };
 		25AF874B73DBD15EDD1760FB /* Pods-Tize.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tize.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tize/Pods-Tize.release.xcconfig"; sourceTree = "<group>"; };
 		7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTContactsViewController.h; sourceTree = "<group>"; };
 		7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTContactsViewController.m; sourceTree = "<group>"; };
@@ -235,6 +247,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15F712EF1A70C9BF004B601D /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				15F712F61A70CB46004B601D /* GWTCommand.h */,
+				15F712F71A70CB46004B601D /* GWTCommand.m */,
+				15F712F01A70CB2A004B601D /* GWTAddToGroupCommand.h */,
+				15F712F11A70CB2A004B601D /* GWTAddToGroupCommand.m */,
+				15F712F31A70CB3A004B601D /* GWTInviteGroupToEventCommand.h */,
+				15F712F41A70CB3A004B601D /* GWTInviteGroupToEventCommand.m */,
+				15F712F91A70CE8D004B601D /* GWTGroupCommand.h */,
+				15F712FA1A70CE8D004B601D /* GWTGroupCommand.m */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
 		7C3B562A195D0278008FD5F5 /* Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,6 +409,7 @@
 		7C9A5C9E195125DC008B2666 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				15F712EF1A70C9BF004B601D /* Commands */,
 				7C9778C319749DC3008BFF66 /* GWTConstants.h */,
 				7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */,
 				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
@@ -649,6 +677,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C1F44801A19DAF6000C06CE /* GWTContactsViewController.m in Sources */,
+				15F712F21A70CB2A004B601D /* GWTAddToGroupCommand.m in Sources */,
 				7C4CACD019D8BD8500EC31C9 /* GWTInviteFriendsViewController.m in Sources */,
 				1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */,
 				7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */,
@@ -658,10 +687,12 @@
 				7CC463761A1DD99E00E7A594 /* GWTAddressBook.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
 				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,
+				15F712F51A70CB3A004B601D /* GWTInviteGroupToEventCommand.m in Sources */,
 				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
 				7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */,
 				7C9A5C5319501FBC008B2666 /* main.m in Sources */,
 				7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */,
+				15F712FB1A70CE8D004B601D /* GWTGroupCommand.m in Sources */,
 				7C9A5C5719501FBC008B2666 /* GWTAppDelegate.m in Sources */,
 				7CB33CE91A2268F000C07BF7 /* GWTTizeTableViewController.m in Sources */,
 				7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */,
@@ -672,6 +703,7 @@
 				7CC463791A1DD9B400E7A594 /* GWTContact.m in Sources */,
 				7C1F44831A19DB99000C06CE /* GWTContactsListViewController.m in Sources */,
 				7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */,
+				15F712F81A70CB46004B601D /* GWTCommand.m in Sources */,
 				7C3B5635195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m in Sources */,
 				7C97794D197AE3B2008BFF66 /* GWTEventBasedViewController.m in Sources */,
 			);

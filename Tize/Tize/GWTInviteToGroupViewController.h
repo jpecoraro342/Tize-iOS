@@ -8,10 +8,11 @@
 
 #import "GWTTizeTableViewController.h"
 
+@class GWTAddToGroupCommand;
 @class PFObject;
 @interface GWTInviteToGroupViewController : GWTTizeTableViewController
 
-@property (nonatomic, copy) void (^dismissBlock)(NSMutableArray* selected);
+@property (nonatomic, strong) GWTAddToGroupCommand *inviteFriendsCommand;
 
 -(instancetype)initWithGroup:(PFObject *)group;
 
