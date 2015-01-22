@@ -8,6 +8,9 @@
 
 #import "GWTTizeTableViewController.h"
 
+@class GWTInviteGroupToEventCommand;
 @interface GWTGroupsEventInviteViewController : GWTTizeTableViewController
+
+@property (nonatomic, strong) GWTInviteGroupToEventCommand *groupCommand;
 
 @end

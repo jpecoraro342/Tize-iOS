@@ -11,10 +11,15 @@
 
 @implementation GWTInviteFriendsToEventCommand
 
+-(instancetype)init {
+    return [self initWithEventID:@""];
+}
+
 -(instancetype)initWithEventID:(NSString*)eventId {
     self = [super init];
     if (self) {
         self.eventId = eventId;
+        self.friendsToInvite = [NSMutableArray array];
     }
     return self;
 }
@@ -32,6 +37,10 @@
 }
 
 -(void)execute {
+    if (!self.eventId || [self.eventId isEqualToString:@""]) {
+        return;
+    }
+    
     NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [self.friendsToInvite count]; i++) {
         PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
@@ -50,6 +59,8 @@
             NSLog(@"\nError: %@", error.localizedDescription);
         }
     }];
+    
+    [self.friendsToInvite removeAllObjects];
 }
 
 @end

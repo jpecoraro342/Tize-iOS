@@ -12,6 +12,8 @@
 #import "GWTBasePageViewController.h"
 #import "GWTInviteFriendsViewController.h"
 #import "GWTContactsViewController.h"
+#import "GWTInviteFriendsToEventCommand.h"
+#import "GWTInviteGroupToEventCommand.h"
 #import "GWTIconCell.h"
 
 @interface GWTEditEventViewController () <UITableViewDataSource, UITableViewDelegate, UINavigationBarDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIActionSheetDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
@@ -62,6 +64,9 @@
         [_event setStartDate:startDate];
         [_event setEndDate:endDate];
         [_event setIcon:self.iconArray[0]];
+        
+        self.friendInvites = [[GWTInviteFriendsToEventCommand alloc] init];
+        self.groupInvites = [[GWTInviteGroupToEventCommand alloc] init];
     }
     return self;
 }
@@ -75,6 +80,9 @@
     
     self.eventTypeLabel.text = @"Edit Event";
     self.createEventButton.titleLabel.text = @"Update Event";
+    
+    self.friendInvites = [[GWTInviteFriendsToEventCommand alloc] initWithEventID:self.event.objectId];
+    self.groupInvites = [[GWTInviteGroupToEventCommand alloc] initWithEventID:self.event.objectId];
     
     [self updateFields];
     [self selectIcon];
@@ -459,7 +467,7 @@
 
 -(void)inviteFriends {
     [self updateEvent];
-    GWTContactsViewController *friends = [[GWTContactsViewController alloc] initAsEventInvite];
+    GWTContactsViewController *friends = [[GWTContactsViewController alloc] initAsEventInviteWithGroupCommand:self.groupInvites friendCommand:self.friendInvites];
     [self presentViewController:friends animated:YES completion:nil];
 }
 
@@ -514,25 +522,8 @@
 }
 
 -(void)sendOutInvites:(GWTEvent*)event {
-    NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
-    for (int i = 0; i < [self.peopleToInvite count]; i++) {
-        PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
-        invite[@"userID"] = [[self.peopleToInvite objectAtIndex:i] objectId];
-        invite[@"attendingStatus"] = [NSNumber numberWithInt:3];
-        invite[@"eventID"] = event.objectId;
-        [eventUserObjects addObject:invite];
-    }
-    NSLog(@"\nInviting %zd friends to \nEvent: %@\n\n", [eventUserObjects count], self.event.eventName);
-    [PFObject saveAllInBackground:eventUserObjects block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"\nFriends successfully invited!\n\n");
-        }
-        else {
-            NSLog(@"\nError: %@", error.localizedDescription);
-        }
-    }];
-    
-    self.peopleToInvite = nil;
+    [self.friendInvites execute];
+    [self.groupInvites execute];
 }
 
 #pragma mark textview and textfield delegates

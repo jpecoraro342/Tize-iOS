@@ -10,8 +10,13 @@
 #import "GWTEvent.h"
 #import "GWTEventBasedViewController.h"
 
+@class GWTInviteFriendsToEventCommand;
+@class GWTInviteGroupToEventCommand;
 @interface GWTEditEventViewController : GWTEventBasedViewController
 
 @property GWTEvent* event;
+
+@property (nonatomic, strong) GWTInviteFriendsToEventCommand *friendInvites;
+@property (nonatomic, strong) GWTInviteGroupToEventCommand *groupInvites;
 
 @end

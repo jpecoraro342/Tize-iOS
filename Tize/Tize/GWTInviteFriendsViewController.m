@@ -12,6 +12,7 @@
 #import "UIImage+Color.h"
 #import "GWTInviteFriendsViewController.h"
 #import "GWTInviteFriendsToEventCommand.h"
+#import "GWTContactsViewController.h"
 
 @interface GWTInviteFriendsViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
@@ -27,7 +28,7 @@
     if (self) {
         [self query];
         UITabBarItem *tize = self.tabBarItem;
-        [tize setTitle:@"Invite Tize"];
+        [tize setTitle:@"My Tize"];
         [tize setImage:[UIImage imageNamed:@"logo_tab_bar.png"]];
     }
     return self;
@@ -151,6 +152,9 @@
             }
         }];
     }
+    else {
+        self.friendsInvitedToEvent = [[NSMutableDictionary alloc] init];
+    }
 }
 
 #pragma mark Other
@@ -180,9 +184,8 @@
 }
 
 -(void)inviteSelected {
-    NSMutableArray *invited = [[NSMutableArray alloc] init];
-    
-    //execute the command and/or tell them dont be lazy
+    [((GWTContactsViewController*)self.tabBarController) inviteSelected];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

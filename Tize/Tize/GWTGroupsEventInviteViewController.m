@@ -8,11 +8,14 @@
 
 #import "GWTGroupsEventInviteViewController.h"
 #import "GWTInviteToGroupViewController.h"
+#import "GWTContactsViewController.h"
+#import "GWTInviteGroupToEventCommand.h"
 #import <Parse/Parse.h>
 
 @interface GWTGroupsEventInviteViewController () <UITabBarDelegate, UITabBarControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *listOfGroups;
+@property (nonatomic, strong) NSMutableDictionary *groupsInvited;
 
 @end
 
@@ -22,8 +25,9 @@
     self = [super init];
     if (self) {
         [self queryGroups];
+        self.groupsInvited = [[NSMutableDictionary alloc] init];
         UITabBarItem *groups = self.tabBarItem;
-        [groups setTitle:@"Select Groups to Invite"];
+        [groups setTitle:@"Groups"];
         [groups setImage:[UIImage imageNamed:@"groupstab.png"]];
     }
     return self;
@@ -39,6 +43,11 @@
     self.rightBarButtonItem = invite;
     
     [self setSizeOfBottomBar:49];
+}
+
+-(void)inviteSelected {
+    [((GWTContactsViewController*)self.tabBarController) inviteSelected];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table View
@@ -60,7 +69,7 @@
 }
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
-    return @"Invite Groups";
+    return @"Select Groups to Invite";
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -71,9 +80,27 @@
     return @"";
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    
+    if (indexPath.row < [self.listOfGroups count]) {
+        PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+        cell.accessoryType = [self.groupsInvited objectForKey:[group objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    }
+    
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    return cell;
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //
+    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    if ([self.groupsInvited objectForKey:[group objectId]]) {
+        [self removeGroupAtIndexPath:indexPath];
+    }
+    else {
+        [self addGroupAtIndexPath:indexPath];
+    }
 }
 
 #pragma mark - Table View Edit
@@ -91,7 +118,31 @@
     }
 }
 
+
+
 #pragma mark -
+
+-(void)addGroupAtIndexPath:(NSIndexPath*)indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    [self.groupsInvited setObject:group forKey:[group objectId]];
+    
+    [self.groupCommand addGroup:group];
+}
+
+-(void)removeGroupAtIndexPath:(NSIndexPath*) indexPath {
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    
+    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    [self.groupsInvited removeObjectForKey:[group objectId]];
+    
+    [self.groupCommand removeGroup:group];
+}
+
+#pragma mark - Queries
 
 -(void)addGroup {
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Create Group" message:@"Enter the group name: " delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Add", nil];
