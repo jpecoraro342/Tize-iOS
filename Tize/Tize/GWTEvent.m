@@ -17,6 +17,7 @@
 @dynamic eventName;
 @dynamic locationName;
 @dynamic host;
+@dynamic hostName;
 @dynamic hostUser;
 @dynamic startDate;
 @dynamic endDate;

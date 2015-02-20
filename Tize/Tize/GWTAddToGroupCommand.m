@@ -24,6 +24,12 @@
 }
 
 -(void)execute {
+    //TODO: Get all the people that are members of this group
+    //compare them against the selected members
+    //only upload these if they are not in that list
+    
+    //NOTE: Using User - should use user.objectid
+    
     NSMutableArray *groupUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [self.listOfFriends count]; i++) {
         PFObject *invite = [PFObject objectWithClassName:@"GroupUsers"];

@@ -58,6 +58,7 @@
         self.shouldSaveChanges = YES;
         _event = [[GWTEvent alloc] init];
         [_event setHost:[[PFUser currentUser] objectId]];
+        [_event setHostName:[[PFUser currentUser] username]];
         [_event setHostUser:[PFUser currentUser]];
         NSDate *startDate = [self nextHourDate:[NSDate date]];
         NSDate *endDate = [startDate dateByAddingTimeInterval:60*60];

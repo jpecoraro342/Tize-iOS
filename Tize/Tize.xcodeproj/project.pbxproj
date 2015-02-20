@@ -256,12 +256,12 @@
 			children = (
 				15F712F61A70CB46004B601D /* GWTCommand.h */,
 				15F712F71A70CB46004B601D /* GWTCommand.m */,
+				15F712F91A70CE8D004B601D /* GWTGroupCommand.h */,
+				15F712FA1A70CE8D004B601D /* GWTGroupCommand.m */,
 				15F712F01A70CB2A004B601D /* GWTAddToGroupCommand.h */,
 				15F712F11A70CB2A004B601D /* GWTAddToGroupCommand.m */,
 				15F712F31A70CB3A004B601D /* GWTInviteGroupToEventCommand.h */,
 				15F712F41A70CB3A004B601D /* GWTInviteGroupToEventCommand.m */,
-				15F712F91A70CE8D004B601D /* GWTGroupCommand.h */,
-				15F712FA1A70CE8D004B601D /* GWTGroupCommand.m */,
 				15F712FC1A70E129004B601D /* GWTInviteFriendsToEventCommand.h */,
 				15F712FD1A70E129004B601D /* GWTInviteFriendsToEventCommand.m */,
 			);

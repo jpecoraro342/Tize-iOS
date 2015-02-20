@@ -200,7 +200,7 @@
     switch (row) {
         case 0: {
             [titleLabel setText:@"Host: "];
-            [infoLabel setText:self.event.hostUser.username];
+            [infoLabel setText:self.event.hostName];
             [self setHostLabel:infoLabel];
             break;
         }
@@ -263,7 +263,7 @@
 #pragma mark Other
 
 -(void)updateFields {
-    [self.hostLabel setText:[self.event.hostUser username]];
+    [self.hostLabel setText:[self.event hostName]];
     [self.eventNameLabel setText:[self.event eventName]];
     [self.aboutTextView setText:[self.event eventDetails]];
     [self.locationLabel setText:[self.event locationName]];

@@ -179,7 +179,7 @@
     cell.eventNameLabel.text = tempEvent.eventName;
     cell.eventTimeLabel.text = tempEvent.startTime;
     cell.eventLocationLabel.text = tempEvent.locationName;
-    cell.eventHostLabel.text = tempEvent.hostUser.username;
+    cell.eventHostLabel.text = tempEvent.hostName;
     cell.eventImageView.image = [self iconForIndexPath:indexPath];
     
     return cell;
@@ -204,13 +204,25 @@
     //Get all the events we are invited to
     PFQuery *getEventUsers = [PFQuery queryWithClassName:@"EventUsers"];
     PFQuery *getAllEventsWeAreInvitedTo = [PFQuery queryWithClassName:@"Event"];
-    [getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
+    //[getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
+    
+    PFQuery *getAllOrganizations = [PFQuery queryWithClassName:@"OrganizationFollowers"];
+    PFQuery *getAllEventsForOrganizations = [PFQuery queryWithClassName:@"Event"];
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
     [getAllEventsWeAreInvitedTo whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
-    [getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
-    [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    //[getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
+    
+    [getAllOrganizations whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
+    [getAllEventsForOrganizations whereKey:@"host" matchesKey:@"organizationID" inQuery:getAllOrganizations];
+    [getAllEventsForOrganizations whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
+    //[getAllEventsForOrganizations orderByAscending:@"startDate"];
+    
+    PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[getAllEventsForOrganizations, getAllEventsWeAreInvitedTo]];
+    //[compoundQuery orderByAscending:@"startDate"];
+    
+    [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
                 [self.refreshControl endRefreshing];

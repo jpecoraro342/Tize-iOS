@@ -41,6 +41,12 @@
         return;
     }
     
+    //TODO: Get all eventuserobjects for this event id
+    //compare them against these
+    //only upload these if they are not in that list
+    
+    //NOTE: Can use userid as dictionary in key
+    
     NSMutableArray *eventUserObjects = [[NSMutableArray alloc] init];
     for (int i = 0; i < [self.friendsToInvite count]; i++) {
         PFObject *invite = [PFObject objectWithClassName:@"EventUsers"];
