@@ -18,7 +18,7 @@
 #import "GWTSettingsViewController.h"
 #import "UIImage+Color.h"
 
-@interface GWTEventsViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
+@interface GWTEventsViewController () <UIBarPositioningDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSMutableArray* upcomingEvents;
@@ -29,14 +29,16 @@
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
+@property (strong, nonatomic) UIToolbar *toolbar;
+
+@property (strong, nonatomic) NSMutableArray *cellIsSelected;
+@property (strong, nonatomic) NSIndexPath *indexPathForSwipingCell;
+
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
-@implementation GWTEventsViewController {
-    NSMutableArray *_cellIsSelected;
-    NSIndexPath *_indexPathForSwipingCell;
-}
+@implementation GWTEventsViewController
 
 -(instancetype)init {
     self = [super init];
@@ -64,17 +66,17 @@
     [self.navigationBar setTintColor:kNavBarTintColor];
     [self.navigationBar setBarTintColor:kNavBarColor];
     
-    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
+    self.toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, [[UIScreen mainScreen] bounds].size.height - 44, self.view.frame.size.width, 44)];
     
     //UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"plus.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStyleBordered target:self action:@selector(addEvent)];
     UIBarButtonItem *addItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addEvent)];
     UIBarButtonItem *flex = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *friends = [[UIBarButtonItem alloc] initWithTitle:@"Contacts" style:UIBarButtonItemStyleBordered target:self action:@selector(viewFriends)];
-    [toolbar setItems:[NSArray arrayWithObjects:addItem, flex, friends, nil]];
-    [toolbar setBarTintColor:[UIColor lightGrayColor]];
-    [toolbar setTintColor:kNavBarTintColor];
+    [self.toolbar setItems:[NSArray arrayWithObjects:addItem, flex, friends, nil]];
+    [self.toolbar setBarTintColor:[UIColor lightGrayColor]];
+    [self.toolbar setTintColor:kNavBarTintColor];
     
-    [self.view addSubview:toolbar];
+    [self.view addSubview:self.toolbar];
     
     UITableViewController *tableController = [[UITableViewController alloc] init];
     tableController.tableView = self.tableView;
@@ -160,21 +162,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     GWTEventCell* cell = [tableView dequeueReusableCellWithIdentifier:@"eventCell" forIndexPath:indexPath];
     
-    GWTEvent *tempEvent;
-    switch (indexPath.section) {
-        case 0: {
-            tempEvent = [self.upcomingEvents objectAtIndex:indexPath.row];
-            break;
-        }
-        case 1: {
-            tempEvent = [self.myEvents objectAtIndex:indexPath.row];
-            break;
-        }
-        case 2: {
-            tempEvent = [self.myPastEvents objectAtIndex:indexPath.row];
-            break;
-        }
-    }
+    GWTEvent *tempEvent = [self eventForIndexPath:indexPath];
     
     cell.eventNameLabel.text = tempEvent.eventName;
     cell.eventTimeLabel.text = tempEvent.startTime;
@@ -193,6 +181,28 @@
     //[self.tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 
+#pragma TableView Helper Methods
+
+-(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath {
+    GWTEvent *tempEvent;
+    switch (indexPath.section) {
+        case 0: {
+            tempEvent = [self.upcomingEvents objectAtIndex:indexPath.row];
+            break;
+        }
+        case 1: {
+            tempEvent = [self.myEvents objectAtIndex:indexPath.row];
+            break;
+        }
+        case 2: {
+            tempEvent = [self.myPastEvents objectAtIndex:indexPath.row];
+            break;
+        }
+    }
+    
+    return tempEvent;
+}
+
 #pragma mark Query
 
 -(void)queryData {
@@ -201,28 +211,22 @@
 }
 
 -(void)queryEvents {
+    [self queryOtherEvents];
+    [self queryMyEvents];
+}
+
+-(void)queryOtherEvents {
     //Get all the events we are invited to
     PFQuery *getEventUsers = [PFQuery queryWithClassName:@"EventUsers"];
     PFQuery *getAllEventsWeAreInvitedTo = [PFQuery queryWithClassName:@"Event"];
-    //[getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
-    
-    PFQuery *getAllOrganizations = [PFQuery queryWithClassName:@"OrganizationFollowers"];
-    PFQuery *getAllEventsForOrganizations = [PFQuery queryWithClassName:@"Event"];
+    [getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
     [getAllEventsWeAreInvitedTo whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
-    //[getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
+    [getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
     
-    [getAllOrganizations whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
-    [getAllEventsForOrganizations whereKey:@"host" matchesKey:@"organizationID" inQuery:getAllOrganizations];
-    [getAllEventsForOrganizations whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
-    //[getAllEventsForOrganizations orderByAscending:@"startDate"];
-    
-    PFQuery *compoundQuery = [PFQuery orQueryWithSubqueries:@[getAllEventsForOrganizations, getAllEventsWeAreInvitedTo]];
-    //[compoundQuery orderByAscending:@"startDate"];
-    
-    [compoundQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
                 [self.refreshControl endRefreshing];
@@ -236,7 +240,9 @@
         }
         [self.tableView reloadData];
     }];
+}
 
+-(void)queryMyEvents {
     //get all of our own events
     PFQuery *getAllEventsForCurrentUser = [PFQuery queryWithClassName:@"Event"];
     [getAllEventsForCurrentUser includeKey:@"hostUser"];

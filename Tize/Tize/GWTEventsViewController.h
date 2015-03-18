@@ -11,12 +11,19 @@
 @class GWTEvent;
 @class GWTBasePageViewController;
 
-@interface GWTEventsViewController : UIViewController
+@interface GWTEventsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) GWTBasePageViewController *parentPageController;
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer*)gesture;
 
 -(void)deleteEvent:(GWTEvent*)event;
+
+#pragma mark - Queries
+-(void)queryData;
+-(void)queryEvents;
+-(void)queryOtherEvents;
+-(void)queryMyEvents;
+-(void)queryAttendingStatus;
 
 @end
