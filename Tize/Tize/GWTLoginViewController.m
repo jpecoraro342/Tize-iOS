@@ -45,26 +45,17 @@
 
 -(void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
     NSLog(@"\nUser could not be logged in: \n%@\n\n", error);
-    [[[UIAlertView alloc] initWithTitle:@"Could Not Log In" message:error.userInfo[@"error"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    //[[[UIAlertView alloc] initWithTitle:@"Could Not Log In" message:error.userInfo[@"error"] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self loadMainView];
+    UIViewController *basePageController = [((GWTAppDelegate*)[[UIApplication sharedApplication] delegate]) setupMainView];
+    [self presentViewController:basePageController animated:YES completion:nil];
     [((GWTAppDelegate*)[[UIApplication sharedApplication] delegate]) registerForNotifications];
 }
 
 -(void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
     
-}
-
--(void)loadMainView {
-    GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] init];
-    
-    GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
-    basePageController.mainEventsView = events;
-    basePageController.currentViewController = events;
-    
-    [self presentViewController:basePageController animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

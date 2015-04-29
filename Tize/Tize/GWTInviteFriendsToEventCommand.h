@@ -19,5 +19,6 @@
 -(void)addFriends:(NSMutableArray*)friendsToAdd;
 -(void)addFriend:(PFUser*)user;
 -(void)removeFriend:(PFUser *)user;
+-(void)removeAllFriends;
 
 @end

@@ -12,11 +12,14 @@
 
 @class GWTInviteFriendsToEventCommand;
 @class GWTInviteGroupToEventCommand;
-@interface GWTEditEventViewController : GWTEventBasedViewController
+@interface GWTEditEventViewController : GWTEventBasedViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property GWTEvent* event;
 
 @property (nonatomic, strong) GWTInviteFriendsToEventCommand *friendInvites;
 @property (nonatomic, strong) GWTInviteGroupToEventCommand *groupInvites;
+
+-(void)updateEvent;
+-(void)sendOutInvites:(GWTEvent*)event;
 
 @end

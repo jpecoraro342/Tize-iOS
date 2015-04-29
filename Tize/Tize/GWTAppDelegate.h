@@ -13,5 +13,6 @@
 @property (strong, nonatomic) UIWindow *window;
 
 -(void)registerForNotifications;
+-(UIViewController*)setupMainView;
 
 @end

@@ -14,24 +14,32 @@
 //Properties from Super Class
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (strong, nonatomic) NSMutableArray* upcomingEvents;
-@property (strong, nonatomic) NSMutableArray* myEvents;
-@property (strong, nonatomic) NSMutableArray* myPastEvents;
+//@property (strong, nonatomic) NSMutableArray* upcomingEvents;
+//@property (strong, nonatomic) NSMutableArray* myEvents;
+//@property (strong, nonatomic) NSMutableArray* myPastEvents;
 
-@property (strong, nonatomic) NSMutableDictionary* attendingStatusMap;
+//@property (strong, nonatomic) NSMutableDictionary* attendingStatusMap;
 
 @property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 
 @property (strong, nonatomic) UIToolbar *toolbar;
 
-@property (strong, nonatomic) NSMutableArray *cellIsSelected;
-@property (strong, nonatomic) NSIndexPath *indexPathForSwipingCell;
+//@property (strong, nonatomic) NSMutableArray *cellIsSelected;
+//@property (strong, nonatomic) NSIndexPath *indexPathForSwipingCell;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
 @implementation GWTOrganizationEventsViewController
+
+-(instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:@"GWTEventsViewController" bundle:nil];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -55,6 +63,18 @@
 
 #pragma mark Tableview Delegate
 
+-(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath {
+    return [super eventForIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1]];
+}
+
+-(UIImage*)iconForIndexPath:(NSIndexPath*)indexPath {
+    return [super iconForIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1]];
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [super tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1]];
+}
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
@@ -63,34 +83,18 @@
     return [super tableView:self.tableView viewForHeaderInSection:section + 1];
 }
 
--(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath {
-    GWTEvent *tempEvent;
-    switch (indexPath.section) {
-        case 0: {
-            tempEvent = [self.upcomingEvents objectAtIndex:indexPath.row];
-            break;
-        }
-        case 1: {
-            tempEvent = [self.myEvents objectAtIndex:indexPath.row];
-            break;
-        }
-        case 2: {
-            tempEvent = [self.myPastEvents objectAtIndex:indexPath.row];
-            break;
-        }
-    }
-    
-    return tempEvent;
-}
-
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [super tableView:self.tableView numberOfRowsInSection:section + 1];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [super tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1]];
 }
 
 #pragma mark - Query
 
 -(void)queryEvents {
-    [self queryMyEvents];
+    [super queryMyEvents];
 }
 
 

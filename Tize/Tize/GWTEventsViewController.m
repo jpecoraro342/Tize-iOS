@@ -16,6 +16,7 @@
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTSettingsViewController.h"
+#import "GWTViewFactorySingleton.h"
 #import "UIImage+Color.h"
 
 @interface GWTEventsViewController () <UIBarPositioningDelegate>
@@ -43,7 +44,7 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
-        _cellIsSelected = [[NSMutableArray alloc] initWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
+        self.cellIsSelected = [[NSMutableArray alloc] initWithObjects:[NSMutableArray array], [NSMutableArray array], [NSMutableArray array], nil];
         [self queryData];
     }
     return self;
@@ -88,13 +89,13 @@
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    //[self.tableView reloadRowsAtIndexPaths:@[_indexPathForSwipingCell] withRowAnimation:UITableViewRowAnimationNone];
+    //[self.tableView reloadRowsAtIndexPaths:@[self.indexPathForSwipingCell] withRowAnimation:UITableViewRowAnimationNone];
 
     //[self queryData];
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
-    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
+    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:self.indexPathForSwipingCell];
     cell.shouldStayHighlighted = NO;
     [cell setHighlighted:NO animated:NO];
 }
@@ -106,7 +107,7 @@
 #pragma mark Tableview Delegate
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([_cellIsSelected[indexPath.section][indexPath.row] boolValue]) {
+    if ([self.cellIsSelected[indexPath.section][indexPath.row] boolValue]) {
         return 120;
     }
     return 66;
@@ -174,7 +175,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    _cellIsSelected[indexPath.section][indexPath.row] = [NSNumber numberWithBool:![_cellIsSelected[indexPath.section][indexPath.row] boolValue]];
+    self.cellIsSelected[indexPath.section][indexPath.row] = [NSNumber numberWithBool:![self.cellIsSelected[indexPath.section][indexPath.row] boolValue]];
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
@@ -219,23 +220,32 @@
     //Get all the events we are invited to
     PFQuery *getEventUsers = [PFQuery queryWithClassName:@"EventUsers"];
     PFQuery *getAllEventsWeAreInvitedTo = [PFQuery queryWithClassName:@"Event"];
-    [getAllEventsWeAreInvitedTo includeKey:@"hostUser"];
+    PFQuery *getAllFollowing = [PFQuery queryWithClassName:@"Following"];
+    PFQuery *getAllPublicEventsFromFollowing = [PFQuery queryWithClassName:@"Event"];
     
     [getEventUsers whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [getAllEventsWeAreInvitedTo whereKey:@"objectId" matchesKey:@"eventID" inQuery:getEventUsers];
     [getAllEventsWeAreInvitedTo whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
-    [getAllEventsWeAreInvitedTo orderByAscending:@"startDate"];
     
-    [getAllEventsWeAreInvitedTo findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+    [getAllFollowing whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
+    
+    [getAllPublicEventsFromFollowing whereKey:@"host" matchesKey:@"following" inQuery:getAllFollowing];
+    [getAllPublicEventsFromFollowing whereKey:@"endDate" greaterThanOrEqualTo:[NSDate date]];
+    [getAllPublicEventsFromFollowing whereKey:@"publicEvent" equalTo:[NSNumber numberWithBool:YES]];
+    
+    PFQuery *allQueries = [PFQuery orQueryWithSubqueries:@[getAllEventsWeAreInvitedTo, getAllPublicEventsFromFollowing]];
+    [allQueries orderByAscending:@"startDate"];
+    
+    [allQueries findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             if (self.refreshControl && self.refreshControl.isRefreshing) {
                 [self.refreshControl endRefreshing];
             }
-            _upcomingEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            _cellIsSelected[0] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.upcomingEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.cellIsSelected[0] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
-                [_upcomingEvents addObject:event];
-                [_cellIsSelected[0] addObject:[NSNumber numberWithBool:NO]];
+                [self.upcomingEvents addObject:event];
+                [self.cellIsSelected[0] addObject:[NSNumber numberWithBool:NO]];
             }
         }
         [self.tableView reloadData];
@@ -254,18 +264,18 @@
             if (self.refreshControl && self.refreshControl.isRefreshing) {
                 [self.refreshControl endRefreshing];
             }
-            _myEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            _myPastEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            _cellIsSelected[1] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
-            _cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.myEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.myPastEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.cellIsSelected[1] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
+            self.cellIsSelected[2] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
                 if ([event.endDate compare:[NSDate new]] != NSOrderedAscending) {
-                    [_myEvents addObject:event];
-                    [_cellIsSelected[1] addObject:[NSNumber numberWithBool:NO]];
+                    [self.myEvents addObject:event];
+                    [self.cellIsSelected[1] addObject:[NSNumber numberWithBool:NO]];
                 }
                 else {
-                    [_myPastEvents addObject:event];
-                    [_cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
+                    [self.myPastEvents addObject:event];
+                    [self.cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
                 }
             }
         }
@@ -279,9 +289,9 @@
     [attendingStatus whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [attendingStatus findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError* error) {
         if (!error) {
-            _attendingStatusMap = [[NSMutableDictionary alloc] init];
+            self.attendingStatusMap = [[NSMutableDictionary alloc] init];
             for (PFObject *attendingStatus in objects) {
-                [_attendingStatusMap setObject:attendingStatus forKey:attendingStatus[@"eventID"]];
+                [self.attendingStatusMap setObject:attendingStatus forKey:attendingStatus[@"eventID"]];
             }
             [self.tableView reloadData];
         }
@@ -315,7 +325,7 @@
         return [UIImage imageNamed:event.icon];
     }
     
-    PFObject *attendingStatus = [_attendingStatusMap objectForKey:event.objectId];
+    PFObject *attendingStatus = [self.attendingStatusMap objectForKey:event.objectId];
     if (attendingStatus) {
         NSInteger status = [attendingStatus[@"attendingStatus"] integerValue];
         switch (status) {
@@ -345,7 +355,7 @@
 }
 
 -(void)addEvent {
-    GWTEditEventViewController *addEvent = [[GWTEditEventViewController alloc] init];
+    GWTEditEventViewController *addEvent = [[GWTViewFactorySingleton viewManager] editEventViewController];
     [self presentViewController:addEvent animated:YES completion:nil];
 }
 
@@ -363,28 +373,14 @@
 }
 
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer *)gesture {
-    _indexPathForSwipingCell = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
+    self.indexPathForSwipingCell = [self.tableView indexPathForRowAtPoint:[gesture locationInView:self.tableView]];
     
     //Highlight the cell
-    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:_indexPathForSwipingCell];
+    GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:self.indexPathForSwipingCell];
     [cell setHighlighted:YES animated:NO];
     cell.shouldStayHighlighted = YES;
     
-    switch (_indexPathForSwipingCell.section) {
-        case 0:
-            if (_indexPathForSwipingCell.row < [self.upcomingEvents count]) {
-                return self.upcomingEvents[_indexPathForSwipingCell.row];
-            }
-        case 1:
-            if (_indexPathForSwipingCell.row < [self.myEvents count]) {
-                return self.myEvents[_indexPathForSwipingCell.row];
-            }
-        case 2:
-            if (_indexPathForSwipingCell.row < [self.myPastEvents count]) {
-                return self.myPastEvents[_indexPathForSwipingCell.row];
-            }
-    }
-    return nil;
+    return [self eventForIndexPath:self.indexPathForSwipingCell];
 }
 
 -(void)deleteEvent:(GWTEvent *)event {

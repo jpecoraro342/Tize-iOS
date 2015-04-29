@@ -36,6 +36,10 @@
     [self.friendsToInvite removeObject:user];
 }
 
+-(void)removeAllFriends {
+    [self.friendsToInvite removeAllObjects];
+}
+
 -(void)execute {
     if (!self.eventId || [self.eventId isEqualToString:@""]) {
         return;

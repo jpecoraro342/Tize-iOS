@@ -11,11 +11,14 @@
 #import "GWTLoginViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTViewFactorySingleton.h"
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 
-@implementation GWTAppDelegate
+@implementation GWTAppDelegate {
+    GWTBasePageViewController *baseViewController;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -30,11 +33,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     if ([PFUser currentUser]) {
-        GWTBasePageViewController *basePageController = [[GWTBasePageViewController alloc] init];
-        GWTEventsViewController *events = [[GWTEventsViewController alloc] init];
-        basePageController.mainEventsView = events;
-        basePageController.currentViewController = events;
-        self.window.rootViewController = basePageController;
+        self.window.rootViewController = [self setupMainView];
         [self registerForNotifications];
     }
     else {
@@ -45,6 +44,15 @@
     [self.window makeKeyAndVisible];    
     return YES;
 }
+
+-(UIViewController*)setupMainView {
+    baseViewController = [[GWTBasePageViewController alloc] init];
+    GWTEventsViewController *events = [[GWTViewFactorySingleton viewManager] eventsViewController];
+    baseViewController.mainEventsView = events;
+    baseViewController.currentViewController = events;
+    return baseViewController;
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

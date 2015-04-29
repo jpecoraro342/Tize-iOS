@@ -27,6 +27,9 @@
 
 @property (nonatomic, copy) NSString* icon;
 
+@property (nonatomic, assign) BOOL publicEvent;
+
+
 +(NSString*)parseClassName;
 -(NSString*)startTime;
 -(NSString*)endTime;

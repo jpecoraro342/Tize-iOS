@@ -11,6 +11,7 @@
 #import "GWTEditEventViewController.h"
 #import "GWTEventDetailViewController.h"
 #import "GWTAttendingTableViewController.h"
+#import "GWTViewFactorySingleton.h"
 
 
 @interface GWTBasePageViewController () <UIScrollViewDelegate, UIScrollViewAccessibilityDelegate>
@@ -102,7 +103,7 @@
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    GWTEditEventViewController *editEvent = [[GWTEditEventViewController alloc] init];
+    GWTEditEventViewController *editEvent = [[GWTViewFactorySingleton viewManager] editEventViewController];
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
     GWTAttendingTableViewController *attending = [[GWTAttendingTableViewController alloc] init];
     

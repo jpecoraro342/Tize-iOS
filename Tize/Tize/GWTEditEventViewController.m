@@ -56,15 +56,15 @@
         self.iconArray = kIconImages;
         self.isEdit = NO;
         self.shouldSaveChanges = YES;
-        _event = [[GWTEvent alloc] init];
-        [_event setHost:[[PFUser currentUser] objectId]];
-        [_event setHostName:[[PFUser currentUser] username]];
-        [_event setHostUser:[PFUser currentUser]];
+        self.event = [[GWTEvent alloc] init];
+        [self.event setHost:[[PFUser currentUser] objectId]];
+        [self.event setHostName:[[PFUser currentUser] username]];
+        [self.event setHostUser:[PFUser currentUser]];
         NSDate *startDate = [self nextHourDate:[NSDate date]];
         NSDate *endDate = [startDate dateByAddingTimeInterval:60*60];
-        [_event setStartDate:startDate];
-        [_event setEndDate:endDate];
-        [_event setIcon:self.iconArray[0]];
+        [self.event setStartDate:startDate];
+        [self.event setEndDate:endDate];
+        [self.event setIcon:self.iconArray[0]];
         
         self.friendInvites = [[GWTInviteFriendsToEventCommand alloc] init];
         self.groupInvites = [[GWTInviteGroupToEventCommand alloc] init];
@@ -95,15 +95,15 @@
     [self updateFields];
     
     //set up pickers
-    _startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
+    self.startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [self.startDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
-    _startDatePicker.date = self.event.startDate;
+    self.startDatePicker.date = self.event.startDate;
     
-    _endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
+    self.endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
     [self.endDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
-    _endDatePicker.date = self.event.endDate;
+    self.endDatePicker.date = self.event.endDate;
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
     
@@ -468,6 +468,7 @@
 
 -(void)inviteFriends {
     [self updateEvent];
+    //TODO: Use Factory Method
     GWTContactsViewController *friends = [[GWTContactsViewController alloc] initAsEventInviteWithGroupCommand:self.groupInvites friendCommand:self.friendInvites];
     [self presentViewController:friends animated:YES completion:nil];
 }

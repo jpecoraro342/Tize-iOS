@@ -19,6 +19,9 @@
 
 -(void)deleteEvent:(GWTEvent*)event;
 
+-(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath;
+-(UIImage*)iconForIndexPath:(NSIndexPath*)indexPath;
+
 #pragma mark - Queries
 -(void)queryData;
 -(void)queryEvents;

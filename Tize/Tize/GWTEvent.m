@@ -23,6 +23,7 @@
 @dynamic endDate;
 @dynamic icon;
 @dynamic eventDetails;
+@dynamic publicEvent;
 @synthesize address;
 
 //Converts the date string into a readable time format, that is also relative to today
