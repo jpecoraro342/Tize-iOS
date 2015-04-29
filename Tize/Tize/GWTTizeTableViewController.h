@@ -58,6 +58,11 @@
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath;
 
 /**
+ *
+ */
+-(void)selectedItemAtIndexPath:(NSIndexPath*)indexPath;
+
+/**
  * Dismisses the VC Modally, should only be used if presented modally
  */
 -(void)dismissModal;
@@ -66,5 +71,10 @@
  * Pops the view from the navigation controller
  */
 -(void)popFromNavigationController;
+
+/**
+ * Invalidates the tableview, forcing a reload
+ */
+-(void)reloadTableView;
 
 @end

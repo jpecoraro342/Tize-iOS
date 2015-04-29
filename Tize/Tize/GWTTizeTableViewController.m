@@ -105,6 +105,11 @@
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self selectedItemAtIndexPath:indexPath];
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
 //Sets the header views to the usual layout
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSInteger headerViewHeight = [self tableView:self.tableView heightForHeaderInSection:section];
@@ -124,11 +129,19 @@
     return headerView;
 }
 
+-(void)reloadTableView {
+    [self.tableView reloadData];
+}
+
 -(void)setSizeOfBottomBar:(CGFloat)sizeOfBottomBar {
     [_tableViewBottom setConstant:sizeOfBottomBar];
 }
 
 #pragma mark Subclasses Must Override
+
+-(void)selectedItemAtIndexPath:(NSIndexPath*)indexPath {
+    
+}
                  
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
     [NSException raise:@"Invalid Call to Superclass" format:@"Method: titleForCellAtIndexPath:(NSIndexPath*)indexPath must be overriden in subclass"];

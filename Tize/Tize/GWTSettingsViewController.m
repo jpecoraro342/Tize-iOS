@@ -9,6 +9,7 @@
 #import <Parse/Parse.h>
 #import "GWTSettingsViewController.h"
 #import "GWTLoginViewController.h"
+#import "GWTOrganizationListViewController.h"
 
 @interface GWTSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -253,7 +254,7 @@
 }
 
 -(void)switchToOrganization {
-    
+    [self.navigationController pushViewController:[[GWTOrganizationListViewController alloc] init] animated:YES];
 }
 
 -(void)loadTutorial {
