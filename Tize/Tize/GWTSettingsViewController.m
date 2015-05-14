@@ -10,8 +10,9 @@
 #import "GWTSettingsViewController.h"
 #import "GWTLoginViewController.h"
 #import "GWTOrganizationListViewController.h"
+#import "UICKeyChainStore.h"
 
-@interface GWTSettingsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface GWTSettingsViewController ()
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -275,7 +276,9 @@
 
 -(void)logout {
     [PFUser logOut];
+    [UICKeyChainStore removeItemForKey:@"com.currentuser.username" service:@"com.gwt.tize"];
     GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
+    
     [self presentViewController:login animated:YES completion:^{
         self.view.window.rootViewController = login;
     }];

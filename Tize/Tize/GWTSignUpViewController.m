@@ -9,6 +9,8 @@
 #import "GWTSignUpViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
+#import "UICKeyChainStore.h"
+#import <Parse/Parse.h>
 
 @interface GWTSignUpViewController () <PFSignUpViewControllerDelegate>
 
@@ -29,6 +31,8 @@
 }
 
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [UICKeyChainStore setString:user.username forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
+    [UICKeyChainStore setString:self.signUpView.passwordField.text forKey:user.username service:@"com.gwt.tize"];
     [self loadMainView];
 }
 

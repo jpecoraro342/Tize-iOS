@@ -83,8 +83,6 @@
 }
 
 -(void)switchToUser:(PFUser*)newUser {
-    [UICKeyChainStore setString:[[PFUser currentUser] username] forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
-    
     NSString *password = [UICKeyChainStore stringForKey:newUser.username service:@"com.gwt.tize"];
     if (!password || [password isEqualToString:@""]) {
         [self showPasswordAlertWithUsername:newUser.username];

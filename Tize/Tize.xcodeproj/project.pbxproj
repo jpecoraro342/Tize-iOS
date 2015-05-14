@@ -275,6 +275,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15D7051A1B04F83B009B1400 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				156EEB471AF0AE3D00DDA926 /* GWTViewFactorySingleton.h */,
+				156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */,
+				156EEB4A1AF0AE5600DDA926 /* GWTViewFactory.h */,
+				156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */,
+				156EEB4D1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.h */,
+				156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */,
+			);
+			name = Factories;
+			sourceTree = "<group>";
+		};
+		15D7051B1B04F866009B1400 /* OrganizationSpecificControllers */ = {
+			isa = PBXGroup;
+			children = (
+				15C0598E1ABA0D8000B1915C /* GWTOrganizationEventsViewController.h */,
+				15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */,
+				15C059911ABA143C00B1915C /* GWTOrganizationEditEventViewController.h */,
+				15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */,
+				15D1AC271AF0BE6300470386 /* GWTOrganizationSettingsViewController.h */,
+				15D1AC281AF0BE6300470386 /* GWTOrganizationSettingsViewController.m */,
+			);
+			name = OrganizationSpecificControllers;
+			sourceTree = "<group>";
+		};
+		15D7051C1B04F8A6009B1400 /* PrimaryControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7C3B562A195D0278008FD5F5 /* Header */,
+				7C3B562B195D027F008FD5F5 /* Implementation */,
+				7C3B562C195D028E008FD5F5 /* Xibs */,
+			);
+			name = PrimaryControllers;
+			sourceTree = "<group>";
+		};
 		15F712EF1A70C9BF004B601D /* Commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -308,6 +344,7 @@
 				156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */,
 				15F712FF1A70E340004B601D /* GWTGroupsEventInviteViewController.h */,
 				7C4CACCD19D8BD8500EC31C9 /* GWTInviteFriendsViewController.h */,
+				15FB9B5D1AF18C1C00A52945 /* GWTOrganizationListViewController.h */,
 			);
 			name = Header;
 			sourceTree = "<group>";
@@ -328,6 +365,7 @@
 				1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */,
 				15F713001A70E340004B601D /* GWTGroupsEventInviteViewController.m */,
 				7C4CACCE19D8BD8500EC31C9 /* GWTInviteFriendsViewController.m */,
+				15FB9B5E1AF18C1C00A52945 /* GWTOrganizationListViewController.m */,
 			);
 			name = Implementation;
 			sourceTree = "<group>";
@@ -410,9 +448,10 @@
 				7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */,
 				7C6F11FD19D370AF0080E636 /* Utilities */,
 				15F712EF1A70C9BF004B601D /* Commands */,
+				15D7051A1B04F83B009B1400 /* Factories */,
 				7C9A5C9E195125DC008B2666 /* Model */,
-				7C9A5C9D195125D3008B2666 /* Controller */,
-				7C9AB6C81996AE75007A81F5 /* View */,
+				7C9A5C9D195125D3008B2666 /* ViewControllers */,
+				7C9AB6C81996AE75007A81F5 /* TableViewCells */,
 				7CE3E2A619ACF454000892B6 /* Resources */,
 				7C9A5C5819501FBC008B2666 /* Images.xcassets */,
 				7C9A5C4D19501FBC008B2666 /* Supporting Files */,
@@ -431,31 +470,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		7C9A5C9D195125D3008B2666 /* Controller */ = {
+		7C9A5C9D195125D3008B2666 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				15C0598E1ABA0D8000B1915C /* GWTOrganizationEventsViewController.h */,
-				15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */,
-				15C059911ABA143C00B1915C /* GWTOrganizationEditEventViewController.h */,
-				15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */,
-				156EEB471AF0AE3D00DDA926 /* GWTViewFactorySingleton.h */,
-				156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */,
-				156EEB4A1AF0AE5600DDA926 /* GWTViewFactory.h */,
-				156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */,
-				156EEB4D1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.h */,
-				156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */,
-				7CB33CEA1A2268FD00C07BF7 /* Superclasses */,
-				7C3B562A195D0278008FD5F5 /* Header */,
-				7C3B562B195D027F008FD5F5 /* Implementation */,
-				7C3B562C195D028E008FD5F5 /* Xibs */,
-				15D1AC271AF0BE6300470386 /* GWTOrganizationSettingsViewController.h */,
-				15D1AC281AF0BE6300470386 /* GWTOrganizationSettingsViewController.m */,
+				7CB33CEA1A2268FD00C07BF7 /* AbstractBaseClasses */,
+				15D7051C1B04F8A6009B1400 /* PrimaryControllers */,
+				15D7051B1B04F866009B1400 /* OrganizationSpecificControllers */,
 				15D1AC2A1AF0BE9300470386 /* GWTFollowingViewController.h */,
 				15D1AC2B1AF0BE9300470386 /* GWTFollowingViewController.m */,
-				15FB9B5D1AF18C1C00A52945 /* GWTOrganizationListViewController.h */,
-				15FB9B5E1AF18C1C00A52945 /* GWTOrganizationListViewController.m */,
 			);
-			name = Controller;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		7C9A5C9E195125DC008B2666 /* Model */ = {
@@ -471,7 +495,7 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
-		7C9AB6C81996AE75007A81F5 /* View */ = {
+		7C9AB6C81996AE75007A81F5 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
 				7C9A5CA2195126A3008B2666 /* GWTEventCell.h */,
@@ -481,7 +505,7 @@
 				7C95A61B19F89385000D805C /* GWTIconCell.m */,
 				7C95A61D19F893F8000D805C /* GWTIconCell.xib */,
 			);
-			name = View;
+			name = TableViewCells;
 			sourceTree = "<group>";
 		};
 		7C9EE77D19F854F900E2305F /* Icons */ = {
@@ -509,7 +533,7 @@
 			path = Icons;
 			sourceTree = "<group>";
 		};
-		7CB33CEA1A2268FD00C07BF7 /* Superclasses */ = {
+		7CB33CEA1A2268FD00C07BF7 /* AbstractBaseClasses */ = {
 			isa = PBXGroup;
 			children = (
 				7C9778B71971C7BB008BFF66 /* GWTBasePageViewController.h */,
@@ -521,7 +545,7 @@
 				7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */,
 				7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */,
 			);
-			name = Superclasses;
+			name = AbstractBaseClasses;
 			sourceTree = "<group>";
 		};
 		7CE3E2A619ACF454000892B6 /* Resources */ = {

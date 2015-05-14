@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GWTSettingsViewController : UIViewController
+@interface GWTSettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+-(void)switchToOrganization;
 
 @end

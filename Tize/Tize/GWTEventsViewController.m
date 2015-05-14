@@ -367,7 +367,7 @@
 #pragma mark Navigation Methods
 
 -(void)settings {
-    GWTSettingsViewController *settingsPage = [[GWTSettingsViewController alloc] init];
+    GWTSettingsViewController *settingsPage = [[GWTViewFactorySingleton viewManager] settingsViewController];
     UINavigationController *settingsNavController = [[UINavigationController alloc] initWithRootViewController:settingsPage];
     [self presentViewController:settingsNavController animated:YES completion:nil];
 }

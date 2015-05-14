@@ -16,6 +16,7 @@
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTAppDelegate.h"
+#import "UICKeyChainStore.h"
 
 @interface GWTLoginViewController () <PFLogInViewControllerDelegate>
 
@@ -49,6 +50,9 @@
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [UICKeyChainStore setString:user.username forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
+    [UICKeyChainStore setString:self.logInView.passwordField.text forKey:user.username service:@"com.gwt.tize"];
+    
     UIViewController *basePageController = [((GWTAppDelegate*)[[UIApplication sharedApplication] delegate]) setupMainView];
     [self presentViewController:basePageController animated:YES completion:nil];
     [((GWTAppDelegate*)[[UIApplication sharedApplication] delegate]) registerForNotifications];
