@@ -50,11 +50,12 @@
 //NOTE: Be wary of this breaking
 -(void)loadOrganizationToolbar {
     NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
-    UIBarButtonItem *groups = [[UIBarButtonItem alloc] initWithTitle:@"Groups" style:UIBarButtonItemStyleBordered target:self action:@selector(loadGroups)];
+    //TODO: Load dedicated contacts view controller - use the factory and load it via superclass
+    /*UIBarButtonItem *groups = [[UIBarButtonItem alloc] initWithTitle:@"Groups" style:UIBarButtonItemStyleBordered target:self action:@selector(loadGroups)];
     [toolbarItems removeLastObject];
     [toolbarItems addObject:groups];
     
-    [self.toolbar setItems:toolbarItems];
+    [self.toolbar setItems:toolbarItems];*/
 }
 
 -(void)loadGroups {

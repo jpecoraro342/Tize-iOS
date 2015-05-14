@@ -95,6 +95,7 @@
 }
 
 -(void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
     GWTEventCell *cell = (GWTEventCell*)[self.tableView cellForRowAtIndexPath:self.indexPathForSwipingCell];
     cell.shouldStayHighlighted = NO;
     [cell setHighlighted:NO animated:NO];

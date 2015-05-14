@@ -120,13 +120,23 @@
     [self queryInvited];
 }
 
+//NOTE: Modified to get everyone following us or us following them
 -(void)querylistOfFriends {
     PFQuery *getAllFollowingEvents = [PFQuery queryWithClassName:@"Following"];
     PFQuery *getAllUsersWeAreFollowing = [PFUser query];
     
+    PFQuery *getAllFollowingMe = [PFQuery queryWithClassName:@"Following"];
+    PFQuery *getAllUsersFollowingMe = [PFUser query];
+    
     [getAllFollowingEvents whereKey:@"user" equalTo:[[PFUser currentUser] objectId]];
     [getAllUsersWeAreFollowing whereKey:@"objectId" matchesKey:@"following" inQuery:getAllFollowingEvents];
-    [getAllUsersWeAreFollowing findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
+    
+    [getAllFollowingMe whereKey:@"following" equalTo:[[PFUser currentUser] objectId]];
+    [getAllUsersFollowingMe whereKey:@"objectId" matchesKey:@"user" inQuery:getAllFollowingMe];
+    
+    PFQuery *both = [PFQuery orQueryWithSubqueries:@[getAllUsersFollowingMe, getAllUsersWeAreFollowing]];
+    [both whereKey:@"userType" equalTo:@(0)];
+    [both findObjectsInBackgroundWithBlock:^(NSArray* objects, NSError *error) {
         if(!error) {
             self.listOfFriendsIveAdded = [[NSMutableArray alloc] init];
             for (PFUser *object in objects) {
