@@ -11,6 +11,7 @@
 		156EEB491AF0AE3D00DDA926 /* GWTViewFactorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */; };
 		156EEB4C1AF0AE5600DDA926 /* GWTViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */; };
 		156EEB4F1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */; };
+		15BC7CE11B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */; };
 		15C059901ABA0D8000B1915C /* GWTOrganizationEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */; };
 		15C059931ABA143C00B1915C /* GWTOrganizationEditEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */; };
 		15D1AC291AF0BE6300470386 /* GWTOrganizationSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15D1AC281AF0BE6300470386 /* GWTOrganizationSettingsViewController.m */; };
@@ -114,6 +115,8 @@
 		156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTViewFactory.m; sourceTree = "<group>"; };
 		156EEB4D1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationViewFactory.h; sourceTree = "<group>"; };
 		156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTOrganizationViewFactory.m; sourceTree = "<group>"; };
+		15BC7CDF1B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTManageOrganizationAdminsViewController.h; sourceTree = "<group>"; };
+		15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTManageOrganizationAdminsViewController.m; sourceTree = "<group>"; };
 		15C0598E1ABA0D8000B1915C /* GWTOrganizationEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationEventsViewController.h; sourceTree = "<group>"; };
 		15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTOrganizationEventsViewController.m; sourceTree = "<group>"; };
 		15C059911ABA143C00B1915C /* GWTOrganizationEditEventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationEditEventViewController.h; sourceTree = "<group>"; };
@@ -297,6 +300,8 @@
 				15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */,
 				15D1AC271AF0BE6300470386 /* GWTOrganizationSettingsViewController.h */,
 				15D1AC281AF0BE6300470386 /* GWTOrganizationSettingsViewController.m */,
+				15BC7CDF1B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.h */,
+				15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */,
 			);
 			name = OrganizationSpecificControllers;
 			sourceTree = "<group>";
@@ -755,6 +760,7 @@
 				7C1F44861A19DBC6000C06CE /* GWTGroupsViewController.m in Sources */,
 				7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */,
 				7C95A62519F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m in Sources */,
+				15BC7CE11B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m in Sources */,
 				7CC463761A1DD99E00E7A594 /* GWTAddressBook.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
 				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,

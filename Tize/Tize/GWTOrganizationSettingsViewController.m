@@ -7,6 +7,7 @@
 //
 
 #import "GWTOrganizationSettingsViewController.h"
+#import "GWTManageOrganizationAdminsViewController.h"
 #import "GWTAppDelegate.h"
 #import "UICKeyChainStore.h"
 #import "SVProgressHUD.h"
@@ -38,20 +39,44 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return self.switchedUser ? 4 : 3;
+        return self.switchedUser ? 5 : 4;
     }
     return [super tableView:self.tableView numberOfRowsInSection:section];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && indexPath.row == 3) {
-        UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
-        cell.textLabel.text = [NSString stringWithFormat:@"Switch To: %@", self.switchedUser];
-        cell.selectionStyle = UITableViewCellSelectionStyleGray;
-        return cell;
+    if (indexPath.section == 0) {
+        switch (indexPath.row) {
+            case 0:
+            case 1:
+            case 2:
+                break;
+            case 3: {
+                UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+                cell.textLabel.text = [NSString stringWithFormat:@"Switch To: %@", self.switchedUser];
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                return cell;
+            }
+            case 4: {
+                UITableViewCell *cell = [[UITableViewCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
+                cell.textLabel.text = @"Manage Admins";
+                cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.selectionStyle = UITableViewCellSelectionStyleGray;
+                return cell;
+            }
+        }
+    }
+    
+    return [super tableView:self.tableView cellForRowAtIndexPath:indexPath];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0 && indexPath.row == 4) {
+        [self loadManageAdminsPage];
     }
     else {
-        return [super tableView:self.tableView cellForRowAtIndexPath:indexPath];
+        [super tableView:self.tableView didSelectRowAtIndexPath:indexPath];
     }
 }
 
@@ -71,6 +96,12 @@
     else {
         [self loginWithUsername:currentStoredUser password:password];
     }
+}
+
+-(void)loadManageAdminsPage {
+    //Not sure why this wasn't working
+    //[self.navigationController pushViewController:[[GWTManageOrganizationAdminsViewController alloc] init] animated:YES];
+    [self presentViewController:[[GWTManageOrganizationAdminsViewController alloc] init] animated:YES completion:nil];
 }
 
 -(void)showPasswordAlertWithUsername:(NSString*)username {

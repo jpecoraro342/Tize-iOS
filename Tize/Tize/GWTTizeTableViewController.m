@@ -55,6 +55,12 @@
     
     [self.navigationBar setItems:@[navItem]];
     [self.navigationBar setTitleTextAttributes:kNavBarTitleDictionary];
+    
+    if (self.navigationController != nil) {
+        self.navigationController.navigationItem.rightBarButtonItem = self.rightBarButtonItem;
+        self.navigationController.navigationItem.titleView = kNavBarTitleView;
+        self.navigationController.navigationItem.leftBarButtonItem = self.leftBarButtonItem ?: self.navigationController.navigationItem.leftBarButtonItem;
+    }
 }
 
 - (UIBarPosition)positionForBar:(id<UIBarPositioning>)bar {
@@ -158,17 +164,7 @@
     return nil;
 }
 
-#pragma mark - View Dismissal
-
--(void)popFromNavigationController {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
--(void)dismissModal {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - Private
+#pragma mark - Navbar Customization
 
 -(void)setLeftBarButtonItem:(UIBarButtonItem *)leftBarButtonItem {
     _leftBarButtonItem = leftBarButtonItem;
@@ -178,6 +174,16 @@
 -(void)setRightBarButtonItem:(UIBarButtonItem *)rightBarButtonItem {
     _rightBarButtonItem = rightBarButtonItem;
     [self setNavItems];
+}
+
+#pragma mark - View Dismissal
+
+-(void)popFromNavigationController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+-(void)dismissModal {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void)didReceiveMemoryWarning {

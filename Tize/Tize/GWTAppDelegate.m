@@ -12,6 +12,7 @@
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTViewFactorySingleton.h"
+#import "SVProgressHUD.h"
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -27,6 +28,8 @@
     [Parse setApplicationId:@"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD"
                   clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     
     [Fabric with:@[CrashlyticsKit]];
     

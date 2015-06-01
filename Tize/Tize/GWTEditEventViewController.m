@@ -285,7 +285,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Cell Selected: %zd", indexPath.row);
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     //add friends
     if (indexPath.row == 8) {

@@ -15,6 +15,7 @@
 @interface GWTOrganizationListViewController ()
 
 @property (nonatomic, strong) NSMutableArray *listOfOrganizations;
+@property (nonatomic, assign) BOOL queryFinished;
 
 @end
 
@@ -32,7 +33,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.listOfOrganizations count] > 0 ? [self.listOfOrganizations count] : 1;
+    return [self.listOfOrganizations count] == 0 && self.queryFinished ? 1 : [self.listOfOrganizations count];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -44,8 +45,8 @@
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([self.listOfOrganizations count] == 0) {
-        return @"Could not find Organizations";
+    if ([self.listOfOrganizations count] == 0 && self.queryFinished) {
+        return @"Could not find any Organizations";
     }
     else {
         return [[self.listOfOrganizations objectAtIndex:indexPath.row] username];
@@ -62,6 +63,8 @@
     }
 }
 
+#pragma mark - Private Methods
+
 -(void)queryOrganizations {
     PFQuery *adminOrganizations = [PFQuery queryWithClassName:@"OrganizationAdmins"];
     [adminOrganizations whereKey:@"admin" equalTo:[PFUser currentUser]];
@@ -74,6 +77,7 @@
                 [self.listOfOrganizations addObject:object[@"organization"]];
             }
             
+            self.queryFinished = YES;
             [self reloadTableView];
         }
         else {
