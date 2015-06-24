@@ -129,7 +129,14 @@
         UITextField *adminUsernameTextfield = addAdminController.textFields[0];
         NSString *username = adminUsernameTextfield.text;
         
-        [self addAdminWithUsername:username];
+        NSError *validationError = [self validateValidAdminUsername:username];
+        
+        if (!validationError) {
+            [self addAdminWithUsername:username];
+        }
+        else {
+            [self showAlertWithError:validationError];
+        }
     }];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) { }];
@@ -141,6 +148,22 @@
     [addAdminController addAction:addAdminAction];
     [addAdminController addAction:cancelAction];
     [self presentViewController:addAdminController animated:YES completion:nil];
+}
+
+-(NSError*)validateValidAdminUsername:(NSString*)username {
+    NSError __block *error;
+    
+    // Verify the user has not already been added
+    [self.listOfAdmins enumerateObjectsUsingBlock:^(PFUser *admin, NSUInteger index, BOOL *stop) {
+        if ([admin.username isEqualToString:username]) {
+            error = [NSError errorWithDomain:@"com.gwt.tize" code:0 userInfo:@{ NSLocalizedDescriptionKey : [NSString stringWithFormat:@"%@ is already an admin", username] }];
+            *stop = YES;
+        }
+    }];
+    
+    // TODO: Check if the username exists server side at all
+    
+    return error;
 }
 
 -(void)addAdminWithUsername:(NSString*)username {
@@ -170,6 +193,10 @@
             [SVProgressHUD showErrorWithStatus:[NSString stringWithFormat:@"Unable to add %@ as an admin: %@", username, errorMessage]];
         }
     }];
+}
+
+-(void)showAlertWithError:(NSError*)error {
+    [[[UIAlertView alloc] initWithTitle:@"Unable to add admin" message:error.localizedDescription delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 @end
