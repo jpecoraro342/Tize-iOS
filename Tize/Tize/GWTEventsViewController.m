@@ -385,8 +385,18 @@
 }
 
 -(void)deleteEvent:(GWTEvent *)event {
-    [self.myEvents removeObject:event];
-    [self.myPastEvents removeObject:event];
+    int index = [self.myEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.myEvents removeObjectAtIndex:index];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+
+    index = [self.myPastEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.myPastEvents removeObjectAtIndex:index];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

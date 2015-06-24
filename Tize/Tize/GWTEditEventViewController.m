@@ -87,6 +87,8 @@
     
     [self updateFields];
     [self selectIcon];
+    
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
@@ -166,7 +168,7 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return self.isEdit ? 2 : 1;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
