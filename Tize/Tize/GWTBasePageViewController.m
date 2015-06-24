@@ -40,7 +40,7 @@
         GWTEvent *event = [self.mainEventsView getEventForTransitionFromGesture:scrollView.gestureRecognizers[1]];
         //NSLog(@"\nScrolling Began: Loading Event Into Views\nEvent: %@\n\n", event);
         if (!event) {
-            //cancell scrolling
+            //cancel scrolling
             self.scrollView.scrollEnabled = NO;
             self.scrollView.scrollEnabled = YES;
     

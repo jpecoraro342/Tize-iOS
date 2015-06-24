@@ -186,6 +186,10 @@
 #pragma TableView Helper Methods
 
 -(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath {
+    if (([self.upcomingEvents count] + [self.myEvents count] + [self.myPastEvents count]) == 0) {
+        return nil;
+    }
+    
     GWTEvent *tempEvent;
     switch (indexPath.section) {
         case 0: {

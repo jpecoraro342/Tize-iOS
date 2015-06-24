@@ -15,8 +15,8 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 //@property (strong, nonatomic) NSMutableArray* upcomingEvents;
-//@property (strong, nonatomic) NSMutableArray* myEvents;
-//@property (strong, nonatomic) NSMutableArray* myPastEvents;
+@property (strong, nonatomic) NSMutableArray* myEvents;
+@property (strong, nonatomic) NSMutableArray* myPastEvents;
 
 //@property (strong, nonatomic) NSMutableDictionary* attendingStatusMap;
 
@@ -90,6 +90,23 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     return [super tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section + 1]];
+}
+
+#pragma mark - 
+
+-(void)deleteEvent:(GWTEvent *)event {
+    int index = [self.myEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.myEvents removeObjectAtIndex:index];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    index = [self.myPastEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.myPastEvents removeObjectAtIndex:index];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
 }
 
 #pragma mark - Query
