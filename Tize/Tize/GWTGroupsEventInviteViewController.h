@@ -6,10 +6,10 @@
 //  Copyright (c) 2015 GrayWolfTechnologies. All rights reserved.
 //
 
-#import "GWTTizeTableViewController.h"
+#import "GWTTizeSearchTableViewController.h"
 
 @class GWTInviteGroupToEventCommand;
-@interface GWTGroupsEventInviteViewController : GWTTizeTableViewController
+@interface GWTGroupsEventInviteViewController : GWTTizeSearchTableViewController
 
 @property (nonatomic, strong) GWTInviteGroupToEventCommand *groupCommand;
 

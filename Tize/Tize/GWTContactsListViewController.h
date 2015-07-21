@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTTizeTableViewController.h"
+#import "GWTTizeSearchTableViewController.h"
 
 @class GWTAddressBook;
 
-@interface GWTContactsListViewController : GWTTizeTableViewController
+@interface GWTContactsListViewController : GWTTizeSearchTableViewController
 
 @property (nonatomic, strong) GWTAddressBook *addressBook;
 

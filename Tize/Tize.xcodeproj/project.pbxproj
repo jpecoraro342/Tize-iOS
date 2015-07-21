@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1547B9E01B54A710005E94C5 /* GWTTizeSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */; };
 		1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */; };
 		156EEB491AF0AE3D00DDA926 /* GWTViewFactorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */; };
 		156EEB4C1AF0AE5600DDA926 /* GWTViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */; };
@@ -105,6 +106,8 @@
 
 /* Begin PBXFileReference section */
 		06F4BB6DD3F5455596323208 /* libPods-Tize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tize.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeSearchTableViewController.h; sourceTree = "<group>"; };
+		1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeSearchTableViewController.m; sourceTree = "<group>"; };
 		156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteToGroupViewController.h; sourceTree = "<group>"; };
 		1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTInviteToGroupViewController.m; sourceTree = "<group>"; };
 		156EEB471AF0AE3D00DDA926 /* GWTViewFactorySingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTViewFactorySingleton.h; sourceTree = "<group>"; };
@@ -191,7 +194,7 @@
 		7C9A5C5419501FBC008B2666 /* Tize-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tize-Prefix.pch"; sourceTree = "<group>"; };
 		7C9A5C5519501FBC008B2666 /* GWTAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWTAppDelegate.h; sourceTree = "<group>"; };
 		7C9A5C5619501FBC008B2666 /* GWTAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWTAppDelegate.m; sourceTree = "<group>"; };
-		7C9A5C5819501FBC008B2666 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		7C9A5C5819501FBC008B2666 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
 		7C9A5C771950235E008B2666 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		7C9A5C791950236B008B2666 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		7C9A5C7B1950237D008B2666 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -480,7 +483,6 @@
 				7C3B562A195D0278008FD5F5 /* Settings VC */,
 				7C9AB6C81996AE75007A81F5 /* TableViewCells */,
 				7CE3E2A619ACF454000892B6 /* Resources */,
-				7C9A5C5819501FBC008B2666 /* Images.xcassets */,
 				7C9A5C4D19501FBC008B2666 /* Supporting Files */,
 			);
 			path = Tize;
@@ -553,6 +555,8 @@
 				7CB33CE71A2268F000C07BF7 /* GWTTizeTableViewController.h */,
 				7CB33CE81A2268F000C07BF7 /* GWTTizeTableViewController.m */,
 				7CB33CEB1A2269B100C07BF7 /* GWTTizeTableViewController.xib */,
+				1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */,
+				1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */,
 				7C97794B197AE3B2008BFF66 /* GWTEventBasedViewController.h */,
 				7C97794C197AE3B2008BFF66 /* GWTEventBasedViewController.m */,
 				7C1F447E1A19DAF6000C06CE /* GWTContactsViewController.h */,
@@ -564,6 +568,7 @@
 		7CE3E2A619ACF454000892B6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7C9A5C5819501FBC008B2666 /* Images.xcassets */,
 				7C9EE77D19F854F900E2305F /* Icons */,
 				7CD793A519AFA37B00357D7A /* checkmark@2x.png */,
 				7CD793A619AFA37B00357D7A /* questionmark@2x.png */,
@@ -780,6 +785,7 @@
 				15F713011A70E340004B601D /* GWTGroupsEventInviteViewController.m in Sources */,
 				15F712FB1A70CE8D004B601D /* GWTGroupCommand.m in Sources */,
 				7C9A5C5719501FBC008B2666 /* GWTAppDelegate.m in Sources */,
+				1547B9E01B54A710005E94C5 /* GWTTizeSearchTableViewController.m in Sources */,
 				7CB33CE91A2268F000C07BF7 /* GWTTizeTableViewController.m in Sources */,
 				7C9778C219749D96008BFF66 /* GWTExtendedNSLog.m in Sources */,
 				7C3B5628195D026E008FD5F5 /* GWTEventDetailViewController.m in Sources */,

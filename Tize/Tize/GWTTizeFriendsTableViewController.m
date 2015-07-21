@@ -14,12 +14,15 @@
 @interface GWTTizeFriendsTableViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray* listOfFriendsWhoAddedMe;
-@property (nonatomic, strong) NSMutableDictionary* friendsWhoAddedMe;
-
 @property (nonatomic, strong) NSMutableArray* listOfFriendsIveAdded;
-@property (nonatomic, strong) NSMutableDictionary* friendsIveAdded;
-
 @property (nonatomic, strong) NSMutableArray* peopleImFollowingNotFollowingMe;
+
+@property (nonatomic, strong) NSMutableArray* filteredListOfFriendsWhoAddedMe;
+@property (nonatomic, strong) NSMutableArray* filteredListOfFriendsIveAdded;
+@property (nonatomic, strong) NSMutableArray* filteredPeopleImFollowingNotFollowingMe;
+
+@property (nonatomic, strong) NSMutableDictionary* friendsWhoAddedMe;
+@property (nonatomic, strong) NSMutableDictionary* friendsIveAdded;
 
 @end
 
@@ -62,9 +65,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.listOfFriendsWhoAddedMe count];
+            return [super searchIsActive] ? [self.filteredListOfFriendsWhoAddedMe count] : [self.listOfFriendsWhoAddedMe count];
         case 1:
-            return [self.peopleImFollowingNotFollowingMe count];
+            return [super searchIsActive] ? [self.filteredPeopleImFollowingNotFollowingMe count] : [self.peopleImFollowingNotFollowingMe count];
     }
     return 0;
 }
@@ -96,7 +99,7 @@
     switch (indexPath.section) {
         case 0: {
             if (indexPath.row < [self.listOfFriendsWhoAddedMe count]) {
-                PFUser *userFollowing = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
+                PFUser *userFollowing = [super searchIsActive] ? [self.filteredListOfFriendsWhoAddedMe objectAtIndex:indexPath.row] : [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
                 cell.textLabel.text = [userFollowing username];
                 cell.accessoryType = [self.friendsIveAdded objectForKey:[userFollowing objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             }
@@ -104,7 +107,7 @@
         }
         case 1: {
             if (indexPath.row < [self.peopleImFollowingNotFollowingMe count]) {
-                PFUser *userImFollowing = [self.peopleImFollowingNotFollowingMe objectAtIndex:indexPath.row];
+                PFUser *userImFollowing = [super searchIsActive] ? [self.peopleImFollowingNotFollowingMe objectAtIndex:indexPath.row] : [self.peopleImFollowingNotFollowingMe objectAtIndex:indexPath.row];
                 cell.textLabel.text = [userImFollowing username];
                 cell.accessoryType = UITableViewCellAccessoryNone;
             }
@@ -119,7 +122,7 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
-        PFUser *friend = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
+        PFUser *friend = [super searchIsActive] ? [self.filteredListOfFriendsWhoAddedMe objectAtIndex:indexPath.row] : [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
         if ([self.friendsIveAdded objectForKey:[friend objectId]]) {
             [self removeFriendAtIndexPath:indexPath];
         }
@@ -127,6 +130,25 @@
             [self addFriendAtIndexPath:indexPath];
         }
     }
+}
+
+#pragma mark - SearchTableVC
+
+-(void)updateFilteredListsWithString:(NSString*)searchString {
+    self.filteredListOfFriendsIveAdded = [self filterList:self.listOfFriendsIveAdded withSearchString:searchString];
+    self.filteredListOfFriendsWhoAddedMe = [self filterList:self.listOfFriendsWhoAddedMe withSearchString:searchString];
+    self.filteredPeopleImFollowingNotFollowingMe = [self filterList:self.peopleImFollowingNotFollowingMe withSearchString:searchString];
+}
+
+-(NSMutableArray*)filterList:(NSArray*)list withSearchString:(NSString*)searchString {
+    NSMutableArray *filteredList = [list mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"username contains[cd] %@", searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [filteredList filterUsingPredicate:searchPredicate];
+    }
+    
+    return filteredList;
 }
 
 #pragma mark query
@@ -187,7 +209,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    PFUser *user = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
+    PFUser *user = [super searchIsActive] ? [self.filteredListOfFriendsWhoAddedMe objectAtIndex:indexPath.row] : [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
     PFObject *following = [PFObject objectWithClassName:@"Following"];
     following[@"user"] = [[PFUser currentUser] objectId];
     following[@"following"] = [user objectId];
@@ -200,7 +222,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    PFUser *user = [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
+    PFUser *user = [super searchIsActive] ? [self.filteredListOfFriendsWhoAddedMe objectAtIndex:indexPath.row] : [self.listOfFriendsWhoAddedMe objectAtIndex:indexPath.row];
     [self.friendsIveAdded removeObjectForKey:[user objectId]];
     //TODO:Write the code to remove a friend
 }

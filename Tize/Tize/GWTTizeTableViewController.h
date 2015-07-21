@@ -77,5 +77,10 @@
  */
 -(void)reloadTableView;
 
+/**
+ *
+ */
+-(void)addSearchBarToTableView:(UISearchBar*)searchBar;
+
 
 @end

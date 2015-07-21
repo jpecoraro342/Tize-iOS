@@ -14,6 +14,10 @@
 
 @property (strong, nonatomic) NSMutableArray *listOfFriends;
 @property (nonatomic, strong) NSMutableArray *listOfFriendsInGroup;
+
+@property (strong, nonatomic) NSMutableArray *filteredListOfFriends;
+@property (nonatomic, strong) NSMutableArray *filteredListOfFriendsInGroup;
+
 @property (strong, nonatomic) NSMutableDictionary *friendsInGroup;
 
 @property (nonatomic, strong) PFObject *group;
@@ -62,9 +66,9 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.listOfFriendsInGroup count];
+            return [self.currentFriendsInGroup count];
         case 1:
-            return [self.listOfFriends count];
+            return [self.currentFriends count];
     }
     return 0;
 }
@@ -87,9 +91,9 @@
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
     switch (indexPath.section) {
         case 0:
-            return [self.listOfFriendsInGroup[indexPath.row] username];
+            return [self.currentFriendsInGroup[indexPath.row] username];
         case 1:
-            return [self.listOfFriends[indexPath.row] username];
+            return [self.currentFriends[indexPath.row] username];
     }
     return @"";
 }
@@ -107,8 +111,8 @@
             break;
         }
         case 1: {
-            if (indexPath.row < [self.listOfFriends count]) {
-                PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+            if (indexPath.row < [self.currentFriends count]) {
+                PFUser *friend = [self.currentFriends objectAtIndex:indexPath.row];
                 cell.accessoryType = [self.friendsInGroup objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             }
             break;
@@ -122,7 +126,7 @@
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == 1) {
-        PFUser *friend = [self.listOfFriends objectAtIndex:indexPath.row];
+        PFUser *friend = [self.currentFriends objectAtIndex:indexPath.row];
         if ([self.friendsInGroup objectForKey:[friend objectId]]) {
             [self removeFriendAtIndexPath:indexPath];
         }
@@ -193,7 +197,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    PFUser *user = [self.listOfFriends objectAtIndex:indexPath.row];
+    PFUser *user = [self.currentFriends objectAtIndex:indexPath.row];
     [self.friendsInGroup setObject:user forKey:[user objectId]];
     
     //[self.listOfFriendsInGroup addObject:user];
@@ -230,8 +234,25 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+#pragma mark - Search
+
+-(void)updateFilteredListsWithString:(NSString *)searchString {
+    self.filteredListOfFriends = [self.listOfFriends mutableCopy];
+    self.filteredListOfFriendsInGroup = [self.listOfFriendsInGroup mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"username contains[cd] %@", searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [self.filteredListOfFriendsInGroup filterUsingPredicate:searchPredicate];
+        [self.filteredListOfFriends filterUsingPredicate:searchPredicate];
+    }
+}
+
+-(NSMutableArray*)currentFriends {
+    return [super searchIsActive] ? self.filteredListOfFriends : self.listOfFriends;
+}
+
+-(NSMutableArray*)currentFriendsInGroup {
+    return [super searchIsActive] ? self.filteredListOfFriendsInGroup : self.listOfFriendsInGroup;
 }
 
 -(NSString*)description {

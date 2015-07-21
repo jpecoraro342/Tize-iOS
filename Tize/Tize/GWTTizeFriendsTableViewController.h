@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
 #import "GWTTizeTableViewController.h"
+#import "GWTTizeSearchTableViewController.h"
 
-@interface GWTTizeFriendsTableViewController : GWTTizeTableViewController
+@interface GWTTizeFriendsTableViewController : GWTTizeSearchTableViewController
 
 @end

@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTEvent.h"
-#import "GWTTizeTableViewController.h"
+#import "GWTTizeSearchTableViewController.h"
 
 @class GWTInviteFriendsToEventCommand;
-@interface GWTInviteFriendsViewController : GWTTizeTableViewController
+@interface GWTInviteFriendsViewController : GWTTizeSearchTableViewController
 
 @property (nonatomic, strong) GWTEvent *event;
 @property (nonatomic, strong) GWTInviteFriendsToEventCommand *inviteCommand;

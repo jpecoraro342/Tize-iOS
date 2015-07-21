@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "GWTTizeTableViewController.h"
+#import "GWTTizeSearchTableViewController.h"
 
-@interface GWTGroupsViewController : GWTTizeTableViewController
+@interface GWTGroupsViewController : GWTTizeSearchTableViewController
 
 @end

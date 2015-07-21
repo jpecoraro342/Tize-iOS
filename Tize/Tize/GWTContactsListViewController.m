@@ -12,6 +12,8 @@
 
 @interface GWTContactsListViewController () <UITabBarDelegate, UITabBarControllerDelegate>
 
+@property (nonatomic, strong) NSMutableArray* filteredContacts;
+
 @end
 
 @implementation GWTContactsListViewController
@@ -43,7 +45,7 @@
         case 0:
             return 0;
         case 1:
-            return [self.addressBook.listOfContacts count];
+            return [self.currentContacts count];
     }
     return 0;
 }
@@ -63,13 +65,28 @@
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    GWTContact *contact = [self.addressBook.listOfContacts objectAtIndex:indexPath.row];
+    GWTContact *contact = [self.currentContacts objectAtIndex:indexPath.row];
     return [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    GWTContact *contact = [self.addressBook.listOfContacts objectAtIndex:indexPath.row];
+    GWTContact *contact = [self.currentContacts objectAtIndex:indexPath.row];
     return contact.listOfPhoneNumbers.firstObject;
+}
+
+#pragma mark - Search Stuff
+
+-(void)updateFilteredListsWithString:(NSString*)searchString {
+    self.filteredContacts = [self.addressBook.listOfContacts mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"firstName contains[cd] %@ or lastName contains[cd] %@", searchString, searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [self.filteredContacts filterUsingPredicate:searchPredicate];
+    }
+}
+
+-(NSMutableArray*)currentContacts {
+    return [super searchIsActive] ? self.filteredContacts : self.addressBook.listOfContacts;
 }
 
 @end

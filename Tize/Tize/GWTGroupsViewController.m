@@ -13,6 +13,7 @@
 @interface GWTGroupsViewController () <UITabBarDelegate, UITabBarControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *listOfGroups;
+@property (nonatomic, strong) NSMutableArray *filteredListOfGroups;
 
 @end
 
@@ -53,7 +54,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.listOfGroups count];
+            return [self.currentGroupsList count];
     }
     return 0;
 }
@@ -67,7 +68,7 @@
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    return self.listOfGroups[indexPath.row][@"name"];
+    return self.currentGroupsList[indexPath.row][@"name"];
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -76,7 +77,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self loadGroupInvite:[self.listOfGroups objectAtIndex:indexPath.row]];
+    [self loadGroupInvite:[self.currentGroupsList objectAtIndex:indexPath.row]];
 }
 
 #pragma mark - Table View Edit
@@ -87,9 +88,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+        PFObject *group = [self.currentGroupsList objectAtIndex:indexPath.row];
         [group deleteEventually];
-        [self.listOfGroups removeObjectAtIndex:indexPath.row];
+        [self.currentGroupsList removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -148,6 +149,21 @@
 -(void)loadGroupInvite:(PFObject *)group {
     GWTInviteToGroupViewController *groupInvite = [[GWTInviteToGroupViewController alloc] initWithGroup:group];
     [self presentViewController:groupInvite animated:YES completion:nil];
+}
+
+#pragma mark - Search
+
+-(void)updateFilteredListsWithString:(NSString*)searchString {
+    self.filteredListOfGroups = [self.listOfGroups mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [self.filteredListOfGroups filterUsingPredicate:searchPredicate];
+    }
+}
+
+-(NSMutableArray *)currentGroupsList {
+    return [super searchIsActive] ? self.filteredListOfGroups : self.listOfGroups;
 }
 
 

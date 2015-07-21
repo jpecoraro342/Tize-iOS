@@ -176,6 +176,11 @@
     [self setNavItems];
 }
 
+#pragma mark - Search Bar
+
+-(void)addSearchBarToTableView:(UISearchBar *)searchBar {
+    self.tableView.tableHeaderView = searchBar;
+}
 #pragma mark - View Dismissal
 
 -(void)popFromNavigationController {

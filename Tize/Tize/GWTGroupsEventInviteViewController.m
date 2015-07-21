@@ -17,6 +17,8 @@
 @property (nonatomic, strong) NSMutableArray *listOfGroups;
 @property (nonatomic, strong) NSMutableDictionary *groupsInvited;
 
+@property (nonatomic, strong) NSMutableArray *filteredListOfGroups;
+
 @end
 
 @implementation GWTGroupsEventInviteViewController
@@ -59,7 +61,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return [self.listOfGroups count];
+            return [self.currentListOfGroups count];
     }
     return 0;
 }
@@ -73,7 +75,7 @@
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    return self.listOfGroups[indexPath.row][@"name"];
+    return self.currentListOfGroups[indexPath.row][@"name"];
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
@@ -83,8 +85,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    if (indexPath.row < [self.listOfGroups count]) {
-        PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    if (indexPath.row < [self.currentListOfGroups count]) {
+        PFObject *group = [self.currentListOfGroups objectAtIndex:indexPath.row];
         cell.accessoryType = [self.groupsInvited objectForKey:[group objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     }
     
@@ -94,7 +96,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    PFObject *group = [self.currentListOfGroups objectAtIndex:indexPath.row];
     if ([self.groupsInvited objectForKey:[group objectId]]) {
         [self removeGroupAtIndexPath:indexPath];
     }
@@ -111,9 +113,9 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+        PFObject *group = [self.currentListOfGroups objectAtIndex:indexPath.row];
         [group deleteEventually];
-        [self.listOfGroups removeObjectAtIndex:indexPath.row];
+        [self.currentListOfGroups removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -126,7 +128,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    PFObject *group = [self.currentListOfGroups objectAtIndex:indexPath.row];
     [self.groupsInvited setObject:group forKey:[group objectId]];
     
     [self.groupCommand addGroup:group];
@@ -136,7 +138,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    PFObject *group = [self.listOfGroups objectAtIndex:indexPath.row];
+    PFObject *group = [self.currentListOfGroups objectAtIndex:indexPath.row];
     [self.groupsInvited removeObjectForKey:[group objectId]];
     
     [self.groupCommand removeGroup:group];
@@ -164,6 +166,21 @@
             [self.tableView reloadData];
         }
     }];
+}
+
+#pragma mark - Search
+
+-(NSMutableArray*)currentListOfGroups {
+    return [super searchIsActive] ? self.filteredListOfGroups : self.listOfGroups;
+}
+
+-(void)updateFilteredListsWithString:(NSString *)searchString {
+    self.filteredListOfGroups = [self.listOfGroups mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"name contains[cd] %@", searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [self.filteredListOfGroups filterUsingPredicate:searchPredicate];
+    }
 }
 
 #pragma mark - Alertview

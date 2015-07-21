@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSMutableArray* listOfFriendsIveAdded;
 @property (strong, nonatomic) NSMutableDictionary *friendsInvitedToEvent;
 
+@property (nonatomic, strong) NSMutableArray* filteredListOfFriendsIveAdded;
+
 @end
 
 @implementation GWTInviteFriendsViewController
@@ -74,7 +76,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.listOfFriendsIveAdded count];
+    return [self.currentListOfFriends count];
 }
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
@@ -92,8 +94,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell* cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
     
-    if (indexPath.row < [self.listOfFriendsIveAdded count]) {
-        PFUser *friend = [self.listOfFriendsIveAdded objectAtIndex:indexPath.row];
+    if (indexPath.row < [self.currentListOfFriends count]) {
+        PFUser *friend = [self.currentListOfFriends objectAtIndex:indexPath.row];
         cell.textLabel.text = [friend username];
         cell.accessoryType = [self.friendsInvitedToEvent objectForKey:[friend objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     }
@@ -104,7 +106,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    PFUser *friend = [self.listOfFriendsIveAdded objectAtIndex:indexPath.row];
+    PFUser *friend = [self.currentListOfFriends objectAtIndex:indexPath.row];
     if ([self.friendsInvitedToEvent objectForKey:[friend objectId]]) {
         [self removeFriendAtIndexPath:indexPath];
     }
@@ -167,13 +169,28 @@
     }
 }
 
-#pragma mark Other
+#pragma mark - Search
+
+-(NSMutableArray*)currentListOfFriends {
+    return [super searchIsActive] ? self.filteredListOfFriendsIveAdded : self.listOfFriendsIveAdded;
+}
+
+-(void)updateFilteredListsWithString:(NSString *)searchString {
+    self.filteredListOfFriendsIveAdded = [self.listOfFriendsIveAdded mutableCopy];
+    
+    NSPredicate *searchPredicate = [NSPredicate predicateWithFormat:@"username contains[cd] %@", searchString];
+    if (searchString && ![searchString isEqualToString:@""]) {
+        [self.filteredListOfFriendsIveAdded filterUsingPredicate:searchPredicate];
+    }
+}
+
+#pragma mark - Other
 
 -(void)addFriendAtIndexPath:(NSIndexPath*)indexPath {
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
-    PFUser *user = [self.listOfFriendsIveAdded objectAtIndex:indexPath.row];
+    PFUser *user = [self.currentListOfFriends objectAtIndex:indexPath.row];
     [self.friendsInvitedToEvent setObject:user forKey:[user objectId]];
     
     [self.inviteCommand addFriend:user];
@@ -183,7 +200,7 @@
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryNone;
     
-    PFUser *user = [self.listOfFriendsIveAdded objectAtIndex:indexPath.row];
+    PFUser *user = [self.currentListOfFriends objectAtIndex:indexPath.row];
     [self.friendsInvitedToEvent removeObjectForKey:[user objectId]];
     
     [self.inviteCommand removeFriend:user];
