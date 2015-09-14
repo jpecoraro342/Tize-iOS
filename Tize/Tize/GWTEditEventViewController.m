@@ -94,18 +94,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self updateFields];
-    
     //set up pickers
     self.startDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
-    [self.startDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
-    self.startDatePicker.date = self.event.startDate;
+    [self.startDatePicker addTarget:self action:@selector(startDatePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
     
     self.endDatePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 216)];
     [self.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
-    [self.endDatePicker addTarget:self action:@selector(setDatePickerDate:) forControlEvents:UIControlEventValueChanged];
-    self.endDatePicker.date = self.event.endDate;
+    [self.endDatePicker addTarget:self action:@selector(endDatePickerDateChanged:) forControlEvents:UIControlEventValueChanged];
+
+    [self updateEventStartDate:self.event.startDate endDate:self.event.endDate];
+    
+    // Update Text Fields
+    [self updateFields];
     
     UIBarButtonItem *cancel = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEdit)];
     
@@ -242,7 +243,7 @@
             case 4: {
                 [titleLabel setText:@"End Time:"];
                 self.eventEndTimeLabel = [[UILabel alloc] initWithFrame:inputTextfield.frame];
-                [self.eventEndTimeLabel setText:[self.event startTime]];
+                [self.eventEndTimeLabel setText:[self.event endTime]];
                 [cell addSubview:self.eventEndTimeLabel];
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 inputTextfield = nil;
@@ -389,16 +390,29 @@
 
 #pragma mark Picker View
 
--(void)setDatePickerDate:(UIDatePicker *)pickerView {
-    NSDate *date = self.startDatePicker.date;
-    NSDate *endDate = self.endDatePicker.date;
+-(void)startDatePickerDateChanged:(UIDatePicker *)pickerView {
+    NSDate *newStartDate = pickerView.date;
+    NSDate *newEndDate = [self.event.endDate dateByAddingTimeInterval:[newStartDate timeIntervalSinceDate:self.event.startDate]];
     
-    if ([date compare:endDate] == NSOrderedDescending) {
-        endDate = [date dateByAddingTimeInterval:60*60];
-        self.endDatePicker.date = endDate;
+    [self updateEventStartDate:newStartDate endDate:newEndDate];
+}
+
+-(void)endDatePickerDateChanged:(UIDatePicker *)pickerView {
+    NSDate *newStartDate = self.event.startDate;
+    NSDate *newEndDate = pickerView.date;
+    
+    if ([self.event.startDate compare:pickerView.date] == NSOrderedDescending) {
+        newStartDate = [self.event.startDate dateByAddingTimeInterval:[newEndDate timeIntervalSinceDate:self.event.endDate]];
     }
     
-    [self.event setStartDate:date];
+    [self updateEventStartDate:newStartDate endDate:newEndDate];
+}
+
+-(void)updateEventStartDate:(NSDate *)startDate endDate:(NSDate*)endDate {
+    [self.startDatePicker setDate:startDate];
+    [self.endDatePicker setDate:endDate];
+    
+    [self.event setStartDate:startDate];
     [self.event setEndDate:endDate];
     
     [self.eventStartTimeLabel setText:self.event.startTime];
