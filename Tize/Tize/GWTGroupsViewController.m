@@ -22,6 +22,8 @@
 -(instancetype)init {
     self = [super init];
     if (self) {
+        self.listOfGroups = [NSMutableArray array];
+        
         [self queryGroups];
         UITabBarItem *groups = self.tabBarItem;
         [groups setTitle:@"Groups"];
@@ -135,7 +137,10 @@
         PFObject *group = [PFObject objectWithClassName:@"Groups"];
         group[@"name"] = groupName;
         group[@"owner"] = [PFUser currentUser];
+        
         [self.listOfGroups addObject:group];
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:([self.listOfGroups count] - 1) inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        
         [group saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             if(!error) {
                 if (succeeded) {

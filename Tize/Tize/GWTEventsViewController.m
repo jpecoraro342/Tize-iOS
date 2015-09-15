@@ -37,6 +37,8 @@
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
+@property (nonatomic, assign) NSInteger queryCompletionCount;
+
 @end
 
 @implementation GWTEventsViewController
@@ -212,6 +214,8 @@
 #pragma mark Query
 
 -(void)queryData {
+    self.queryCompletionCount = 0;
+    
     [self queryEvents];
     [self queryAttendingStatus];
 }
@@ -242,18 +246,22 @@
     [allQueries orderByAscending:@"startDate"];
     
     [allQueries findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        [self updateRefreshControl];
         if (!error) {
-            if (self.refreshControl && self.refreshControl.isRefreshing) {
-                [self.refreshControl endRefreshing];
-            }
             self.upcomingEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             self.cellIsSelected[0] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             for (GWTEvent* event in objects) {
                 [self.upcomingEvents addObject:event];
                 [self.cellIsSelected[0] addObject:[NSNumber numberWithBool:NO]];
             }
+            
+            [self.tableView reloadData];
         }
-        [self.tableView reloadData];
+        else {
+            NSLog(@"Error loading other events: %@", error.localizedDescription);
+            [[[UIAlertView alloc] initWithTitle:@"Unable to load events" message:error.localizedDescription delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+        }
+        
     }];
 }
 
@@ -266,9 +274,7 @@
     [getAllEventsForCurrentUser orderByAscending:@"startDate"];
     [getAllEventsForCurrentUser findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            if (self.refreshControl && self.refreshControl.isRefreshing) {
-                [self.refreshControl endRefreshing];
-            }
+            [self updateRefreshControl];
             self.myEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             self.myPastEvents = [[NSMutableArray alloc] initWithCapacity:[objects count]];
             self.cellIsSelected[1] = [[NSMutableArray alloc] initWithCapacity:[objects count]];
@@ -283,8 +289,12 @@
                     [self.cellIsSelected[2] addObject:[NSNumber numberWithBool:NO]];
                 }
             }
+            
+            [self.tableView reloadData];
         }
-        [self.tableView reloadData];
+        else {
+            NSLog(@"Error Querying My Events: %@", error.localizedDescription);
+        }
     }];
 }
 
@@ -293,6 +303,7 @@
     PFQuery *attendingStatus = [PFQuery queryWithClassName:@"EventUsers"];
     [attendingStatus whereKey:@"userID" equalTo:[[PFUser currentUser] objectId]];
     [attendingStatus findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError* error) {
+        [self updateRefreshControl];
         if (!error) {
             self.attendingStatusMap = [[NSMutableDictionary alloc] init];
             for (PFObject *attendingStatus in objects) {
@@ -301,9 +312,20 @@
             [self.tableView reloadData];
         }
         else {
-
+            NSLog(@"Error Querying Attending Status: %@", error.localizedDescription);
         }
     }];
+}
+
+-(void)updateRefreshControl {
+    static NSInteger numberOfQueries = 3;
+    self.queryCompletionCount++;
+    if (self.queryCompletionCount == numberOfQueries) {
+        if (self.refreshControl && self.refreshControl.isRefreshing) {
+            [self.refreshControl endRefreshing];
+        }
+        self.queryCompletionCount = 0;
+    }
 }
 
 #pragma mark User Management
