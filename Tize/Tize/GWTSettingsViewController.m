@@ -16,6 +16,11 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, assign) BOOL friendRequests;
+@property (nonatomic, assign) BOOL eventInvites;
+@property (nonatomic, assign) BOOL upcomingEvents;
+@property (nonatomic, assign) BOOL inviteResponse;
+
 @end
 
 @implementation GWTSettingsViewController
@@ -58,13 +63,13 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case 0:
+        case 0: //My Account
             return 4;
-        case 1:
-            return 3;
-        case 2:
+        case 1: //Notifications
+            return 4;
+        case 2: //Contact??
             return 0;
-        case 3:
+        case 3: //More Information
             return 4;
         default:
             return 0;
@@ -125,15 +130,19 @@
             switch (indexPath.row) {
                 case 0:
                     cell.textLabel.text = @"New Friend Requests";
-                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"newFriendRequestNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                    cell.accessoryType = self.friendRequests ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 case 1:
                     cell.textLabel.text = @"Event Invites";
-                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"newEventInvitesNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                    cell.accessoryType = self.eventInvites ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 case 2:
                     cell.textLabel.text = @"Events Upcoming";
-                    cell.accessoryType = [[NSUserDefaults standardUserDefaults] boolForKey:@"upcomingEventsNotification"] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                    cell.accessoryType = self.upcomingEvents ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                    break;
+                case 3:
+                    cell.textLabel.text = @"Invitation Response";
+                    cell.accessoryType = self.inviteResponse ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
                     break;
                 default:
                     break;
@@ -227,32 +236,35 @@
 
 -(void)toggleNotification:(NSIndexPath*)indexPath {
     NSInteger row = indexPath.row;
+    BOOL selected = NO;
     switch (row) {
         case 0: {
             //toggle new friend requests
-            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"newFriendRequestNotification"];
-            selected = !selected;
-            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"newFriendRequestNotification"];
-            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            self.friendRequests = !self.friendRequests;
+            selected = self.friendRequests;
             break;
         }
         case 1: {
             //toggle eventInvites Notification
-            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"newEventInvitesNotification"];
-            selected = !selected;
-            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"newEventInvitesNotification"];
-            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            self.eventInvites = !self.eventInvites;
+            selected = self.eventInvites;
             break;
         }
         case 2: {
             //toggle upcoming events
-            BOOL selected = [[NSUserDefaults standardUserDefaults] boolForKey:@"upcomingEventsNotification"];
-            selected = !selected;
-            [[NSUserDefaults standardUserDefaults] setBool:selected forKey:@"upcomingEventsNotification"];
-            [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            self.upcomingEvents = !self.upcomingEvents;
+            selected = self.upcomingEvents;
+            break;
+        }
+        case 3: {
+            //toggle upcoming events
+            self.inviteResponse = !self.inviteResponse;
+            selected = self.inviteResponse;
             break;
         }
     }
+    
+    [self.tableView cellForRowAtIndexPath:indexPath].accessoryType = selected ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
 }
 
 -(void)switchToOrganization {
@@ -288,6 +300,40 @@
 -(void)doneEditing {
     //save the settings
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+# pragma mark - Property Definitions
+
+-(BOOL)friendRequests {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"newFriendRequestNotification"];
+}
+
+-(BOOL)eventInvites {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"newEventInvitesNotification"];
+}
+
+-(BOOL)upcomingEvents {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"upcomingEventsNotification"];
+}
+
+-(BOOL)inviteResponse {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"invitationResponseNotification"];
+}
+
+-(void)setFriendRequests:(BOOL)friendRequests {
+    [[NSUserDefaults standardUserDefaults] setBool:friendRequests forKey:@"newFriendRequestNotification"];
+}
+
+-(void)setEventInvites:(BOOL)eventInvites {
+    [[NSUserDefaults standardUserDefaults] setBool:eventInvites forKey:@"newEventInvitesNotification"];
+}
+
+-(void)setUpcomingEvents:(BOOL)upcomingEvents {
+    [[NSUserDefaults standardUserDefaults] setBool:upcomingEvents forKey:@"upcomingEventsNotification"];
+}
+
+-(void)setInviteResponse:(BOOL)inviteResponse {
+    [[NSUserDefaults standardUserDefaults] setBool:inviteResponse forKey:@"invitationResponseNotification"];
 }
 
 -(NSString*)description {

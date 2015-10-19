@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150DAEAF1BA7D71D00454D8F /* GWTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 150DAEAE1BA7D71D00454D8F /* GWTSettings.m */; };
 		1547B9E01B54A710005E94C5 /* GWTTizeSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */; };
 		1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */; };
 		156EEB491AF0AE3D00DDA926 /* GWTViewFactorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */; };
@@ -106,6 +107,8 @@
 
 /* Begin PBXFileReference section */
 		06F4BB6DD3F5455596323208 /* libPods-Tize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tize.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		150DAEAD1BA7D71D00454D8F /* GWTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTSettings.h; sourceTree = "<group>"; };
+		150DAEAE1BA7D71D00454D8F /* GWTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSettings.m; sourceTree = "<group>"; };
 		1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeSearchTableViewController.h; sourceTree = "<group>"; };
 		1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeSearchTableViewController.m; sourceTree = "<group>"; };
 		156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteToGroupViewController.h; sourceTree = "<group>"; };
@@ -504,6 +507,8 @@
 			children = (
 				7C9A5C9F19512628008B2666 /* GWTEvent.h */,
 				7C9A5CA019512628008B2666 /* GWTEvent.m */,
+				150DAEAD1BA7D71D00454D8F /* GWTSettings.h */,
+				150DAEAE1BA7D71D00454D8F /* GWTSettings.m */,
 			);
 			name = "PFObject Subclasses";
 			sourceTree = "<group>";
@@ -800,6 +805,7 @@
 				15FB9B5F1AF18C1C00A52945 /* GWTOrganizationListViewController.m in Sources */,
 				7C9778B91971C7BB008BFF66 /* GWTBasePageViewController.m in Sources */,
 				156EEB4C1AF0AE5600DDA926 /* GWTViewFactory.m in Sources */,
+				150DAEAF1BA7D71D00454D8F /* GWTSettings.m in Sources */,
 				15F712F81A70CB46004B601D /* GWTCommand.m in Sources */,
 				7C3B5635195D0367008FD5F5 /* GWTTizeFriendsTableViewController.m in Sources */,
 				156EEB4F1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m in Sources */,
