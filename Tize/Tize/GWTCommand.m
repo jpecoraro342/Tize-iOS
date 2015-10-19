@@ -10,4 +10,8 @@
 
 @implementation GWTCommand
 
+-(void)execute {
+    [NSException raise:@"NSNotImplementedException" format:@"Method not implemented"];
+}
+
 @end

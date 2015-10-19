@@ -101,7 +101,7 @@
 
 -(void)initializeViewControllers {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    //CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
     GWTEditEventViewController *editEvent = [[GWTViewFactorySingleton viewManager] editEventViewController];
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];

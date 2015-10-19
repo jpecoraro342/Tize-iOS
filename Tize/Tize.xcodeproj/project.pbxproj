@@ -627,7 +627,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = GWT;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = GrayWolfTechnologies;
 				TargetAttributes = {
 					7C9A5C4219501FBC008B2666 = {
@@ -846,6 +846,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_BITCODE = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -887,6 +889,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				COPY_PHASE_STRIP = YES;
+				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -919,6 +922,7 @@
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GrayWolfTechnologies.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -942,6 +946,7 @@
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.GrayWolfTechnologies.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
 				TARGETED_DEVICE_FAMILY = 1;
