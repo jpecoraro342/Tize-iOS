@@ -10,6 +10,7 @@
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
 #import "UICKeyChainStore.h"
+#import "UIImage+Color.h"
 #import <Parse/Parse.h>
 
 @interface GWTSignUpViewController () <PFSignUpViewControllerDelegate>
@@ -51,9 +52,30 @@
     [self presentViewController:basePageController animated:YES completion:nil];
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    
+    UIImageView *logo = kLoginLogo;
+    logo.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.signUpView setLogo:logo];
+    
+    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageWithColor:kGreenColor] forState:UIControlStateNormal];
+    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageWithColor:kDarkerGreenColor] forState:UIControlStateHighlighted];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat viewWidth = CGRectGetWidth(self.view.frame);
+    
+    CGFloat yoffset = viewWidth/2 - 20 - self.signUpView.logo.frame.size.height;
+    
+    // Set frame for elements
+    [self.signUpView.logo setFrame:CGRectMake(viewWidth/2 - viewWidth/4, self.signUpView.logo.frame.origin.y - 20, viewWidth/2, viewWidth/2)];
+    [self.signUpView.usernameField setFrame:CGRectOffset(self.signUpView.usernameField.frame, 0, yoffset)];
+    [self.signUpView.passwordField setFrame:CGRectOffset(self.signUpView.passwordField.frame, 0, yoffset)];
+    [self.signUpView.signUpButton setFrame:CGRectOffset(self.signUpView.signUpButton.frame, 0, yoffset)];
 }
 
 - (void)didReceiveMemoryWarning {

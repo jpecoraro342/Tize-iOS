@@ -16,6 +16,7 @@
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
 #import "GWTAppDelegate.h"
+#import "UIImage+Color.h"
 #import "UICKeyChainStore.h"
 
 @interface GWTLoginViewController () <PFLogInViewControllerDelegate>
@@ -29,8 +30,7 @@
     if (self) {
         self.fields = PFLogInFieldsUsernameAndPassword
         | PFLogInFieldsLogInButton
-        | PFLogInFieldsSignUpButton
-        | PFLogInFieldsPasswordForgotten;
+        | PFLogInFieldsSignUpButton;
         
         self.delegate = self;
         
@@ -40,8 +40,33 @@
     return self;
 }
 
-- (void)viewDidLoad {
+-(void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIImageView *logo = kLoginLogo;
+    logo.contentMode = UIViewContentModeScaleAspectFit;
+    
+    [self.logInView setLogo:logo];
+    
+    [self.logInView.logInButton setBackgroundImage:[UIImage imageWithColor:kGreenColor] forState:UIControlStateNormal];
+    [self.logInView.logInButton setBackgroundImage:[UIImage imageWithColor:kDarkerGreenColor] forState:UIControlStateHighlighted];
+    
+    [self.logInView.signUpButton setBackgroundImage:[UIImage imageWithColor:kGrayColor] forState:UIControlStateNormal];
+    [self.logInView.signUpButton setBackgroundImage:[UIImage imageWithColor:kDarkGrayColor] forState:UIControlStateHighlighted];
+}
+
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat viewWidth = CGRectGetWidth(self.view.frame);
+    
+    CGFloat yoffset = viewWidth/2 - 20 - self.logInView.logo.frame.size.height;
+    
+    // Set frame for elements
+    [self.logInView.logo setFrame:CGRectMake(viewWidth/2 - viewWidth/4, self.logInView.logo.frame.origin.y - 20, viewWidth/2, viewWidth/2)];
+    [self.logInView.usernameField setFrame:CGRectOffset(self.logInView.usernameField.frame, 0, yoffset)];
+    [self.logInView.passwordField setFrame:CGRectOffset(self.logInView.passwordField.frame, 0, yoffset)];
+    [self.logInView.logInButton setFrame:CGRectOffset(self.logInView.logInButton.frame, 0, yoffset)];
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
