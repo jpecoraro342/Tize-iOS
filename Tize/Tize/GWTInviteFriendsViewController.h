@@ -18,4 +18,6 @@
 
 -(instancetype)initWithEvent:(GWTEvent *)event;
 
+-(void)updateInvitedListFromCommand;
+
 @end

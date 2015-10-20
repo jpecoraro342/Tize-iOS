@@ -169,6 +169,15 @@
     }
 }
 
+-(void)updateInvitedListFromCommand {
+    [self.friendsInvitedToEvent removeAllObjects];
+    
+    for (PFUser* friend in self.inviteCommand.friendsToInvite) {
+        [self.friendsInvitedToEvent setObject:friend forKey:friend.objectId];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - Search
 
 -(NSMutableArray*)currentListOfFriends {

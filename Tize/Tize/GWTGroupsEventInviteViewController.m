@@ -144,6 +144,15 @@
     [self.groupCommand removeGroup:group];
 }
 
+-(void)updateInvitedListFromCommand {
+    [self.groupsInvited removeAllObjects];
+    
+    for (PFObject* group in self.groupCommand.listOfGroups) {
+        [self.groupsInvited setObject:group forKey:[group objectId]];
+    }
+    [self.tableView reloadData];
+}
+
 #pragma mark - Queries
 
 -(void)addGroup {

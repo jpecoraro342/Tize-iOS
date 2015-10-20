@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) GWTInviteGroupToEventCommand *groupCommand;
 
+-(void)updateInvitedListFromCommand;
+
 @end

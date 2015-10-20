@@ -56,6 +56,9 @@
     friends.inviteCommand = self.friendInvites;
     groups.groupCommand = self.groupInvites;
     
+    [friends updateInvitedListFromCommand];
+    [groups updateInvitedListFromCommand];
+    
     [self setViewControllers:@[friends, contacts, groups]];
     [self setSelectedViewController:friends];
 }
