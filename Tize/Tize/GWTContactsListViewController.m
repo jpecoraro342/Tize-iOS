@@ -37,7 +37,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 50;
+    return 44;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -70,8 +70,9 @@
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    GWTContact *contact = [self.currentContacts objectAtIndex:indexPath.row];
-    return contact.listOfPhoneNumbers.firstObject;
+    // GWTContact *contact = [self.currentContacts objectAtIndex:indexPath.row];
+    // return contact.listOfPhoneNumbers.firstObject;
+    return @"";
 }
 
 #pragma mark - Search Stuff
