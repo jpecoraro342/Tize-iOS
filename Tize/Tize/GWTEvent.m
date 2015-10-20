@@ -43,7 +43,7 @@
 
 -(void)initDateFormatter {
     _dateFormatter = [[NSDateFormatter alloc] init];
-    [_dateFormatter setDateFormat:@"MMM dd hh:mm a"];
+    [_dateFormatter setDateFormat:@"MMM dd, h:mm a"];
     //[_dateFormatter setDoesRelativeDateFormatting:YES];
 }
 
