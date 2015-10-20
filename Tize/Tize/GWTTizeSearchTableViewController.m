@@ -137,7 +137,7 @@
 }
 
 -(BOOL)searchIsActive {
-    return self.searchBar.isFirstResponder;
+    return self.isSearching;
     // return self.searchController.isActive;
 }
 

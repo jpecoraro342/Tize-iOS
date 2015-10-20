@@ -66,7 +66,7 @@
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
     GWTContact *contact = [self.currentContacts objectAtIndex:indexPath.row];
-    return [NSString stringWithFormat:@"%@ %@", contact.firstName, contact.lastName];
+    return [NSString stringWithFormat:@"%@ %@", contact.firstName ?: @"", contact.lastName ?: @""];
 }
 
 -(NSString*)subtitleForCellAtIndexPath:(NSIndexPath*)indexPath {

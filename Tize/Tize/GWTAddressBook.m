@@ -58,9 +58,14 @@
     for (int i = 0; i < [contacts count]; i++) {
         ABRecordRef record = (ABRecordRef)CFBridgingRetain([contacts objectAtIndex:i]);
         GWTContact *contact = [[GWTContact alloc] initWithABContact:record];
-        [self.listOfContacts addObject:contact];
+        if (contact.firstName || contact.lastName) {
+            [self.listOfContacts addObject:contact];
+        }
     }
     
+    [self.listOfContacts sortUsingComparator:^NSComparisonResult(GWTContact* contact1, GWTContact* contact2) {
+        return [contact1.firstName ?: contact1.lastName compare:contact2.firstName ?: contact2.lastName];
+    }];
 }
 
 @end
