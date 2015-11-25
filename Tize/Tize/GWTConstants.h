@@ -14,6 +14,10 @@
 
 #define rgbColor(r, g, b) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:1]
 
+//User
+
+#define isOrganizationUser ([[[PFUser currentUser] objectForKey:@"userType"] integerValue] == 1)
+
 //Colors
 #define kDarkOrangeColor rgbColor(245, 136, 101)
 #define kLightOrangeColor rgbColor(250, 172, 110)

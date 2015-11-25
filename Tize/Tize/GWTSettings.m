@@ -20,4 +20,15 @@
     return @"Settings";
 }
 
++(GWTSettings*)newSettingsWithDefault {
+    GWTSettings *newSettings = [[GWTSettings alloc] initWithClassName:@"Settings"];
+    
+    newSettings.friendRequests = YES;
+    newSettings.eventInvites = YES;
+    newSettings.upcomingEvents = YES;
+    newSettings.inviteResponse = NO;
+    
+    return newSettings;
+}
+
 @end

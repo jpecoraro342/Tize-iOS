@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GWTSettingsManager.h"
 
 @interface GWTSettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (nonatomic, strong) id<GWTSettingsManager> settingsData;
 
 -(void)switchToOrganization;
 

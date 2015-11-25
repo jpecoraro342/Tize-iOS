@@ -15,6 +15,7 @@
 #import "GWTEventDetailViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTBasePageViewController.h"
+#import "GWTNetworkedSettingsManager.h"
 #import "GWTAppDelegate.h"
 #import "UIImage+Color.h"
 #import "UICKeyChainStore.h"
@@ -75,6 +76,7 @@
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [[[GWTNetworkedSettingsManaager alloc] init] fetchSettings];
     [UICKeyChainStore setString:user.username forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
     [UICKeyChainStore setString:self.logInView.passwordField.text forKey:user.username service:@"com.gwt.tize"];
     

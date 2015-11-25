@@ -19,5 +19,6 @@
 @property (nonatomic, assign) BOOL inviteResponse;
 
 +(NSString*)parseClassName;
++(GWTSettings*)newSettingsWithDefault;
 
 @end

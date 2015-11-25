@@ -11,11 +11,14 @@
 #import "GWTEventsViewController.h"
 #import "GWTEditEventViewController.h"
 #import "GWTContactsViewController.h"
+#import "GWTNetworkedSettingsManager.h"
 
 @implementation GWTViewFactory
 
 -(GWTSettingsViewController*)settingsViewController {
-    return [[GWTSettingsViewController alloc] init];
+    GWTSettingsViewController *settings = [[GWTSettingsViewController alloc] init];
+    settings.settingsData = [[GWTNetworkedSettingsManaager alloc] init];
+    return settings;
 }
 
 -(GWTEventsViewController*)eventsViewController {

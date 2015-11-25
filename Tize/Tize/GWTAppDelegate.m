@@ -12,6 +12,8 @@
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
 #import "GWTViewFactorySingleton.h"
+#import "GWTNetworkedSettingsManager.h"
+#import "GWTSettings.h"
 #import "SVProgressHUD.h"
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
@@ -24,6 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [GWTEvent registerSubclass];
+    [GWTSettings registerSubclass];
     
     [Parse setApplicationId:@"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD"
                   clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
@@ -36,6 +39,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     if ([PFUser currentUser]) {
+        [[[GWTNetworkedSettingsManaager alloc] init] fetchSettings];
         self.window.rootViewController = [self setupMainView];
         [self registerForNotifications];
     }

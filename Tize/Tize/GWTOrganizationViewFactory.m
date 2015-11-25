@@ -10,12 +10,15 @@
 #import "GWTOrganizationEditEventViewController.h"
 #import "GWTOrganizationEventsViewController.h"
 #import "GWTOrganizationSettingsViewController.h"
+#import "GWTLocalSettingsManager.h"
 #import "GWTEventsViewController.h"
 
 @implementation GWTOrganizationViewFactory
 
 -(GWTSettingsViewController*)settingsViewController {
-    return [[GWTOrganizationSettingsViewController alloc] init];
+    GWTOrganizationSettingsViewController *settings = [[GWTOrganizationSettingsViewController alloc] init];
+    settings.settingsData = [[GWTLocalSettingsManager alloc] init];
+    return settings;
 }
 
 -(GWTOrganizationEventsViewController*)eventsViewController {
