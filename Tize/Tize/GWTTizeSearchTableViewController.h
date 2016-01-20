@@ -12,5 +12,6 @@
 
 -(BOOL)searchIsActive;
 -(void)updateFilteredListsWithString:(NSString*)searchString;
+-(NSString*)searchBarText;
 
 @end

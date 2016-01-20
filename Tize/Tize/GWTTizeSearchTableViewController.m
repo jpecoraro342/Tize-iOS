@@ -64,6 +64,10 @@
      */
 }
 
+-(NSString*)searchBarText {
+    return self.searchBar.text;
+}
+
 #pragma mark - Search Bar Delegate
 
 -(void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
