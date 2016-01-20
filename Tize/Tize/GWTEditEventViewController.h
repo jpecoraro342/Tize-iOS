@@ -21,5 +21,6 @@
 
 -(void)updateEvent;
 -(void)sendOutInvites:(GWTEvent*)event;
+-(void)updateTableView;
 
 @end

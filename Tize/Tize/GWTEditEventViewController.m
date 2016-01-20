@@ -277,8 +277,8 @@
                 inputTextfield = nil;
                 cell.selectionStyle = UITableViewCellSelectionStyleGray;
                 cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+                cell.clipsToBounds = YES;
                 break;
-                
             }
         }
     
@@ -306,12 +306,16 @@
         return;
     }
     
-    [self.tableView beginUpdates];
-    [self.tableView endUpdates];
+    [self updateTableView];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:YES];
+}
+
+-(void)updateTableView {
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
 }
 
 #pragma mark - Collection View

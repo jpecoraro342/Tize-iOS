@@ -80,8 +80,6 @@
     return [super tableView:self.tableView heightForRowAtIndexPath:indexPath];
 }
 
-
-//Modify to use with the ispublic thing
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
@@ -155,6 +153,8 @@
 -(void)changePublicValue {
     self.isPublic = self.isPublicSwitch.isOn;
     [self.event setPublicEvent:self.isPublic];
+    [self.view endEditing:YES];
+    [super updateTableView];
 }
 
 //Add public/private
