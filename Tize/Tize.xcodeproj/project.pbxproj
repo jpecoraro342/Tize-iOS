@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		150DAEAF1BA7D71D00454D8F /* GWTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 150DAEAE1BA7D71D00454D8F /* GWTSettings.m */; };
 		1547B9E01B54A710005E94C5 /* GWTTizeSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */; };
+		155899E51C5DD92300E23A9E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155899E41C5DD92300E23A9E /* MessageUI.framework */; };
 		1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */; };
 		156EEB491AF0AE3D00DDA926 /* GWTViewFactorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */; };
 		156EEB4C1AF0AE5600DDA926 /* GWTViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */; };
@@ -25,8 +26,8 @@
 		15F712FE1A70E129004B601D /* GWTInviteFriendsToEventCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F712FD1A70E129004B601D /* GWTInviteFriendsToEventCommand.m */; };
 		15F713011A70E340004B601D /* GWTGroupsEventInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15F713001A70E340004B601D /* GWTGroupsEventInviteViewController.m */; };
 		15FB9B5F1AF18C1C00A52945 /* GWTOrganizationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FB9B5E1AF18C1C00A52945 /* GWTOrganizationListViewController.m */; };
-		15FE2B311C0664030097AA36 /* GWTLocalSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2B2E1C0664030097AA36 /* GWTLocalSettingsManager.m */; settings = {ASSET_TAGS = (); }; };
-		15FE2B321C0664030097AA36 /* GWTNetworkedSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2B301C0664030097AA36 /* GWTNetworkedSettingsManager.m */; settings = {ASSET_TAGS = (); }; };
+		15FE2B311C0664030097AA36 /* GWTLocalSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2B2E1C0664030097AA36 /* GWTLocalSettingsManager.m */; };
+		15FE2B321C0664030097AA36 /* GWTNetworkedSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FE2B301C0664030097AA36 /* GWTNetworkedSettingsManager.m */; };
 		772755060C3A4860AF229729 /* libPods-Tize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 06F4BB6DD3F5455596323208 /* libPods-Tize.a */; };
 		7C1F44801A19DAF6000C06CE /* GWTContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F447F1A19DAF6000C06CE /* GWTContactsViewController.m */; };
 		7C1F44831A19DB99000C06CE /* GWTContactsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C1F44821A19DB99000C06CE /* GWTContactsListViewController.m */; };
@@ -113,6 +114,7 @@
 		150DAEAE1BA7D71D00454D8F /* GWTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSettings.m; sourceTree = "<group>"; };
 		1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeSearchTableViewController.h; sourceTree = "<group>"; };
 		1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeSearchTableViewController.m; sourceTree = "<group>"; };
+		155899E41C5DD92300E23A9E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteToGroupViewController.h; sourceTree = "<group>"; };
 		1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTInviteToGroupViewController.m; sourceTree = "<group>"; };
 		156EEB471AF0AE3D00DDA926 /* GWTViewFactorySingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTViewFactorySingleton.h; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				155899E51C5DD92300E23A9E /* MessageUI.framework in Frameworks */,
 				7C2CF5EC196BA2C2002AE0C6 /* Accounts.framework in Frameworks */,
 				7C2CF5EA196BA2BD002AE0C6 /* Social.framework in Frameworks */,
 				7C2CF5E8196BA2B8002AE0C6 /* Twitter.framework in Frameworks */,
@@ -459,6 +462,7 @@
 		7C9A5C4519501FBC008B2666 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				155899E41C5DD92300E23A9E /* MessageUI.framework */,
 				15ED57481A41261700B24CEB /* Fabric.framework */,
 				7CD793AF19AFAFF600357D7A /* Crashlytics.framework */,
 				7C2CF5EB196BA2C2002AE0C6 /* Accounts.framework */,
@@ -926,7 +930,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -936,7 +940,7 @@
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.GrayWolfTechnologies.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.GrayWolfTechnologies.Tize;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -950,7 +954,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -960,7 +964,7 @@
 				GCC_PREFIX_HEADER = "Tize/Tize-Prefix.pch";
 				INFOPLIST_FILE = "Tize/Tize-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.GrayWolfTechnologies.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = com.GrayWolfTechnologies.Tize;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
 				TARGETED_DEVICE_FAMILY = 1;

@@ -9,8 +9,11 @@
 #import "GWTContactsListViewController.h"
 #import "GWTAddressBook.h"
 #import "GWTContact.h"
+#import "PFUser.h"
+#import <MessageUI/MessageUI.h>
 
-@interface GWTContactsListViewController () <UITabBarDelegate, UITabBarControllerDelegate>
+
+@interface GWTContactsListViewController () <UITabBarDelegate, UITabBarControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray* filteredContacts;
 
@@ -75,6 +78,12 @@
     return @"";
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    GWTContact *selectedContact = [[self currentContacts] objectAtIndex:indexPath.row];
+    [self showMessagesViewControllerForContact:selectedContact];
+}
+
 #pragma mark - Search Stuff
 
 -(void)updateFilteredListsWithString:(NSString*)searchString {
@@ -88,6 +97,42 @@
 
 -(NSMutableArray*)currentContacts {
     return [super searchIsActive] ? self.filteredContacts : self.addressBook.listOfContacts;
+}
+
+#pragma mark - MFMessages View Controller Stuff
+
+-(void)showMessagesViewControllerForContact:(GWTContact*)contact {
+    if(![MFMessageComposeViewController canSendText]) {
+        UIAlertView *warningAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Your device doesn't support SMS!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [warningAlert show];
+        return;
+    }
+    
+    MFMessageComposeViewController* composeVC = [[MFMessageComposeViewController alloc] init];
+    composeVC.messageComposeDelegate = self;
+    
+    // Configure the fields of the interface.
+    composeVC.recipients = @[contact.listOfPhoneNumbers.firstObject];
+    composeVC.body = [self getMessageTextForContact:contact];
+    
+    // Present the view controller modally.
+    [self presentViewController:composeVC animated:YES completion:nil];
+}
+
+-(void)messageComposeViewController:(MFMessageComposeViewController *)controller
+                 didFinishWithResult:(MessageComposeResult)result {
+    // Check the result or perform other tasks.
+    
+    // Dismiss the mail compose view controller.
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(NSString*)getMessageTextForContact:(GWTContact*)contact {
+    return [NSString stringWithFormat:@"Hey %@! Add me on Tize by clicking this link %@.", contact.firstName, [self getTizeURL]];
+}
+
+-(NSString*)getTizeURL {
+    return [NSString stringWithFormat:@"tizeapp:adduser/%@", [PFUser currentUser].objectId];
 }
 
 @end
