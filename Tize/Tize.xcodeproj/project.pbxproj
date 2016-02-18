@@ -14,6 +14,9 @@
 		156EEB491AF0AE3D00DDA926 /* GWTViewFactorySingleton.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB481AF0AE3D00DDA926 /* GWTViewFactorySingleton.m */; };
 		156EEB4C1AF0AE5600DDA926 /* GWTViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */; };
 		156EEB4F1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */; };
+		15A4240C1C7501EB00BCC4A6 /* Tize.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 155899E61C613FD700E23A9E /* Tize.entitlements */; };
+		15A424121C75871900BCC4A6 /* GWTNetworkFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A424111C75871900BCC4A6 /* GWTNetworkFacade.m */; };
+		15A424151C75873A00BCC4A6 /* GWTParseNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */; };
 		15BC7CE11B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */; };
 		15C059901ABA0D8000B1915C /* GWTOrganizationEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */; };
 		15C059931ABA143C00B1915C /* GWTOrganizationEditEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */; };
@@ -115,6 +118,7 @@
 		1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeSearchTableViewController.h; sourceTree = "<group>"; };
 		1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeSearchTableViewController.m; sourceTree = "<group>"; };
 		155899E41C5DD92300E23A9E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		155899E61C613FD700E23A9E /* Tize.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Tize.entitlements; sourceTree = "<group>"; };
 		156645491A5EF88E00F1FDCA /* GWTInviteToGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTInviteToGroupViewController.h; sourceTree = "<group>"; };
 		1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTInviteToGroupViewController.m; sourceTree = "<group>"; };
 		156EEB471AF0AE3D00DDA926 /* GWTViewFactorySingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTViewFactorySingleton.h; sourceTree = "<group>"; };
@@ -123,6 +127,11 @@
 		156EEB4B1AF0AE5600DDA926 /* GWTViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTViewFactory.m; sourceTree = "<group>"; };
 		156EEB4D1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationViewFactory.h; sourceTree = "<group>"; };
 		156EEB4E1AF0AE6D00DDA926 /* GWTOrganizationViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTOrganizationViewFactory.m; sourceTree = "<group>"; };
+		15A4240E1C7586AE00BCC4A6 /* GWTNetworking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWTNetworking.h; sourceTree = "<group>"; };
+		15A424101C75871900BCC4A6 /* GWTNetworkFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTNetworkFacade.h; sourceTree = "<group>"; };
+		15A424111C75871900BCC4A6 /* GWTNetworkFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTNetworkFacade.m; sourceTree = "<group>"; };
+		15A424131C75873A00BCC4A6 /* GWTParseNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTParseNetwork.h; sourceTree = "<group>"; };
+		15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTParseNetwork.m; sourceTree = "<group>"; };
 		15BC7CDF1B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTManageOrganizationAdminsViewController.h; sourceTree = "<group>"; };
 		15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTManageOrganizationAdminsViewController.m; sourceTree = "<group>"; };
 		15C0598E1ABA0D8000B1915C /* GWTOrganizationEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationEventsViewController.h; sourceTree = "<group>"; };
@@ -289,6 +298,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15A4240D1C75859300BCC4A6 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				15A4240E1C7586AE00BCC4A6 /* GWTNetworking.h */,
+				15A424101C75871900BCC4A6 /* GWTNetworkFacade.h */,
+				15A424111C75871900BCC4A6 /* GWTNetworkFacade.m */,
+				15A424131C75873A00BCC4A6 /* GWTParseNetwork.h */,
+				15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		15B57C131B4B70F900CC3F80 /* Address Book Facade */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,10 +508,12 @@
 		7C9A5C4C19501FBC008B2666 /* Tize */ = {
 			isa = PBXGroup;
 			children = (
+				155899E61C613FD700E23A9E /* Tize.entitlements */,
 				15B57C171B4B75E700CC3F80 /* App Delegate */,
 				7C6F11FD19D370AF0080E636 /* Utilities */,
 				15B57C181B4B760000CC3F80 /* Class Extensions */,
 				7C9A5C9E195125DC008B2666 /* PFObject Subclasses */,
+				15A4240D1C75859300BCC4A6 /* Networking */,
 				15B57C131B4B70F900CC3F80 /* Address Book Facade */,
 				15F712EF1A70C9BF004B601D /* Invite Commands */,
 				15D7051A1B04F83B009B1400 /* View Factories */,
@@ -652,6 +675,9 @@
 							com.apple.InAppPurchase = {
 								enabled = 0;
 							};
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -705,6 +731,7 @@
 				7C95A61E19F893F8000D805C /* GWTIconCell.xib in Resources */,
 				7C9EE79819F854F900E2305F /* movie@2x.png in Resources */,
 				7CB33CEC1A2269B100C07BF7 /* GWTTizeTableViewController.xib in Resources */,
+				15A4240C1C7501EB00BCC4A6 /* Tize.entitlements in Resources */,
 				7C3B5629195D026E008FD5F5 /* GWTEventDetailViewController.xib in Resources */,
 				7C425A921A0197D2004FBBC3 /* trophy@2x.png in Resources */,
 				7C9EE79019F854F900E2305F /* coffee@2x.png in Resources */,
@@ -799,7 +826,9 @@
 				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,
 				15F712F51A70CB3A004B601D /* GWTInviteGroupToEventCommand.m in Sources */,
 				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
+				15A424121C75871900BCC4A6 /* GWTNetworkFacade.m in Sources */,
 				15F712FE1A70E129004B601D /* GWTInviteFriendsToEventCommand.m in Sources */,
+				15A424151C75873A00BCC4A6 /* GWTParseNetwork.m in Sources */,
 				7C9A5CA119512628008B2666 /* GWTEvent.m in Sources */,
 				7C9A5C5319501FBC008B2666 /* main.m in Sources */,
 				7C9A5C9B19512132008B2666 /* GWTEventsViewController.m in Sources */,
@@ -882,7 +911,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -917,7 +946,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -930,8 +959,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tize/Tize.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -942,7 +972,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.GrayWolfTechnologies.Tize;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -954,8 +984,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = Tize/Tize.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Neil Schwalb (B8HUWFKY2L)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -966,7 +997,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.GrayWolfTechnologies.Tize;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "09c407ee-2acc-46ef-8c4b-d37e378ae156";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

@@ -15,6 +15,7 @@
 #import "GWTNetworkedSettingsManager.h"
 #import "GWTSettings.h"
 #import "SVProgressHUD.h"
+#import "GWTNetworkFacade.h"
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -58,6 +59,32 @@
     baseViewController.mainEventsView = events;
     baseViewController.currentViewController = events;
     return baseViewController;
+}
+
+- (BOOL)application:(UIApplication *)application
+continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    
+    // TODO: Go Through Normal Launch Options
+    // Set the command up to run after user sign in
+    
+    NSURL *url = userActivity.webpageURL;
+    NSArray *components = url.pathComponents;
+    
+    NSInteger userIndex = [components indexOfObject:@"adduser"];
+    
+    if (userIndex > 0) {
+        if (components.count >= userIndex + 1) {
+            NSString *userId = [components objectAtIndex:userIndex + 1];
+            [GWTNetworkFacade makeUsersFollowEachother:userId user2:[[PFUser currentUser] objectId] completionBlock:^(BOOL succeded, NSError *error) {
+                
+            }];
+            
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 
