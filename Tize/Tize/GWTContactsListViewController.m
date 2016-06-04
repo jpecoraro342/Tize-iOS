@@ -132,7 +132,7 @@
 }
 
 -(NSString*)getTizeURL {
-    return [NSString stringWithFormat:@"www.josephpecoraro.me/adduser/%@", [PFUser currentUser].objectId];
+    return [NSString stringWithFormat:@"tizeapp.com/adduser/%@", [PFUser currentUser].objectId];
 }
 
 @end

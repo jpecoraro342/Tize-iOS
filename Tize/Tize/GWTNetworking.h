@@ -15,7 +15,7 @@
 typedef void (^GWTBooleanResultBlock)(BOOL succeeded, NSError *error);
 typedef void (^GWTIntegerResultBlock)(int number, NSError *error);
 typedef void (^GWTArrayResultBlock)(NSArray *objects, NSError *error);
-typedef void (^PFObjectResultBlock)(NSObject *object,  NSError *error);
+// typedef void (^PFObjectResultBlock)(NSObject *object,  NSError *error);
 typedef void (^GWTSetResultBlock)(NSSet *channels, NSError *error);
 // typedef void (^GWTUserResultBlock)(GWTUser *user, NSError *error);
 typedef void (^GWTDataResultBlock)(NSData *data, NSError *error);
