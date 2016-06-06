@@ -50,7 +50,7 @@
 
 -(void)loadEventInviteTabs {
     GWTInviteFriendsViewController *friends = [[GWTInviteFriendsViewController alloc] init];
-    GWTContactsListViewController *contacts = [[GWTContactsListViewController alloc] init];
+    // GWTContactsListViewController *contacts = [[GWTContactsListViewController alloc] init];
     GWTGroupsEventInviteViewController *groups = [[GWTGroupsEventInviteViewController alloc] init];
     
     friends.inviteCommand = self.friendInvites;
@@ -59,7 +59,7 @@
     [friends updateInvitedListFromCommand];
     [groups updateInvitedListFromCommand];
     
-    [self setViewControllers:@[friends, contacts, groups]];
+    [self setViewControllers:@[friends, groups]];
     [self setSelectedViewController:friends];
 }
 

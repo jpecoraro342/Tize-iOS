@@ -102,7 +102,7 @@
             if (indexPath.row < [self.listOfFriendsIveAdded count]) {
                 PFUser *userFollowing = [self.getListOfFriendsIveAdded objectAtIndex:indexPath.row];
                 cell.textLabel.text = [userFollowing username];
-                cell.accessoryType = [self.friendsWhoAddedMe objectForKey:[userFollowing objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                cell.accessoryType = UITableViewCellAccessoryNone; // [self.friendsWhoAddedMe objectForKey:[userFollowing objectId]] ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             }
             break;
         }

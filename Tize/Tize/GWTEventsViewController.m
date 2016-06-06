@@ -192,6 +192,10 @@
         return nil;
     }
     
+    if (!indexPath) {
+        return nil;
+    }
+    
     GWTEvent *tempEvent;
     switch (indexPath.section) {
         case 0: {

@@ -120,36 +120,38 @@
     NSInteger headerViewHeight = [self tableView:self.tableView heightForHeaderInSection:section];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, headerViewHeight)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, headerViewHeight)];
-    [titleLabel setTextColor:kOffWhiteColor];
     
-     [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    [headerView setBackgroundColor:kOffWhiteColor];
+    [titleLabel setTextColor:[UIColor darkGrayColor]];
+    
+    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height-3, headerView.frame.size.width, 3)];
+    [borderView setBackgroundColor:kBorderColor];
     
     switch (section) {
         case 0:
             titleLabel.text = self.event.eventName;
             titleLabel.textAlignment = NSTextAlignmentCenter;
             self.titleLabel = titleLabel;
-            [titleLabel setTextColor:[UIColor darkGrayColor]];
+            [headerView setBackgroundColor:[UIColor lightGrayColor]];
+            [borderView setFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
             break;
         case 1:
             titleLabel.text = @"Attending";
-            [titleLabel setTextColor:kGreenColor];
+            [borderView setBackgroundColor:kGreenColor];
             break;
         case 2:
             titleLabel.text = @"Maybe Attending";
-            [titleLabel setTextColor:kLightOrangeColor];
+            [borderView setBackgroundColor:kLightOrangeColor];
             break;
         case 3:
             titleLabel.text = @"Not Attending";
-            [titleLabel setTextColor:kRedColor];
+            [borderView setBackgroundColor:kRedColor];
             break;
         case 4:
             titleLabel.text = @"Not Responded";
+            [borderView setBackgroundColor:[UIColor lightGrayColor]];
             break;
     }
-    
-    UIView *borderView = [[UIView alloc] initWithFrame:CGRectMake(0, headerView.frame.size.height-1, headerView.frame.size.width, 1)];
-    [borderView setBackgroundColor:kBorderColor];
     
     [headerView addSubview:titleLabel];
     [headerView addSubview:borderView];
