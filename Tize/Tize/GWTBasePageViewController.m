@@ -8,7 +8,6 @@
 
 #import "GWTBasePageViewController.h"
 #import "GWTEventsViewController.h"
-#import "GWTEditEventViewController.h"
 #import "GWTEventDetailViewController.h"
 #import "GWTAttendingTableViewController.h"
 #import "GWTViewFactorySingleton.h"
@@ -66,6 +65,12 @@
             [[self.viewControllers objectAtIndex:2] viewWillAppear:YES];
         }
     }
+    else if ([self.currentViewController isEqual:self.editViewController]) {
+        self.scrollView.scrollEnabled = NO;
+        self.scrollView.scrollEnabled = YES;
+        
+        self.editEventDontScroll = YES;
+    }
     else {
         [self.mainEventsView viewWillAppear:YES];
     }
@@ -74,6 +79,9 @@
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (self.noEventDontScroll) {
         [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:NO];
+    }
+    else if (self.editEventDontScroll) {
+        [self.scrollView scrollRectToVisible:self.editViewController.view.frame animated:NO];
     }
 }
 
@@ -103,12 +111,12 @@
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     //CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    GWTEditEventViewController *editEvent = [[GWTViewFactorySingleton viewManager] editEventViewController];
+    self.editViewController = [[GWTViewFactorySingleton viewManager] editEventViewController];
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
     GWTAttendingTableViewController *attending = [[GWTAttendingTableViewController alloc] init];
     
     //Note: Main Events View Controller is not in this list
-    self.viewControllers = [[NSMutableArray alloc] initWithObjects:editEvent, detailEvent, attending, nil];
+    self.viewControllers = [[NSMutableArray alloc] initWithObjects:self.editViewController, detailEvent, attending, nil];
     
     CGRect mainEventsFrame = self.mainEventsView.view.frame;
     mainEventsFrame.origin.x = screenWidth;
@@ -151,6 +159,7 @@
 }
 
 -(void)goForwardToEventsPage {
+    self.editEventDontScroll = NO;
     [self.currentViewController viewWillDisappear:YES];
     [self.mainEventsView viewWillAppear:YES];
     [self.scrollView scrollRectToVisible:self.mainEventsView.view.frame animated:YES];

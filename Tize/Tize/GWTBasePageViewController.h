@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GWTEditEventViewController.h"
 
 @class GWTEventsViewController;
 @class GWTEvent;
@@ -15,9 +16,11 @@
 
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) GWTEventsViewController *mainEventsView;
+@property (nonatomic, strong) GWTEditEventViewController *editViewController;
 @property (nonatomic, strong) UIViewController *currentViewController;
 
 @property (nonatomic, assign) BOOL noEventDontScroll;
+@property (nonatomic, assign) BOOL editEventDontScroll;
 
 -(void)goForwardToEventsPage;
 -(void)goBackwardToEventsPage;
