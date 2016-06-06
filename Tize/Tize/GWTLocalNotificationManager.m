@@ -29,6 +29,7 @@
     UILocalNotification *note = [[UILocalNotification alloc] init];
     [note setFireDate:startTime];
     [note setAlertBody:message];
+    [note setSoundName:UILocalNotificationDefaultSoundName];
     
     [note setUserInfo:@{ @"id" : event.objectId }];
     [[UIApplication sharedApplication] scheduleLocalNotification:note];

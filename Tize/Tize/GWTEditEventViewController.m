@@ -10,6 +10,7 @@
 #import "GWTEventsViewController.h"
 #import "GWTTizeFriendsTableViewController.h"
 #import "GWTBasePageViewController.h"
+#import "GWTLocalNotificationManager.h"
 #import "GWTInviteFriendsViewController.h"
 #import "GWTContactsViewController.h"
 #import "GWTInviteFriendsToEventCommand.h"
@@ -459,6 +460,7 @@
             if (!error) {
                 if (succeeded) {
                     [self sendOutInvites:self.event];
+                    [[[GWTLocalNotificationManager alloc] init] scheduleNotificationForEvent:self.event];
                 }
             }
             else {

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		150DAEAF1BA7D71D00454D8F /* GWTSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 150DAEAE1BA7D71D00454D8F /* GWTSettings.m */; };
+		15313DBD1D063796006E738A /* CWStatusBarNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 15313DBC1D063796006E738A /* CWStatusBarNotification.m */; };
+		15313DC11D063ADC006E738A /* GWTNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 15313DC01D063ADC006E738A /* GWTNotificationView.m */; };
 		1547B9E01B54A710005E94C5 /* GWTTizeSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */; };
 		155899E51C5DD92300E23A9E /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155899E41C5DD92300E23A9E /* MessageUI.framework */; };
 		1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1566454A1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m */; };
@@ -116,6 +118,10 @@
 		06F4BB6DD3F5455596323208 /* libPods-Tize.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tize.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		150DAEAD1BA7D71D00454D8F /* GWTSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTSettings.h; sourceTree = "<group>"; };
 		150DAEAE1BA7D71D00454D8F /* GWTSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTSettings.m; sourceTree = "<group>"; };
+		15313DBB1D063796006E738A /* CWStatusBarNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CWStatusBarNotification.h; sourceTree = "<group>"; };
+		15313DBC1D063796006E738A /* CWStatusBarNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CWStatusBarNotification.m; sourceTree = "<group>"; };
+		15313DBF1D063ADC006E738A /* GWTNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GWTNotificationView.h; path = Tize/GWTNotificationView.h; sourceTree = SOURCE_ROOT; };
+		15313DC01D063ADC006E738A /* GWTNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GWTNotificationView.m; path = Tize/GWTNotificationView.m; sourceTree = SOURCE_ROOT; };
 		1547B9DE1B54A710005E94C5 /* GWTTizeSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTTizeSearchTableViewController.h; sourceTree = "<group>"; };
 		1547B9DF1B54A710005E94C5 /* GWTTizeSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTTizeSearchTableViewController.m; sourceTree = "<group>"; };
 		155899E41C5DD92300E23A9E /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -301,6 +307,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15313DBA1D063788006E738A /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				15313DBB1D063796006E738A /* CWStatusBarNotification.h */,
+				15313DBC1D063796006E738A /* CWStatusBarNotification.m */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
+		15313DBE1D063AB5006E738A /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				15313DBF1D063ADC006E738A /* GWTNotificationView.h */,
+				15313DC01D063ADC006E738A /* GWTNotificationView.m */,
+			);
+			name = "Custom Views";
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		15A4240D1C75859300BCC4A6 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,6 +546,7 @@
 			isa = PBXGroup;
 			children = (
 				155899E61C613FD700E23A9E /* Tize.entitlements */,
+				15313DBA1D063788006E738A /* Libraries */,
 				15B57C171B4B75E700CC3F80 /* App Delegate */,
 				7C6F11FD19D370AF0080E636 /* Utilities */,
 				15B57C181B4B760000CC3F80 /* Class Extensions */,
@@ -537,6 +563,7 @@
 				15D7051C1B04F8A6009B1400 /* Contacts VC */,
 				7C3B562A195D0278008FD5F5 /* Settings VC */,
 				7C9AB6C81996AE75007A81F5 /* TableViewCells */,
+				15313DBE1D063AB5006E738A /* Custom Views */,
 				7CE3E2A619ACF454000892B6 /* Resources */,
 				7C9A5C4D19501FBC008B2666 /* Supporting Files */,
 			);
@@ -838,6 +865,8 @@
 				7CC463761A1DD99E00E7A594 /* GWTAddressBook.m in Sources */,
 				7C9A5C9619512112008B2666 /* GWTLoginViewController.m in Sources */,
 				7C95A61C19F89385000D805C /* GWTIconCell.m in Sources */,
+				15313DBD1D063796006E738A /* CWStatusBarNotification.m in Sources */,
+				15313DC11D063ADC006E738A /* GWTNotificationView.m in Sources */,
 				15F712F51A70CB3A004B601D /* GWTInviteGroupToEventCommand.m in Sources */,
 				7C6F11FB19D36BD50080E636 /* GWTSettingsViewController.m in Sources */,
 				15A424121C75871900BCC4A6 /* GWTNetworkFacade.m in Sources */,

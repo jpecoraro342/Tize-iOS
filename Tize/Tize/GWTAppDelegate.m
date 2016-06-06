@@ -16,6 +16,8 @@
 #import "GWTSettings.h"
 #import "SVProgressHUD.h"
 #import "GWTNetworkFacade.h"
+#import "CWStatusBarNotification.h"
+#import "GWTNotificationView.h"
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -42,6 +44,8 @@
     if ([PFUser currentUser]) {
         [[[GWTNetworkedSettingsManager alloc] init] fetchSettings];
         self.window.rootViewController = [self setupMainView];
+        
+        // I don't want to do this here.. ?
         [self registerForNotifications];
     }
     else {
@@ -79,6 +83,7 @@ continueUserActivity:(NSUserActivity *)userActivity
             [GWTNetworkFacade makeUsersFollowEachother:userId user2:[[PFUser currentUser] objectId] completionBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     NSLog(@"Successfully following user");
+                    [self displayNotificationWIthMessage:@"User successfully added."];
                 }
                 else {
                     NSLog(@"Error following %@: %@", userId, error.localizedDescription);
@@ -157,6 +162,23 @@ continueUserActivity:(NSUserActivity *)userActivity
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"Push Notification Recieved: %@", userInfo);
     //[PFPush handlePush:userInfo];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+        [self displayNotificationWIthMessage:notification.alertBody];
+    }
+}
+
+-(void)displayNotificationWIthMessage:(NSString*)message {
+    CWStatusBarNotification *note = [CWStatusBarNotification new];
+    [note setNotificationStyle:CWNotificationStyleNavigationBarNotification];
+    [note setNotificationAnimationInStyle:CWNotificationAnimationStyleTop];
+    [note setNotificationAnimationOutStyle:CWNotificationAnimationStyleTop];
+    [note setNotificationAnimationType:CWNotificationAnimationTypeOverlay];
+    
+    [note displayNotificationWithView:[GWTNotificationView notificationViewWithMessage:message] forDuration:4];
 }
 
 @end
