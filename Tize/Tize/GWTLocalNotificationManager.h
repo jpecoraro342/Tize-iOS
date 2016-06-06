@@ -12,7 +12,7 @@
 
 @interface GWTLocalNotificationManager : NSObject
 
-@property (nonatomic, strong) GWTNetworkedSettingsManaager* settings;
+@property (nonatomic, strong) GWTNetworkedSettingsManager* settings;
 
 -(void)scheduleNotificationForEvent:(GWTEvent*)event;
 -(void)cancelNotificationForEvent:(GWTEvent*)event;

@@ -40,7 +40,7 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     if ([PFUser currentUser]) {
-        [[[GWTNetworkedSettingsManaager alloc] init] fetchSettings];
+        [[[GWTNetworkedSettingsManager alloc] init] fetchSettings];
         self.window.rootViewController = [self setupMainView];
         [self registerForNotifications];
     }

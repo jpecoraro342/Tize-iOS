@@ -17,7 +17,7 @@
 
 -(GWTSettingsViewController*)settingsViewController {
     GWTSettingsViewController *settings = [[GWTSettingsViewController alloc] init];
-    settings.settingsData = [[GWTNetworkedSettingsManaager alloc] init];
+    settings.settingsData = [[GWTNetworkedSettingsManager alloc] init];
     return settings;
 }
 

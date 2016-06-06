@@ -76,7 +76,7 @@
 }
 
 -(void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [[[GWTNetworkedSettingsManaager alloc] init] fetchSettings];
+    [[[GWTNetworkedSettingsManager alloc] init] fetchSettings];
     [UICKeyChainStore setString:user.username forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
     [UICKeyChainStore setString:self.logInView.passwordField.text forKey:user.username service:@"com.gwt.tize"];
     

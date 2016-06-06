@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GWTSettingsManager.h"
 
-@interface GWTNetworkedSettingsManaager : NSObject <GWTSettingsManager>
+@interface GWTNetworkedSettingsManager : NSObject <GWTSettingsManager>
 
 @property (nonatomic, assign) BOOL friendRequests;
 @property (nonatomic, assign) BOOL eventInvites;

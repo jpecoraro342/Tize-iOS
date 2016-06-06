@@ -13,7 +13,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.settings = [[GWTNetworkedSettingsManaager alloc] init];
+        self.settings = [[GWTNetworkedSettingsManager alloc] init];
     }
     return self;
 }

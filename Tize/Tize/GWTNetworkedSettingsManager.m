@@ -9,7 +9,7 @@
 #import "GWTNetworkedSettingsManager.h"
 #import "GWTSettings.h"
 
-@implementation GWTNetworkedSettingsManaager {
+@implementation GWTNetworkedSettingsManager {
     GWTSettings *settingsInParse;
 }
 
