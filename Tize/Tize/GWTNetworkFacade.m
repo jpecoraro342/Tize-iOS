@@ -26,6 +26,7 @@
         }
         else {
             //TODO: Handle Error
+            NSLog(@"Unable to follow first user");
         }
     }];
 }

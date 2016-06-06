@@ -8,6 +8,7 @@
 
 #import "GWTEventDetailViewController.h"
 #import "GWTEventsViewController.h"
+#import "GWTLocalNotificationManager.h"
 #import "UIImage+Color.h"
 
 @interface GWTEventDetailViewController () <UITableViewDataSource, UITableViewDelegate, UIBarPositioningDelegate>
@@ -310,6 +311,7 @@
     
     if ([sender isEqual:self.attendingButton]) {
         self.currentAttendingStatus[@"attendingStatus"] = @(0);
+        [[[GWTLocalNotificationManager alloc] init] scheduleNotificationForEvent:self.event];
         self.usersAttending++;
     }
     else if ([sender isEqual:self.maybeAttendingButton]) {
@@ -318,6 +320,7 @@
     }
     else if ([sender isEqual:self.notAttendingButton]) {
         self.currentAttendingStatus[@"attendingStatus"] = @(2);
+        [[[GWTLocalNotificationManager alloc] init] cancelNotificationForEvent:self.event];
         self.usersNotAttending++;
     }
     [self.currentAttendingStatus saveInBackground];

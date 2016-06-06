@@ -17,6 +17,7 @@
 		15A4240C1C7501EB00BCC4A6 /* Tize.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 155899E61C613FD700E23A9E /* Tize.entitlements */; };
 		15A424121C75871900BCC4A6 /* GWTNetworkFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A424111C75871900BCC4A6 /* GWTNetworkFacade.m */; };
 		15A424151C75873A00BCC4A6 /* GWTParseNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */; };
+		15A9E2FA1D05D3F30049C50A /* GWTLocalNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 15A9E2F91D05D3F30049C50A /* GWTLocalNotificationManager.m */; };
 		15BC7CE11B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */; };
 		15C059901ABA0D8000B1915C /* GWTOrganizationEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C0598F1ABA0D8000B1915C /* GWTOrganizationEventsViewController.m */; };
 		15C059931ABA143C00B1915C /* GWTOrganizationEditEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15C059921ABA143C00B1915C /* GWTOrganizationEditEventViewController.m */; };
@@ -132,6 +133,8 @@
 		15A424111C75871900BCC4A6 /* GWTNetworkFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTNetworkFacade.m; sourceTree = "<group>"; };
 		15A424131C75873A00BCC4A6 /* GWTParseNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTParseNetwork.h; sourceTree = "<group>"; };
 		15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTParseNetwork.m; sourceTree = "<group>"; };
+		15A9E2F81D05D3F30049C50A /* GWTLocalNotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTLocalNotificationManager.h; sourceTree = "<group>"; };
+		15A9E2F91D05D3F30049C50A /* GWTLocalNotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTLocalNotificationManager.m; sourceTree = "<group>"; };
 		15BC7CDF1B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTManageOrganizationAdminsViewController.h; sourceTree = "<group>"; };
 		15BC7CE01B1B815E00C616CE /* GWTManageOrganizationAdminsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTManageOrganizationAdminsViewController.m; sourceTree = "<group>"; };
 		15C0598E1ABA0D8000B1915C /* GWTOrganizationEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTOrganizationEventsViewController.h; sourceTree = "<group>"; };
@@ -308,6 +311,15 @@
 				15A424141C75873A00BCC4A6 /* GWTParseNetwork.m */,
 			);
 			name = Networking;
+			sourceTree = "<group>";
+		};
+		15A9E2F71D05D3C00049C50A /* Notification Management */ = {
+			isa = PBXGroup;
+			children = (
+				15A9E2F81D05D3F30049C50A /* GWTLocalNotificationManager.h */,
+				15A9E2F91D05D3F30049C50A /* GWTLocalNotificationManager.m */,
+			);
+			name = "Notification Management";
 			sourceTree = "<group>";
 		};
 		15B57C131B4B70F900CC3F80 /* Address Book Facade */ = {
@@ -515,6 +527,7 @@
 				7C9A5C9E195125DC008B2666 /* PFObject Subclasses */,
 				15A4240D1C75859300BCC4A6 /* Networking */,
 				15B57C131B4B70F900CC3F80 /* Address Book Facade */,
+				15A9E2F71D05D3C00049C50A /* Notification Management */,
 				15F712EF1A70C9BF004B601D /* Invite Commands */,
 				15D7051A1B04F83B009B1400 /* View Factories */,
 				7CB33CEA1A2268FD00C07BF7 /* Abstract Base VC */,
@@ -817,6 +830,7 @@
 				1566454B1A5EF88E00F1FDCA /* GWTInviteToGroupViewController.m in Sources */,
 				7C3B5630195D02CA008FD5F5 /* GWTEditEventViewController.m in Sources */,
 				15C059931ABA143C00B1915C /* GWTOrganizationEditEventViewController.m in Sources */,
+				15A9E2FA1D05D3F30049C50A /* GWTLocalNotificationManager.m in Sources */,
 				7C1F44861A19DBC6000C06CE /* GWTGroupsViewController.m in Sources */,
 				7C3B563A195D0380008FD5F5 /* GWTAttendingTableViewController.m in Sources */,
 				7C95A62519F89F98000D805C /* NSDateFormatter+RelativeDateFormat.m in Sources */,

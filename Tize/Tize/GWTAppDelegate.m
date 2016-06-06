@@ -76,8 +76,13 @@ continueUserActivity:(NSUserActivity *)userActivity
     if (userIndex > 0) {
         if (components.count >= userIndex + 1) {
             NSString *userId = [components objectAtIndex:userIndex + 1];
-            [GWTNetworkFacade makeUsersFollowEachother:userId user2:[[PFUser currentUser] objectId] completionBlock:^(BOOL succeded, NSError *error) {
-                
+            [GWTNetworkFacade makeUsersFollowEachother:userId user2:[[PFUser currentUser] objectId] completionBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    NSLog(@"Successfully following user")
+                }
+                else {
+                    NSLog(@"Error following %@: %@", userId, error.localizedDescription);
+                }
             }];
             
             return YES;

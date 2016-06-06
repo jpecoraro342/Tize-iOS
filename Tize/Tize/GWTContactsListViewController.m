@@ -44,27 +44,15 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return 0;
-        case 1:
-            return [self.currentContacts count];
-    }
-    return 0;
+    return [self.currentContacts count];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 -(NSString*)titleForHeaderInSection:(NSInteger)section {
-    switch (section) {
-        case 0:
-            return @"Tize In My Contacts";
-        case 1:
-            return @"Add Tize";
-    }
-    return nil;
+    return @"Add Tize";
 }
 
 -(NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {

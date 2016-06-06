@@ -121,30 +121,30 @@
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, headerViewHeight)];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, tableView.frame.size.width - 10, headerViewHeight)];
     [titleLabel setTextColor:kOffWhiteColor];
-
+    
+     [headerView setBackgroundColor:[UIColor lightGrayColor]];
+    
     switch (section) {
         case 0:
             titleLabel.text = self.event.eventName;
             titleLabel.textAlignment = NSTextAlignmentCenter;
             self.titleLabel = titleLabel;
-            [headerView setBackgroundColor:[UIColor lightGrayColor]];
             [titleLabel setTextColor:[UIColor darkGrayColor]];
             break;
         case 1:
             titleLabel.text = @"Attending";
-            [headerView setBackgroundColor:kGreenColor];
+            [titleLabel setTextColor:kGreenColor];
             break;
         case 2:
             titleLabel.text = @"Maybe Attending";
-            [headerView setBackgroundColor:kLightOrangeColor];
+            [titleLabel setTextColor:kLightOrangeColor];
             break;
         case 3:
             titleLabel.text = @"Not Attending";
-            [headerView setBackgroundColor:kRedColor];
+            [titleLabel setTextColor:kRedColor];
             break;
         case 4:
             titleLabel.text = @"Not Responded";
-            [headerView setBackgroundColor:[UIColor lightGrayColor]];
             break;
     }
     
