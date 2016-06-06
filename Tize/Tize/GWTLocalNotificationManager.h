@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "GWTNetworkedSettingsManager.h"
 #import "GWTEvent.h"
 
 @interface GWTLocalNotificationManager : NSObject
+
+@property (nonatomic, strong) GWTNetworkedSettingsManaager* settings;
 
 -(void)scheduleNotificationForEvent:(GWTEvent*)event;
 -(void)cancelNotificationForEvent:(GWTEvent*)event;

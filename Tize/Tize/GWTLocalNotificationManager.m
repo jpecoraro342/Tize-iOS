@@ -10,7 +10,19 @@
 
 @implementation GWTLocalNotificationManager
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        self.settings = [[GWTNetworkedSettingsManaager alloc] init];
+    }
+    return self;
+}
+
 -(void)scheduleNotificationForEvent:(GWTEvent*)event {
+    if (!self.settings.upcomingEvents) {
+        return;
+    }
+    
     NSDate *startTime = [event.startDate dateByAddingTimeInterval:-60*60]; // 1 hour before event start date
     NSString *message = [NSString stringWithFormat:@"%@ is starting soon", event.eventName];
     
