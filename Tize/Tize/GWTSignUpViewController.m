@@ -36,7 +36,7 @@
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [UICKeyChainStore setString:user.username forKey:@"com.currentuser.username" service:@"com.gwt.tize"];
     [UICKeyChainStore setString:self.signUpView.passwordField.text forKey:user.username service:@"com.gwt.tize"];
-    [[[GWTNetworkedSettingsManaager alloc] init] fetchSettings];
+    [[[GWTNetworkedSettingsManager alloc] init] fetchSettings];
     [self loadMainView];
 }
 
