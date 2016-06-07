@@ -18,6 +18,10 @@
 
 #define isOrganizationUser ([[[PFUser currentUser] objectForKey:@"userType"] integerValue] == 1)
 
+//Notification Names
+
+#define kEventUpdated @"EventUpdatedNotification"
+
 //Colors
 #define kDarkOrangeColor rgbColor(245, 136, 101)
 #define kLightOrangeColor rgbColor(250, 172, 110)

@@ -86,6 +86,7 @@
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(queryData) forControlEvents:UIControlEventValueChanged];
     tableController.refreshControl = self.refreshControl;
+
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -387,6 +388,9 @@
 
 -(void)addEvent {
     GWTEditEventViewController *addEvent = [[GWTViewFactorySingleton viewManager] editEventViewController];
+    addEvent.eventCreated = ^(GWTEvent *event) {
+        [self createdEvent:event];
+    };
     [self presentViewController:addEvent animated:YES completion:nil];
 }
 
@@ -415,7 +419,7 @@
 }
 
 -(void)deleteEvent:(GWTEvent *)event {
-    int index = [self.myEvents indexOfObject:event];
+    NSUInteger index = [self.myEvents indexOfObject:event];
     if (index != NSNotFound) {
         [self.myEvents removeObjectAtIndex:index];
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -427,6 +431,24 @@
         [self.myPastEvents removeObjectAtIndex:index];
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+-(void)createdEvent:(GWTEvent *)event {
+    NSUInteger index = [self.myEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    index = [self.myPastEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    [self.myEvents insertObject:event atIndex:0];
+    [[self.cellIsSelected objectAtIndex:1] insertObject:[NSNumber numberWithBool:NO] atIndex:0];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)didReceiveMemoryWarning {

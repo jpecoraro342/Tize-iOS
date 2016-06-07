@@ -24,7 +24,7 @@
 
 @property (strong, nonatomic) UIToolbar *toolbar;
 
-//@property (strong, nonatomic) NSMutableArray *cellIsSelected;
+@property (strong, nonatomic) NSMutableArray *cellIsSelected;
 //@property (strong, nonatomic) NSIndexPath *indexPathForSwipingCell;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -95,7 +95,7 @@
 #pragma mark - 
 
 -(void)deleteEvent:(GWTEvent *)event {
-    int index = [self.myEvents indexOfObject:event];
+    NSUInteger index = [self.myEvents indexOfObject:event];
     if (index != NSNotFound) {
         [self.myEvents removeObjectAtIndex:index];
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -107,6 +107,24 @@
         [self.myPastEvents removeObjectAtIndex:index];
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
+}
+
+-(void)createdEvent:(GWTEvent *)event {
+    NSUInteger index = [self.myEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    index = [self.myPastEvents indexOfObject:event];
+    if (index != NSNotFound) {
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:index inSection:1]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        return;
+    }
+    
+    [self.myEvents insertObject:event atIndex:0];
+    [[self.cellIsSelected objectAtIndex:0] insertObject:[NSNumber numberWithBool:NO] atIndex:0];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - Query

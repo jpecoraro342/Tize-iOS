@@ -18,6 +18,7 @@
 -(GWTEvent*)getEventForTransitionFromGesture:(UIGestureRecognizer*)gesture;
 
 -(void)deleteEvent:(GWTEvent*)event;
+-(void)createdEvent:(GWTEvent*)event;
 
 -(GWTEvent *)eventForIndexPath:(NSIndexPath*)indexPath;
 -(UIImage*)iconForIndexPath:(NSIndexPath*)indexPath;

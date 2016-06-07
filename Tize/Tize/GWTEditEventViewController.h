@@ -19,6 +19,8 @@
 @property (nonatomic, strong) GWTInviteFriendsToEventCommand *friendInvites;
 @property (nonatomic, strong) GWTInviteGroupToEventCommand *groupInvites;
 
+@property (nonatomic, copy) void (^eventCreated)(GWTEvent* event);
+
 -(void)updateEvent;
 -(void)sendOutInvites:(GWTEvent*)event;
 -(void)updateTableView;

@@ -26,5 +26,6 @@
 -(void)goBackwardToEventsPage;
 
 -(void)deleteEvent:(GWTEvent*)event;
+-(void)createdEvent:(GWTEvent*)event;
 
 @end

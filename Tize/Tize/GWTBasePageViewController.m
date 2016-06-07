@@ -178,6 +178,10 @@
     [self.mainEventsView deleteEvent:event];
 }
 
+-(void)createdEvent:(GWTEvent*)event {
+    [self.mainEventsView createdEvent:event];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

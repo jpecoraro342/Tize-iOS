@@ -456,11 +456,15 @@
 - (IBAction)createEvent:(id)sender {
     [self.view endEditing:YES];
     if ([self validateFields]) {
+        [(GWTBasePageViewController*)self.parentViewController createdEvent:self.event];
         [self.event saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error){
             if (!error) {
                 if (succeeded) {
                     [self sendOutInvites:self.event];
-                    [[[GWTLocalNotificationManager alloc] init] scheduleNotificationForEvent:self.event];
+                    if (!self.isEdit) {
+                        [[[GWTLocalNotificationManager alloc] init] scheduleNotificationForEvent:self.event];
+                        self.eventCreated(self.event);
+                    }
                 }
             }
             else {
