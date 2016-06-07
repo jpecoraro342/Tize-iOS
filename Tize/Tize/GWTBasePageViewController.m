@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width * 3.0, [UIScreen mainScreen].bounds.size.height);
+    self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 3.0, [UIScreen mainScreen].bounds.size.height);
     
     [self initializeViewControllers];
     
@@ -109,7 +109,7 @@
 
 -(void)initializeViewControllers {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-    //CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    // CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
     self.editViewController = [[GWTViewFactorySingleton viewManager] editEventViewController];
     GWTEventDetailViewController *detailEvent = [[GWTEventDetailViewController alloc] init];
@@ -126,7 +126,7 @@
     [self.scrollView scrollRectToVisible:mainEventsFrame animated:NO];
     
     CGRect attendingFrame = attending.view.frame;
-    attendingFrame.origin.x = 640;
+    attendingFrame.origin.x = screenWidth * 2;
     attending.view.frame = attendingFrame;
     
     for (UIViewController *vc in self.viewControllers) {
