@@ -132,7 +132,6 @@
     for (UIViewController *vc in self.viewControllers) {
         [self.scrollView addSubview:vc.view];
     }
-    
 }
 
 -(void)updateControllersWithEvent:(GWTEvent*)event {

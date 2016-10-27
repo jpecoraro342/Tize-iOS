@@ -31,9 +31,11 @@
     [GWTEvent registerSubclass];
     [GWTSettings registerSubclass];
     
-    [Parse setApplicationId:@"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD"
-                  clientKey:@"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj"];
-    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [Parse initializeWithConfiguration:[ParseClientConfiguration configurationWithBlock:^(id<ParseMutableClientConfiguration> configuration) {
+        configuration.applicationId = @"YHvE8hQzcbqHfpDD29rO2hq0Xwn3fMOFm366KyGD";
+        configuration.clientKey = @"YxtmXQBBjrxHMeEEmOFNzdks7VcJ1Ct1HPXhLxpj";
+        configuration.server = @"https://fierce-ocean-49937.herokuapp.com/parse";
+    }]];
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeGradient];
     
@@ -52,6 +54,11 @@
         GWTLoginViewController *login = [[GWTLoginViewController alloc] init];
         self.window.rootViewController = login;
     }
+    
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveDidReceiveURLResponseNotification:) name:PFNetworkDidReceiveURLResponseNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveWillSendURLRequestNotification:) name:PFNetworkWillSendURLRequestNotification object:nil];
+    
     
     [self.window makeKeyAndVisible];    
     return YES;
@@ -179,6 +186,21 @@ continueUserActivity:(NSUserActivity *)userActivity
     [note setNotificationAnimationType:CWNotificationAnimationTypeOverlay];
     
     [note displayNotificationWithView:[GWTNotificationView notificationViewWithMessage:message] forDuration:4];
+}
+
+# pragma mark - network logging
+
+- (void)receiveWillSendURLRequestNotification:(NSNotification *) notification {
+    // Use key to get the NSURLRequest from userInfo
+    NSURLRequest *request = notification.userInfo[PFNetworkNotificationURLRequestUserInfoKey];
+}
+
+- (void)receiveDidReceiveURLResponseNotification:(NSNotification *) notification {
+    // Use key to get the NSURLRequest from userInfo
+    NSURLRequest *request = notification.userInfo[PFNetworkNotificationURLRequestUserInfoKey];
+    // Use key to get the NSURLResponse from userInfo
+    NSURLResponse *response = notification.userInfo[PFNetworkNotificationURLResponseUserInfoKey];
+    NSString *responseBody = notification.userInfo[PFNetworkNotificationURLResponseBodyUserInfoKey];
 }
 
 @end
