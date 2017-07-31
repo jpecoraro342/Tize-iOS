@@ -25,6 +25,7 @@
     [super viewDidLoad];
     
     self.scrollView.contentSize = CGSizeMake([UIScreen mainScreen].bounds.size.width * 3.0, [UIScreen mainScreen].bounds.size.height);
+    self.scrollView.frame = [UIScreen mainScreen].bounds;
     
     [self initializeViewControllers];
     
@@ -128,6 +129,12 @@
     CGRect attendingFrame = attending.view.frame;
     attendingFrame.origin.x = screenWidth * 2;
     attending.view.frame = attendingFrame;
+    
+    NSLog(@"Edit view frame: %@", NSStringFromCGRect(self.editViewController.view.frame));
+    NSLog(@"Detail view frame: %@", NSStringFromCGRect(detailEvent.view.frame));
+    NSLog(@"Attending view frame: %@", NSStringFromCGRect(attending.view.frame));
+    NSLog(@"Main view frame: %@", NSStringFromCGRect(self.mainEventsView.view.frame));
+    NSLog(@"Scroll view frame: %@", NSStringFromCGRect(self.scrollView.frame));
     
     for (UIViewController *vc in self.viewControllers) {
         [self.scrollView addSubview:vc.view];

@@ -27,7 +27,8 @@
         [self queryGroups];
         UITabBarItem *groups = self.tabBarItem;
         [groups setTitle:@"Groups"];
-        [groups setImage:[UIImage imageNamed:@"groupstab.png"]];
+        NSString *imageFile = [NSString stringWithFormat:@"%@/%@.jpg", [[NSBundle mainBundle] resourcePath], @"groupstab.png"];
+        [groups setImage:[UIImage imageWithContentsOfFile:imageFile]];
     }
     return self;
 }

@@ -49,9 +49,9 @@
 
 //Logging
 #ifdef DEBUG
-#define NSLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
+// #define NSLog(args...) ExtendNSLog(__FILE__,__LINE__,__PRETTY_FUNCTION__,args);
 #else
-#define NSLog(...) CLS_LOG(__VA_ARGS__)
+// #define NSLog(...) CLS_LOG(__VA_ARGS__)
 #endif
 
 #endif
